@@ -1,6 +1,6 @@
 use rdll::{SEXP, R_NilValue, Rf_protect, Rf_unprotect};
 use traits::ToSEXP;
-
+use std::default::Default;
 
 /// Shelter
 ///
@@ -9,10 +9,16 @@ pub struct Shelter {
     nprotected: ::std::os::raw::c_int,
 }
 
+impl Default for Shelter{
+	fn default()->Self{
+	 	Shelter { nprotected: 0 }
+	}
+}
+
 impl Shelter {
     pub fn new() -> Shelter {
         // println!("{:?}", "protecting \n");
-        Shelter { nprotected: 0 }
+        Self::default()
     }
 
     pub fn add<T: ToSEXP>(&mut self, a: T) -> SEXP {

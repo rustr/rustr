@@ -32,13 +32,7 @@ pub fn cstring_user<T: Into<Vec<u8>>>(string: T) -> Result<CString, NulError> {
 }
 
 pub fn check_user_interrupt() -> bool {
-    unsafe {
-        if R_ToplevelExec(Some(check_interrupt_fn), ::std::ptr::null_mut()) == Rboolean::TRUE {
-            false
-        } else {
-            true
-        }
-    }
+    unsafe { R_ToplevelExec(Some(check_interrupt_fn), ::std::ptr::null_mut()) != Rboolean::TRUE }
 }
 
 #[inline]

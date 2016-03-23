@@ -70,7 +70,7 @@ impl<T: SEXPbucket> CharVecM<T> {
 }
 
 
-
+#[allow(explicit_counter_loop)]
 impl<T: SEXPbucket, E: Into<CString> + Clone> From<Vec<E>> for CharVecM<T> {
     fn from(x: Vec<E>) -> CharVecM<T> {
         let size_x = x.len();

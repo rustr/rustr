@@ -70,12 +70,12 @@ macro_rules! gen_fmt {
         }
 
     fn cause(&self) -> Option<&Error> {
-        match self.kind() {
-            &UnknownError(..) => None,
-            &UnreachableError(..) => None,
-            &ForceStopError(..) => None,
-            &Other(ref c) => c.cause(),
-            $(&$x(ref c))
+        match *self.kind() {
+            UnknownError(..) => None,
+            UnreachableError(..) => None,
+            ForceStopError(..) => None,
+            Other(ref c) => c.cause(),
+            $($x(ref c))
                     |* => c.cause(),
         }
 

@@ -95,8 +95,7 @@ impl URNew for u8 {
             return res;
         }
         let rptr = RAW(x);
-        let res = *rptr.offset(0) as u8;
-        res
+        *rptr.offset(0) as u8
     }
 }
 

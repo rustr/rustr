@@ -189,7 +189,7 @@ pub trait UIntoR {
 
 impl FromR<SEXP> for SEXP {
     fn fromr(&self) -> RResult<SEXP> {
-        Ok(self.clone())
+        Ok(self)
     }
 }
 

@@ -7,12 +7,7 @@ use rdll::{R_ToplevelExec, Rboolean};
 
 #[inline]
 pub fn rbool(x: Rboolean) -> bool {
-    if x == Rboolean::TRUE {
-        true
-    } else {
-        false
-    }
-
+    x == Rboolean::TRUE
 }
 
 /// Check User Interrupt

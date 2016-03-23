@@ -124,7 +124,7 @@ impl<Obj: Any, T: SEXPbucket> RPtrM<Obj, T> {
             if res.is_null() {
                 return rerror(Other("external pointer is not valid".into()));
             }
-            return Ok(res);
+            Ok(res)
         }
     }
     pub unsafe fn uget(&mut self) -> *mut Obj {

@@ -66,15 +66,15 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
                                                                        .as_ptr()),
                                                         x));
                         let res = Shield::new(Rf_eval(call.s(), R_GlobalEnv));
-                        return Ok(res.s());
+                        Ok(res.s())
 
                     }
                     // 2 m 2 c
-                    CHARSXP => return Ok(Rf_ScalarString(x)),
+                    CHARSXP => Ok(Rf_ScalarString(x)),
                     // 2 m 3 c
-                    SYMSXP => return Ok(Rf_ScalarString(PRINTNAME(x))),
+                    SYMSXP => Ok(Rf_ScalarString(PRINTNAME(x))),
                     // 2 m 4 c
-                    _ => return rerror(NotCompatible("not compatible with STRSXP".into())),
+                    _ => rerror(NotCompatible("not compatible with STRSXP".into())),
                 }
                 // end m1 c1 mm
 

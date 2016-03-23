@@ -39,9 +39,9 @@ impl<T: SEXPbucket> RFunM<T> {
         match unsafe { RTYPEOF(x.s()) } {
             CLOSXP | SPECIALSXP | BUILTINSXP => {
                 self.data.set(unsafe { x.s() });
-                return Ok(());
+                Ok(())
             }
-            _ => return rraise("cannot convert to function"),
+            _ => rraise("cannot convert to function"),
         }
     }
     pub fn from_str_global(x: &str) -> RResult<RFunM<T>> {
@@ -66,14 +66,14 @@ impl<T: SEXPbucket> RFunM<T> {
     }
     pub fn eval<D: RNew>(&self, args: &[&Args]) -> RResult<D> {
         let call = Shield::new(try!(language1(self, args)));
-        return D::rnew(try!(rustr_eval(unsafe { call.s() }, unsafe { R_GlobalEnv })));
+        D::rnew(try!(rustr_eval(unsafe { call.s() }, unsafe { R_GlobalEnv })))
     }
     pub fn eval_env<EE: SEXPbucket, D: RNew>(&self,
                                              args: &[&Args],
                                              envir: EnvirM<EE>)
                                              -> RResult<D> {
         let call = Shield::new(try!(language1(self, args)));
-        return D::rnew(try!(rustr_eval(unsafe { call.s() }, unsafe { envir.s() })));
+        D::rnew(try!(rustr_eval(unsafe { call.s() }, unsafe { envir.s() })))
     }
 }
 
@@ -90,9 +90,9 @@ impl<T: SEXPbucket> RNew for RFunM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {
         match unsafe { RTYPEOF(x.s()) } {
             CLOSXP | SPECIALSXP | BUILTINSXP => {
-                return Ok(RFunM { data: T::new(unsafe { x.s() }) });
+                Ok(RFunM { data: T::new(unsafe { x.s() }) })
             }
-            _ => return rraise("cannot convert to function"),
+            _ =>  rraise("cannot convert to function"),
         }
     }
 }
