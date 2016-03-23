@@ -39,7 +39,7 @@ pub trait RSlot :ToSEXP{
             if R_has_slot(self.s(), name.s()) == 0 {
                 return Ok(false);
             }
-            return Ok(true);
+            Ok(true)
 
         }
     }

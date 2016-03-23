@@ -14,11 +14,11 @@ pub type RList = RListM<Preserve>;
 impl<T: SEXPbucket> RListM<T> {
     pub fn new(x: SEXP) -> RResult<RListM<T>> {
 
-        if RTYPEOF(x.clone()) != VECSXP {
+        if RTYPEOF(x) != VECSXP {
             return rerror(NotCompatible("expecting a list".into()));
         }
 
-        Ok(RListM { data: T::new(x.clone()) })
+        Ok(RListM { data: T::new(x) })
     }
     pub fn alloc(x: R_xlen_t) -> RListM<T> {
         RListM { data: T::new(unsafe { Rf_allocVector(VECSXP, x) }) }
@@ -62,14 +62,12 @@ impl<T: SEXPbucket> RListM<T> {
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = match from_last {
-            true => Rboolean::TRUE,
-            false => Rboolean::FALSE,
-        };
+        let last = if from_last { Rboolean::TRUE} else { Rboolean::FALSE };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }
 }
 
+#[allow(explicit_counter_loop)]
 impl<T: SEXPbucket, E: UIntoR + Clone> From<Vec<E>> for RListM<T> {
     fn from(x: Vec<E>) -> RListM<T> {
         let size_x = x.len();

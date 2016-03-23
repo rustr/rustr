@@ -87,23 +87,23 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
 
                 match RTYPEOF(x) {
                     REALSXP | RAWSXP | LGLSXP | CPLXSXP | INTSXP => {
-                        return Ok(Rf_coerceVector(x, into as ::std::os::raw::c_uint))
+                        Ok(Rf_coerceVector(x, into as ::std::os::raw::c_uint))
                     }
-                    _ => return rerror(NotCompatible("not compatible with requested type".into())), 
+                    _ => rerror(NotCompatible("not compatible with requested type".into())), 
                 }
 
             } // end m1 c2
 
             VECSXP => {
-                return convert_using_rfunction(x, "as.list");
+                convert_using_rfunction(x, "as.list")
             }
 
             EXPRSXP => {
-                return convert_using_rfunction(x, "as.expression");
+                convert_using_rfunction(x, "as.expression")
             }
 
             LANGSXP => {
-                return convert_using_rfunction(x, "as.call");
+               convert_using_rfunction(x, "as.call")
             }
 
             LISTSXP => {
@@ -111,15 +111,15 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
                     LANGSXP => {
                         let y = Shield::new(Rf_duplicate(x));
                         SET_RTYPEOF(y.s(), LISTSXP);
-                        return Ok(y.s());
+                        Ok(y.s())
                     }
                     _ => {
-                        return convert_using_rfunction(x, "as.pairlist");
+                        convert_using_rfunction(x, "as.pairlist")
                     }
                 }
             }
 
-            _ => return rerror(UnreachableError(format!("r_true_cast: {:?} to {}", x, into))),
+            _ => rerror(UnreachableError(format!("r_true_cast: {:?} to {}", x, into))),
 
         }
 
@@ -130,7 +130,7 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
 pub fn r_cast(x: SEXP, into: Rtype) -> SEXPResult {
     unsafe {
         if RTYPEOF(x) == into {
-            return Ok(x);
+             Ok(x)
         } else {
             // #ifdef RCPP_WARN_ON_COERCE
             let result = match r_true_cast(x, into) {
@@ -142,7 +142,7 @@ pub fn r_cast(x: SEXP, into: Rtype) -> SEXPResult {
                        R_CHAR(Rf_type2str(TYPEOF(x) as ::std::os::raw::c_uint)),
                        R_CHAR(Rf_type2str(into as ::std::os::raw::c_uint)));
 
-            return Ok(result.s());
+            Ok(result.s())
             // #else
             // return internal::r_true_cast<TARGET>(x);
             // #endif

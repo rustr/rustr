@@ -14,10 +14,10 @@ pub type ExprVec = ExprVecM<Preserve>;
 impl<T: SEXPbucket> ExprVecM<T> {
     pub fn new(x: SEXP) -> RResult<ExprVecM<T>> {
 
-        if RTYPEOF(x.clone()) != EXPRSXP {
+        if RTYPEOF(x) != EXPRSXP {
             return rerror(NotCompatible("expecting a expression vector".into()));
         }
-        Ok(ExprVecM { data: T::new(x.clone()) })
+        Ok(ExprVecM { data: T::new(x) })
     }
     pub fn alloc(x: R_xlen_t) -> ExprVecM<T> {
         ExprVecM { data: T::new(unsafe { Rf_allocVector(EXPRSXP, x) }) }
@@ -61,10 +61,7 @@ impl<T: SEXPbucket> ExprVecM<T> {
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = match from_last {
-            true => Rboolean::TRUE,
-            false => Rboolean::FALSE,
-        };
+        let last = if from_last { Rboolean::TRUE} else { Rboolean::FALSE };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }
 }

@@ -11,10 +11,10 @@ pub type BoolVec = BoolVecM<Preserve>;
 
 impl<T: SEXPbucket> BoolVecM<T> {
     pub fn new(x: SEXP) -> RResult<BoolVecM<T>> {
-        if RTYPEOF(x.clone()) != LGLSXP {
+        if RTYPEOF(x) != LGLSXP {
             return rerror(NotCompatible("expecting a numeric vector".into()));
         }
-        Ok(BoolVecM { data: T::new(x.clone()) })
+        Ok(BoolVecM { data: T::new(x) })
     }
     pub fn alloc(x: R_xlen_t) -> BoolVecM<T> {
         BoolVecM { data: T::new(unsafe { Rf_allocVector(LGLSXP, x) }) }
@@ -65,9 +65,10 @@ impl<T: SEXPbucket> BoolVecM<T> {
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = match from_last {
-            true => Rboolean::TRUE,
-            false => Rboolean::FALSE,
+        let last = if from_last {
+            Rboolean::TRUE
+        } else {
+            Rboolean::FALSE
         };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }

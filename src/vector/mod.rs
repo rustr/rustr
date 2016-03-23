@@ -62,10 +62,7 @@ impl<T: SEXPbucket> $NumVecM<T> {
         Some(vecs)}
     }
 	pub fn is_duplicated(&self,from_last:bool)->R_xlen_t{
-    	let last = match from_last{
-    		true => Rboolean::TRUE,
-    		false => Rboolean::FALSE
-    	};
+    	let last = if from_last {  Rboolean::TRUE} else{Rboolean::FALSE};
     	unsafe{
     		Rf_any_duplicated(self.s(),last)
     	}

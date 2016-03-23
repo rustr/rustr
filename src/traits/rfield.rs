@@ -12,7 +12,7 @@ pub trait RField: ToSEXP+ SetSEXP{
             let call = Shield::new(Rf_lang3(R_DollarSymbol,
                                             self.s(),
                                             Rf_mkString(c_str(field_name).as_ptr())));
-            return RNew::rnew(Rf_eval(call.s(), R_GlobalEnv));
+            RNew::rnew(Rf_eval(call.s(), R_GlobalEnv))
         }
     }
     fn set<T: ToSEXP>(&mut self, field_name: &str, x: T) {

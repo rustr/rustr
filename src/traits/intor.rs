@@ -700,7 +700,7 @@ impl IntoR for $x<String> {
             	SET_STRING_ELT( rvec.s(), index, Rf_mkChar(try!(CString::new(strs)).as_ptr()));
             	index = index + 1;
             } 
-            return Ok(rvec.s());
+           Ok(rvec.s())
         }
     }
 }
@@ -790,7 +790,7 @@ impl<'a> IntoR for &'a [String] {
                                Rf_mkChar(try!(CString::new(strs)).as_ptr()));
                 index = index + 1;
             }
-            return Ok(rvec.s());
+            Ok(rvec.s())
         }
     }
 }
@@ -805,7 +805,7 @@ impl<'a, 'b> IntoR for &'a [&'b str] {
                 SET_STRING_ELT(rvec.s(), index, Rf_mkChar(try!(CString::new(*xs)).as_ptr()));
                 index = index + 1;
             }
-            return Ok(rvec.s());
+            Ok(rvec.s())
         }
     }
 }
@@ -847,7 +847,7 @@ impl IntoR for $x<String> {
             	SET_STRING_ELT( rvec.s(), index, Rf_mkChar(try!(CString::new(strs)).as_ptr()));
             	index = index + 1;
             } 
-            return Ok(rvec.s());
+            Ok(rvec.s())
         }
     }
 }

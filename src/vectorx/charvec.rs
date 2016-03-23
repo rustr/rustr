@@ -12,10 +12,10 @@ pub type CharVec = CharVecM<Preserve>;
 
 impl<T: SEXPbucket> CharVecM<T> {
     pub fn new(x: SEXP) -> RResult<CharVecM<T>> {
-        if RTYPEOF(x.clone()) != STRSXP {
+        if RTYPEOF(x) != STRSXP {
             return rerror(NotCompatible("expecting a string vector".into()));
         }
-        Ok(CharVecM { data: T::new(x.clone()) })
+        Ok(CharVecM { data: T::new(x) })
     }
     pub fn alloc(x: R_xlen_t) -> CharVecM<T> {
         CharVecM { data: T::new(unsafe { Rf_allocVector(STRSXP, x) }) }
@@ -61,10 +61,7 @@ impl<T: SEXPbucket> CharVecM<T> {
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = match from_last {
-            true => Rboolean::TRUE,
-            false => Rboolean::FALSE,
-        };
+        let last = if from_last { Rboolean::TRUE} else { Rboolean::FALSE };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }
 }
