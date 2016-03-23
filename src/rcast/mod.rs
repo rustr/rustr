@@ -26,9 +26,9 @@ pub fn convert_using_rfunction(x: SEXP, fun: &str) -> SEXPResult {
 
             // match two
             Err(y) => {
-                match y.kind() {
+                match *y.kind() {
                     // match two case one
-                    &EvalError(_) => {
+                    EvalError(_) => {
                         return rerror(NotCompatible(format!("could not convert using R function \
                                                              : {}",
                                                             fun)

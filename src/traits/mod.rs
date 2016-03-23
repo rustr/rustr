@@ -153,7 +153,7 @@ impl ToSEXP for Rtemp {
 
 impl ToSEXP for SEXP {
     unsafe fn s(&self) -> SEXP {
-        self.clone()
+        *self
     }
 }
 
@@ -201,7 +201,7 @@ impl RNew for SEXP {
 
 impl IntoR for SEXP {
     fn intor(&self) -> RResult<SEXP> {
-        Ok(self.clone())
+        Ok(*self)
     }
 }
 

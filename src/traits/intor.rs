@@ -39,8 +39,7 @@ impl RNew for $x {
 impl URNew for $x {
 	unsafe fn urnew(x:SEXP) -> $x {
 			let rptr = $sexpget(x);
-			let res = *rptr.offset(0) as $x;
-			res
+			*rptr.offset(0) as $x
 	}
 }
 
@@ -455,7 +454,7 @@ impl<D: RNew> RNew for HashMap<String, D> {
                                     .into_string()),
                            try!(D::rnew(VECTOR_ELT(selfs, ii as R_xlen_t))));
             }
-            return Ok(res);
+            Ok(res)
         }
     }
 }
@@ -476,7 +475,7 @@ impl<D: IntoR> IntoR for HashMap<CString, D> {
                 index = index + 1;
             }
             Rf_setAttrib(rvecs, R_NamesSymbol, names);
-            return Ok(rvecs);
+            Ok(rvecs)
         }
     }
 }
@@ -486,7 +485,7 @@ impl<D: RNew> RNew for HashMap<CString, D> {
 
         unsafe {
             let names = Rf_getAttrib(x, R_NamesSymbol);
-            if Rf_isString(names.clone()) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
+            if Rf_isString(names) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
                 return rerror(REKind::NotCompatible("expecting a named list".into()));
             }
             let lens = Rf_xlength(x);
@@ -498,7 +497,7 @@ impl<D: RNew> RNew for HashMap<CString, D> {
                 res.insert(CStr::from_ptr(R_CHAR(STRING_ELT(names, ii as R_xlen_t))).to_owned(),
                            try!(D::rnew(VECTOR_ELT(selfs, ii as R_xlen_t))));
             }
-            return Ok(res);
+            Ok(res)
         }
     }
 }
@@ -521,7 +520,7 @@ impl<D: IntoR> IntoR for BTreeMap<String, D> {
                 index = index + 1;
             }
             Rf_setAttrib(rvecs, R_NamesSymbol, names);
-            return Ok(rvecs);
+            Ok(rvecs)
         }
     }
 }
@@ -531,7 +530,7 @@ impl<D: RNew> RNew for BTreeMap<String, D> {
 
         unsafe {
             let names = Rf_getAttrib(x, R_NamesSymbol);
-            if Rf_isString(names.clone()) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
+            if Rf_isString(names) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
                 return rerror(REKind::NotCompatible("expecting a named list".into()));
             }
             let lens = Rf_xlength(x);
@@ -545,7 +544,7 @@ impl<D: RNew> RNew for BTreeMap<String, D> {
                                     .into_string()),
                            try!(D::rnew(VECTOR_ELT(selfs, ii as R_xlen_t))));
             }
-            return Ok(res);
+            Ok(res)
         }
     }
 }
@@ -566,7 +565,7 @@ impl<D: IntoR> IntoR for BTreeMap<CString, D> {
                 index = index + 1;
             }
             Rf_setAttrib(rvecs, R_NamesSymbol, names);
-            return Ok(rvecs);
+            Ok(rvecs)
         }
     }
 }
@@ -576,7 +575,7 @@ impl<D: RNew> RNew for BTreeMap<CString, D> {
 
         unsafe {
             let names = Rf_getAttrib(x, R_NamesSymbol);
-            if Rf_isString(names.clone()) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
+            if Rf_isString(names) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
                 return rerror(REKind::NotCompatible("expecting a named list".into()));
             }
             let lens = Rf_xlength(x);
@@ -588,7 +587,7 @@ impl<D: RNew> RNew for BTreeMap<CString, D> {
                 res.insert(CStr::from_ptr(R_CHAR(STRING_ELT(names, ii as R_xlen_t))).to_owned(),
                            try!(D::rnew(VECTOR_ELT(selfs, ii as R_xlen_t))));
             }
-            return Ok(res);
+            Ok(res)
         }
     }
 }
@@ -650,7 +649,7 @@ impl IntoR for String {
             let rvec = Shield::new(Rf_allocVector(STRSXP, 1));
             let strs: &str = self.as_ref();
             SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(try!(CString::new(strs)).as_ptr()));
-            return Ok(rvec.s());
+            Ok(rvec.s())
         }
     }
 }
@@ -660,7 +659,7 @@ impl<'a> IntoR for &'a str {
         unsafe {
             let rvec = Shield::new(Rf_allocVector(STRSXP, 1));
             SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(try!(CString::new(*self)).as_ptr()));
-            return Ok(rvec.s());
+            Ok(rvec.s())
         }
     }
 }
@@ -834,7 +833,7 @@ impl UIntoR for $x<CString> {
 impl IntoR for $x<CString> {
     fn intor(&self) -> RResult<SEXP> {
     	
-            unsafe{return Ok(Self::uintor(self));}
+            unsafe{ Ok(Self::uintor(self))}
     }
 }
 

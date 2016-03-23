@@ -50,7 +50,7 @@ impl<T: SEXPbucket>  FromStr for EnvirM<T> {
 }
 
 impl<T: SEXPbucket> EnvirM<T> {
-    pub fn as_envir<TT: ToSEXP>(s: TT) -> RResult<EnvirM<T>> {
+    pub fn from_sexp<TT: ToSEXP>(s: TT) -> RResult<EnvirM<T>> {
         unsafe {
             if RTYPEOF(s.s()) == ENVSXP {
                 return Ok(EnvirM { data: T::new(s.s()) });
@@ -67,7 +67,7 @@ impl<T: SEXPbucket> EnvirM<T> {
         EnvirM { data: T::new(x) }
     }
     pub fn set<E: ToSEXP>(&mut self, x: E) -> RResult<()> {
-        match EnvirM::<T>::as_envir(unsafe { x.s() }) {
+        match EnvirM::<T>::from_sexp(unsafe { x.s() }) {
             Ok(res) => {
                 self.data.set(unsafe { res.s() });
                 Ok(())
@@ -76,8 +76,8 @@ impl<T: SEXPbucket> EnvirM<T> {
         }
     }
 
-    pub fn new<E: ToSEXP>(&mut self, x: E) -> RResult<EnvirM<T>> {
-        match EnvirM::<T>::as_envir(unsafe { x.s() }) {
+    pub fn new<E: ToSEXP>(x: E) -> RResult<EnvirM<T>> {
+        match EnvirM::<T>::from_sexp(unsafe { x.s() }) {
             Ok(res) => Ok(EnvirM { data: unsafe { T::new(res.s()) } }),
             Err(e) => rraise(e),
         }
@@ -91,7 +91,7 @@ impl<T: SEXPbucket> EnvirM<T> {
             match res {
                 Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
                 Err(e) => {
-                    return rraise(e);
+                    rraise(e)
                 } 
             }
         }
@@ -101,9 +101,9 @@ impl<T: SEXPbucket> EnvirM<T> {
          */
     fn is_user_database(&self) -> bool {
         unsafe {
-            return OBJECT(self.data.s()) == 1 &&
+            OBJECT(self.data.s()) == 1 &&
                    Rf_inherits(self.data.s(), c_str("UserDefinedDatabase").as_ptr()) ==
-                   Rboolean::TRUE;
+                   Rboolean::TRUE
         }
     }
     pub fn global() -> EnvirM<NoProtect> {

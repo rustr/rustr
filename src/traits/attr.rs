@@ -38,7 +38,7 @@ pub trait RAttribute : ToSEXP{
                 attrs = CDR(attrs);
             }
         }
-        return false; /* give up */
+        false 
     }
     fn attributte<D: RNew>(&self) -> RResult<D> {
         unsafe { RNew::rnew(ATTRIB(self.s())) }
