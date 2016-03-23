@@ -27,7 +27,7 @@ pub fn pairlist(xs: &[&Args]) -> RResult<SEXP> {
             res = Shield::new(Rf_cons(Shield::new(head.s()).s(), res.s()));
         }
     }
-    while let Some(nhead) = it.next() {
+    for nhead in it {
         unsafe {
             if nhead.named() {
                 let y = Shield::new(nhead.s());
@@ -71,7 +71,7 @@ pub fn pairlist1(hd: &Args, xs: &[&Args]) -> RResult<SEXP> {
             rp(res.s());
         }
     }
-    while let Some(nhead) = it.next() {
+    for nhead in it {
         unsafe {
             if nhead.named() {
                 let y = Shield::new(nhead.s());

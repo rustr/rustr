@@ -164,8 +164,7 @@ impl<Obj: Any, T: SEXPbucket> RWeakM<Obj, T> {
         }
     }
     pub unsafe fn uget(&mut self) -> *mut Obj {
-        let res: *mut Obj = ::std::mem::transmute(R_ExternalPtrAddr(self.data.s()));
-        res
+        ::std::mem::transmute(R_ExternalPtrAddr(self.data.s()))
     }
     //  An example release function.
     //  User should impl this themselves, because finalizer_ptr::<Obj> may change.

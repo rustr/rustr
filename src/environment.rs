@@ -108,7 +108,7 @@ impl<T: SEXPbucket> EnvirM<T> {
     }
     pub fn global() -> EnvirM<NoProtect> {
         unsafe {
-            return EnvirM { data: NoProtect::new(R_GlobalEnv) };
+            EnvirM { data: NoProtect::new(R_GlobalEnv) }
         }
     }
 
@@ -160,7 +160,7 @@ impl<T: SEXPbucket> EnvirM<T> {
                                                 self.data.s()),
                                        R_GlobalEnv));
 
-            return Ok(EnvirM { data: T::new(sexp) });
+            Ok(EnvirM { data: T::new(sexp) })
         }
     }
     pub fn ls<D: RNew>(&self, all: Rboolean) -> RResult<D> {
@@ -170,12 +170,12 @@ impl<T: SEXPbucket> EnvirM<T> {
                 let tb: *mut R_ObjectTable =
                     ::std::mem::transmute(R_ExternalPtrAddr(HASHTAB(self.data.s())));
                 match (*tb).objects {
-                    Some(resfn) => return D::rnew(resfn(tb)),
-                    None => return rraise("ls() R_ExternalPtrAddr is invalid."),
+                    Some(resfn) => D::rnew(resfn(tb)),
+                    None => rraise("ls() R_ExternalPtrAddr is invalid."),
                 }
             } else {
 
-                return D::rnew(R_lsInternal(self.data.s(), all));
+               D::rnew(R_lsInternal(self.data.s(), all))
             }
         }
     }
@@ -208,7 +208,7 @@ impl<T: SEXPbucket> EnvirM<T> {
                 return D::rnew(res2);
             }
 
-            return D::rnew(res);
+            D::rnew(res)
         }
 
     }
@@ -216,7 +216,7 @@ impl<T: SEXPbucket> EnvirM<T> {
     pub fn exists(&self, name: &str) -> bool {
         unsafe {
             let res = Rf_findVarInFrame(self.data.s(), Symbol::from(name).s());
-            return res != R_UnboundValue;
+            res != R_UnboundValue
         }
     }
     #[allow(non_snake_case)]
@@ -225,7 +225,7 @@ impl<T: SEXPbucket> EnvirM<T> {
             return rraise(format!("no such binding: {:?}", name));
         }
         unsafe {
-            return Ok(R_BindingIsLocked(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE);
+            Ok(R_BindingIsLocked(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE)
         }
 
     }

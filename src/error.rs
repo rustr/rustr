@@ -218,14 +218,14 @@ pub fn get_exception_classes(ex: &RError) -> SEXP {
 
 }
 
-pub fn error_to_r_condition(_x: RError) -> SEXP {
+pub fn error_to_r_condition(x: RError) -> SEXP {
     // todo
     unsafe {
-        let class_sym = Shield::new(get_exception_classes(&_x));
+        let class_sym = Shield::new(get_exception_classes(&x));
 
         let cond = Shield::new(Rf_allocVector(VECSXP as ::std::os::raw::c_uint, 2));
 
-        let mess_c = c_str(format!("{}", _x).as_ref());
+        let mess_c = c_str(format!("{}", x).as_ref());
 
         let message = Shield::new(Rf_mkString(mess_c.as_ptr()));
 
