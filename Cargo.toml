@@ -1,0 +1,24 @@
+[package]
+name = "rustr"
+version = "0.1.1"
+authors = ["qinwf <mail@qinwenfeng.com>"]
+exclude = ["TODO.md","target"]
+keywords = ["ffi", "r", "statistic","binding", "math"]
+license = "Apache-2.0"
+description = "Rust and R integration"
+documentation = "http://docs.rustr.org/"
+homepage = "http://rustr.org/"
+repository = "https://github.com/rustr/rustr"
+
+[lib]
+name = "rustr"
+
+[features]
+default = []
+dev = ["clippy"]
+date = ["chrono"]
+
+[dependencies]
+clippy = {version = "0.0.54", optional = true}
+chrono = {version = "0.2", optional = true}
+
