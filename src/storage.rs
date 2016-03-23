@@ -53,7 +53,7 @@ impl SEXPbucket for Preserve {
     }
 
     fn invalidate(&mut self) -> SEXP {
-        let out = self.data.clone();
+        let out = self.data;
         unsafe {
             self.data = R_NilValue;
         }

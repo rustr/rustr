@@ -19,6 +19,6 @@ dev = ["clippy"]
 date = ["chrono"]
 
 [dependencies]
-clippy = {version = "0.0.54", optional = true}
+clippy = {version = "0.0.55", optional = true}
 chrono = {version = "0.2", optional = true}
 

@@ -431,7 +431,7 @@ impl<D: IntoR> IntoR for HashMap<String, D> {
                 index = index + 1;
             }
             Rf_setAttrib(rvecs, R_NamesSymbol, names);
-            return Ok(rvecs);
+            Ok(rvecs)
         }
     }
 }
@@ -441,7 +441,7 @@ impl<D: RNew> RNew for HashMap<String, D> {
 
         unsafe {
             let names = Rf_getAttrib(x, R_NamesSymbol);
-            if Rf_isString(names.clone()) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
+            if Rf_isString(names) != Rboolean::TRUE || RTYPEOF(x) != VECSXP {
                 return rerror(REKind::NotCompatible("expecting a named list".into()));
             }
             let lens = Rf_xlength(x);

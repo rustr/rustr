@@ -4,7 +4,7 @@ use error::*;
 use rtype::*;
 use traits::*;
 use rdll::*;
-use r_cast::*;
+use rcast::*;
 
 pub struct RDateTime {
     m_d: f64,

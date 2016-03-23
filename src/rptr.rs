@@ -97,12 +97,12 @@ impl<Obj: Any, T: SEXPbucket> RPtrParam<Obj, T> {
             tag: self.tag,
         };
         let onexit: Rboolean;
-        if self.exit == true {
+        if self.exit {
             onexit = Rboolean::TRUE;
         } else {
             onexit = Rboolean::FALSE;
         }
-        if self.drop == true {
+        if self.drop {
             unsafe {
                 R_RegisterCFinalizerEx(extptr, self.finalizer_func, onexit);
             }
@@ -121,7 +121,7 @@ impl<Obj: Any, T: SEXPbucket> RPtrM<Obj, T> {
     pub fn get(&mut self) -> RResult<*mut Obj> {
         unsafe {
             let res: *mut Obj = ::std::mem::transmute(R_ExternalPtrAddr(self.data.s()));
-            if res.is_null() == true {
+            if res.is_null() {
                 return rerror(Other("external pointer is not valid".into()));
             }
             return Ok(res);

@@ -4,7 +4,7 @@ use traits::*;
 use chrono::*;
 use error::*;
 use rtype::*;
-use r_cast::*;
+use rcast::*;
 pub struct RDate {
     m_d: f64,
     m_t: Date<FixedOffset>,

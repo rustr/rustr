@@ -20,7 +20,7 @@ macro_rules! rustr_version{
 #[macro_use]
 pub mod macros;
 
-#[allow(non_camel_case_types,non_upper_case_globals,non_snake_case)]
+#[allow(non_camel_case_types,non_upper_case_globals,non_snake_case,type_complexity,expl_impl_clone_on_copy,used_underscore_binding)]
 pub mod rdll;
 pub mod protect;
 pub mod storage;

@@ -7,7 +7,7 @@ use ::storage::*;
 use ::traits::*;
 use ::rtype::*;
 use ::error::*;
-
+use std::str::FromStr;
 use rcast::*;
 
 use util::*;
@@ -16,6 +16,15 @@ use std::ffi::CString;
 pub type RFml = RFmlM<Preserve>;
 
 gen_traits_sexp!(RFmlM);
+
+impl<T: SEXPbucket> FromStr for RFmlM<T>{
+    type Err = RError;
+    fn from_str(string: &str) -> RResult<Self> {
+        let char = try!(CString::new(string));
+        let dd = try!(convert_using_rfunction(unsafe { Rf_mkString(char.as_ptr()) }, "as.formula"));
+        Ok(RFmlM { data: T::new(dd) })
+    }
+}
 
 impl<T: SEXPbucket> RFmlM<T> {
     pub fn new(x: SEXP) -> RResult<Self> {
@@ -51,11 +60,6 @@ impl<T: SEXPbucket> RFmlM<T> {
             };
             Ok(RFmlM { data: T::new(res) })
         }
-    }
-    pub fn from_str(string: &str) -> RResult<Self> {
-        let char = try!(CString::new(string));
-        let dd = try!(convert_using_rfunction(unsafe { Rf_mkString(char.as_ptr()) }, "as.formula"));
-        Ok(RFmlM { data: T::new(dd) })
     }
 }
 // impl<T: SEXPbucket> FromCastSEXP for RFmlM<T> {

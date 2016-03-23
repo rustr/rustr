@@ -19,8 +19,35 @@ use ::protect::stackp::*;
 pub type Envir = EnvirM<Preserve>;
 pub type EnvirN = EnvirM<NoProtect>;
 
+use std::str::FromStr;
+
 gen_traits_sexp!(EnvirM);
 
+impl<T: SEXPbucket>  FromStr for EnvirM<T> {
+	type Err = RError;
+    fn from_str(name: &str) -> RResult<EnvirM<T>> {
+        unsafe {
+
+            // similar to matchEnvir@envir.c
+            if name == ".GlobalEnv" {
+                Ok(EnvirM { data: T::new(R_GlobalEnv) })
+            } else if name == "package:base" {
+                Ok(EnvirM { data: T::new(R_BaseEnv) })
+            } else {
+                let as_environment_sym = Rf_install(c_str("as.environment").as_ptr());
+                let res = rustr_eval(Rf_lang2(as_environment_sym,
+                                              Rf_mkString(c_str(name).as_ptr())),
+                                     R_GlobalEnv);
+                match res {
+                    Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
+                    Err(_) => {
+                        rraise("fail to create enviroment")
+                    } 
+                }
+            }
+        }
+    }
+}
 
 impl<T: SEXPbucket> EnvirM<T> {
     pub fn as_envir<TT: ToSEXP>(s: TT) -> RResult<EnvirM<T>> {
@@ -56,28 +83,6 @@ impl<T: SEXPbucket> EnvirM<T> {
         }
     }
 
-    pub fn from_str(name: &str) -> RResult<EnvirM<T>> {
-        unsafe {
-
-            // similar to matchEnvir@envir.c
-            if name == ".GlobalEnv" {
-                return Ok(EnvirM { data: T::new(R_GlobalEnv) });
-            } else if name == "package:base" {
-                return Ok(EnvirM { data: T::new(R_BaseEnv) });
-            } else {
-                let as_environment_sym = Rf_install(c_str("as.environment").as_ptr());
-                let res = rustr_eval(Rf_lang2(as_environment_sym,
-                                              Rf_mkString(c_str(name).as_ptr())),
-                                     R_GlobalEnv);
-                match res {
-                    Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
-                    Err(_) => {
-                        return rraise("fail to create enviroment");
-                    } 
-                }
-            }
-        }
-    }
     pub fn from_pos(pos: ::std::os::raw::c_int) -> RResult<EnvirM<T>> {
         unsafe {
             let as_environment_sym = Rf_install(c_str("as.environment").as_ptr());
@@ -109,19 +114,19 @@ impl<T: SEXPbucket> EnvirM<T> {
 
     pub fn empty() -> EnvirM<T> {
         unsafe {
-            return EnvirM { data: T::new(R_EmptyEnv) };
+            EnvirM { data: T::new(R_EmptyEnv) }
         }
     }
 
     pub fn base() -> EnvirM<T> {
         unsafe {
-            return EnvirM { data: T::new(R_BaseEnv) };
+            EnvirM { data: T::new(R_BaseEnv) }
         }
     }
 
     pub fn base_namespace() -> EnvirM<T> {
         unsafe {
-            return EnvirM { data: T::new(R_BaseNamespace) };
+            EnvirM { data: T::new(R_BaseNamespace) }
         }
     }
     pub fn namespace_env(package: &str) -> RResult<EnvirM<T>> {
@@ -132,7 +137,7 @@ impl<T: SEXPbucket> EnvirM<T> {
             match env {
                 Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
                 Err(e) => {
-                    return rraise(e);
+                    rraise(e)
                 } 
             }
         }
@@ -140,7 +145,7 @@ impl<T: SEXPbucket> EnvirM<T> {
     }
     pub fn parent(&self) -> EnvirM<T> {
         unsafe {
-            return EnvirM { data: T::new(ENCLOS(self.data.s())) };
+            EnvirM { data: T::new(ENCLOS(self.data.s())) }
         }
     }
 
@@ -161,7 +166,7 @@ impl<T: SEXPbucket> EnvirM<T> {
     pub fn ls<D: RNew>(&self, all: Rboolean) -> RResult<D> {
 
         unsafe {
-            if self.is_user_database() == true {
+            if self.is_user_database() {
                 let tb: *mut R_ObjectTable =
                     ::std::mem::transmute(R_ExternalPtrAddr(HASHTAB(self.data.s())));
                 match (*tb).objects {
@@ -187,7 +192,7 @@ impl<T: SEXPbucket> EnvirM<T> {
                 let res2 = Rf_eval(res, self.data.s());
                 return D::rnew(res2);
             }
-            return D::rnew(res);
+            D::rnew(res)
         }
     }
     pub fn find<D: RNew>(&self, name: &str) -> RResult<D> {
