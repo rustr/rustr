@@ -31,12 +31,11 @@ script:
       travis-cargo build &&
       travis-cargo test &&
       travis-cargo test -- --release &&
-      travis-cargo run -- --bin bench --release &&
       travis-cargo --only stable doc
 env:
   global:
     # override the default `--features unstable` used for the nightly branch (optional)
-    - TRAVIS_CARGO_NIGHTLY_FEATURE=nightly
+    - TRAVIS_CARGO_NIGHTLY_FEATURE="dev date"
 
 after_failure:
   - ./travis-tool.sh dump_logs
