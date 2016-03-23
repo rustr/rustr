@@ -20,20 +20,20 @@ impl<T: SEXPbucket> SymbolM<T> {
             let types = RTYPEOF(x.s());
             match types {
                 SYMSXP => {
-                    return Ok(SymbolM { data: T::new(x.s()) });
+                    Ok(SymbolM { data: T::new(x.s()) })
                 }
 
                 CHARSXP => {
-                    return Ok(SymbolM { data: (T::new(Rf_installChar(x.s()))) });
+                    Ok(SymbolM { data: (T::new(Rf_installChar(x.s()))) })
                 }
 
                 STRSXP => {
                     // todo: check that there is at least one element
-                    return Ok(SymbolM { data: T::new(Rf_installChar(STRING_ELT(x.s(), 0))) });
+                    Ok(SymbolM { data: T::new(Rf_installChar(STRING_ELT(x.s(), 0))) })
                 }
 
                 _ => {
-                    return rraise("cannot convert to symbol (SYMSXP)");
+                    rraise("cannot convert to symbol (SYMSXP)")
                 }
             }
         }

@@ -28,12 +28,12 @@ macro_rules! gen_fmt {
 
     impl fmt::Display for RError{
         fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-                match self.kind() {
-                    &UnknownError(ref info) => write!(fmt,"UnknownError: {}",info),
-                    &UnreachableError(ref info) => write!(fmt,"UnreachableError: {}",info),
-                    &ForceStopError(ref info) => write!(fmt,"ForceStopError: {}",info),
-                    &Other(ref c) =>  write!(fmt, "rustr error: {}",c.description()),
-                    $(&$x(ref c) => write!(fmt, "{}: {}", stringify!($x), c.description()))
+                match *self.kind() {
+                    UnknownError(ref info) => write!(fmt,"UnknownError: {}",info),
+                    UnreachableError(ref info) => write!(fmt,"UnreachableError: {}",info),
+                    ForceStopError(ref info) => write!(fmt,"ForceStopError: {}",info),
+                    Other(ref c) =>  write!(fmt, "rustr error: {}",c.description()),
+                    $($x(ref c) => write!(fmt, "{}: {}", stringify!($x), c.description()))
                         ,*
 
                 }
@@ -43,12 +43,12 @@ macro_rules! gen_fmt {
 
 	impl RError {
         pub fn kind_info(&self) -> &str {
-	        match self.kind() {
-	            &UnknownError(..) => "UnknownError",
-	            &UnreachableError(..) => "UnreachableError",
-	            &ForceStopError(..) => "ForceStopError",
-	            &Other(ref c) =>  c.description(),
-	            $(&$x(..) => stringify!($x))
+	        match *self.kind() {
+	            UnknownError(..) => "UnknownError",
+	            UnreachableError(..) => "UnreachableError",
+	            ForceStopError(..) => "ForceStopError",
+	            Other(ref c) =>  c.description(),
+	            $($x(..) => stringify!($x))
 	                ,*
 	        }
 	    }
@@ -57,12 +57,12 @@ macro_rules! gen_fmt {
     impl Error for RError {
 
         fn description(&self) -> &str {
-            match self.kind() {
-                &UnknownError(..) => "UnknownError",
-                &UnreachableError(..) => "UnreachableError",
-                &ForceStopError(..) => "ForceStopError",
-                &Other(ref c) => c.description(),
-                $(&$x(ref c) => c.description())
+            match *self.kind() {
+                UnknownError(..) => "UnknownError",
+                UnreachableError(..) => "UnreachableError",
+                ForceStopError(..) => "ForceStopError",
+                Other(ref c) => c.description(),
+                $($x(ref c) => c.description())
                     ,*
 
             }
@@ -198,7 +198,7 @@ pub fn get_current_call() -> SEXP {
         while CDR(res) != R_NilValue {
             res = CDR(res);
         }
-        return CAR(res);
+        CAR(res)
     }
 
 }
@@ -240,7 +240,7 @@ pub fn error_to_r_condition(x: RError) -> SEXP {
         Rf_setAttrib(cond.s(), R_NamesSymbol, names.s());
         Rf_setAttrib(cond.s(), R_ClassSymbol, class_sym.s());
 
-        return cond.s();
+        cond.s()
     }
 
 }
@@ -254,7 +254,7 @@ pub fn forward_exception_to_r(ex: RError) -> SEXP {
         let expr = Shield::new(Rf_lang2(stop_sym, condition.s()));
 
         Rf_eval(expr.s(), R_GlobalEnv);
-        return R_NilValue;
+        R_NilValue
     }
 }
 

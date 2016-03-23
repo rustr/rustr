@@ -92,7 +92,7 @@ pub fn derives_from(cl: SEXP, clazz: CString) -> bool {
             }
         }
     }
-    return false;
+    false
 }
 
 pub fn rprint<T: ToSEXP>(s: T) {

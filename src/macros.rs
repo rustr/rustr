@@ -31,9 +31,9 @@ pub fn check_interrupt() -> RResult<()> {
         if R_ToplevelExec(::std::option::Option::Some(::util::check_interrupt_fn),
                           ::std::ptr::null_mut()) == Rboolean::FALSE {
             // NULL=0
-            return rerror(REKind::Interrupted("user interrpted".into()));
+            rerror(REKind::Interrupted("user interrpted".into()))
         } else {
-            return Ok(());
+            Ok(())
         }
     }
 }

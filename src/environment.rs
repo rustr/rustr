@@ -55,12 +55,12 @@ impl<T: SEXPbucket> EnvirM<T> {
             if RTYPEOF(s.s()) == ENVSXP {
                 return Ok(EnvirM { data: T::new(s.s()) });
             }
-            return Ok(EnvirM {
+            Ok(EnvirM {
                 data: T::new(try!(rustr_eval(Rf_lang2(Rf_install(c_str("as.environment")
                                                                      .as_ptr()),
                                                       s.s()),
                                              R_GlobalEnv))),
-            });
+            })
         }
     }
     pub unsafe fn from_sexp_envir(x: SEXP) -> EnvirM<T> {
@@ -246,13 +246,13 @@ impl<T: SEXPbucket> EnvirM<T> {
             let name_sym = Rf_install(c_str(name).as_ptr());
 
             Rf_defineVar(name_sym, x.s(), self.data.s());
-            return Ok(());
+            Ok(())
         }
 
     }
     pub fn is_locked(&self) -> bool {
         unsafe {
-            return R_EnvironmentIsLocked(self.data.s()) == Rboolean::TRUE;
+            R_EnvironmentIsLocked(self.data.s()) == Rboolean::TRUE
         }
     }
 
@@ -261,7 +261,7 @@ impl<T: SEXPbucket> EnvirM<T> {
             return rraise(format!("no such binding: {:?}", name));
         }
         unsafe {
-            return Ok(R_BindingIsActive(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE);
+            Ok(R_BindingIsActive(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE)
 
         }
     }
@@ -277,7 +277,7 @@ impl<T: SEXPbucket> EnvirM<T> {
         }
         unsafe {
             R_LockBinding(Symbol::from(name).s(), self.data.s());
-            return Ok(());
+            Ok(())
         }
 
     }
@@ -288,7 +288,7 @@ impl<T: SEXPbucket> EnvirM<T> {
         }
         unsafe {
             R_unLockBinding(Symbol::from(name).s(), self.data.s());
-            return Ok(());
+            Ok(())
         }
     }
     /**
@@ -322,7 +322,7 @@ impl<T: SEXPbucket> EnvirM<T> {
         } else {
             return rraise(format!("no such binding: {:?}", name));
         }
-        return Ok(true);
+        Ok(true)
 
     }
 }

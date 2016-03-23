@@ -86,7 +86,7 @@ pub fn pairlist1(hd: &Args, xs: &[&Args]) -> RResult<SEXP> {
             }
         }
     }
-    return Ok(unsafe { res.s() });
+    Ok(unsafe { res.s() })
 
 }
 

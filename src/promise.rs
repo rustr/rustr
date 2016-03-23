@@ -29,7 +29,7 @@ impl<T: SEXPbucket> PromiseM<T> {
                 re = PRCODE(re);
             }
 
-            return Ok(PromiseM { data: T::new(re) });
+            Ok(PromiseM { data: T::new(re) })
         }
     }
     pub fn seen(&self) -> ::std::os::raw::c_int {

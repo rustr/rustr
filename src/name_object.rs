@@ -51,7 +51,7 @@ impl<'a, T: 'a + ToSEXP> NameObj<'a, T> {
 
     pub fn from_named_obj(x: &'a NameObj<T>) -> NameObj<'a, T> {
         NameObj {
-            name: x.name.clone(),
+            name: x.name,
             obj: x.obj,
         }
     }

@@ -47,7 +47,7 @@ impl Drop for Shield {
 
 impl ToSEXP for Shield {
     unsafe fn s(&self) -> SEXP {
-        (self.t).clone()
+        (self.t)
     }
 }
 
@@ -65,6 +65,6 @@ impl Moves for Shield {
 
 impl Others for Shield {
     fn others(x: &Shield) -> Shield {
-        unsafe { Shield { t: rustr_protect(x.t.clone()) } }
+        unsafe { Shield { t: rustr_protect(x.t) } }
     }
 }

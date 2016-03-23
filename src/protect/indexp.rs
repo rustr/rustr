@@ -73,6 +73,6 @@ impl Moves for Armor {
 
 impl ToSEXP for Armor {
     unsafe fn s(&self) -> SEXP {
-        self.data.clone()
+        self.data
     }
 }

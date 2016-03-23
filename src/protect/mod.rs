@@ -27,17 +27,17 @@ pub unsafe fn rustr_replace_object(x: SEXP, y: SEXP) -> SEXP {
         rustr_preserve_object(y);
     } else if Rf_isNull(y) == Rboolean::TRUE {
         rustr_release_object(x);
-    } else {
+    } else if x != y {
         // if we are setting to the same SEXP as we already have, do nothing
-        if x != y {
 
-            // the previous SEXP was not NULL, so release it
-            rustr_release_object(x);
 
-            // the new SEXP is not NULL, so preserve it
-            rustr_preserve_object(y);
+        // the previous SEXP was not NULL, so release it
+        rustr_release_object(x);
 
-        }
+        // the new SEXP is not NULL, so preserve it
+        rustr_preserve_object(y);
+
+
     }
     y
 }

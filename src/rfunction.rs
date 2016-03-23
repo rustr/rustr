@@ -26,9 +26,9 @@ impl<T: SEXPbucket> NewRObj for RFunM<T> {
     fn new<E: ToSEXP>(x: E) -> RResult<Self> {
         match unsafe { RTYPEOF(x.s()) } {
             CLOSXP | SPECIALSXP | BUILTINSXP => unsafe {
-                return Ok(RFunM { data: T::new(x.s()) });
+                 Ok(RFunM { data: T::new(x.s()) })
             },
-            _ => return rraise("cannot convert to function"),
+            _ => rraise("cannot convert to function")
         }
     }
 }

@@ -146,7 +146,7 @@ impl SEXPbucket for NoProtect {
             Err(y) => return rerror(Other(y.into())), // nul string error
         };
 
-        unsafe { Ok(Rf_inherits((self.data).clone(), class.as_ptr()) == Rboolean::TRUE) }
+        unsafe { Ok(Rf_inherits((self.data), class.as_ptr()) == Rboolean::TRUE) }
     }
 
 
