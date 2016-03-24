@@ -9,6 +9,7 @@ description = "Rust and R integration"
 documentation = "http://docs.rustr.org/"
 homepage = "http://rustr.org/"
 repository = "https://github.com/rustr/rustr"
+build = "build.rs"
 
 [lib]
 name = "rustr"
