@@ -1,5 +1,6 @@
 #![cfg_attr(feature = "dev", feature(plugin))]
 #![cfg_attr(feature = "dev", plugin(clippy))]
+#![cfg_attr(feature = "engine", feature(const_fn))]
 
 /// rustr version
 /// 
