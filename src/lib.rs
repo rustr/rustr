@@ -1,6 +1,5 @@
 #![cfg_attr(feature = "dev", feature(plugin))]
 #![cfg_attr(feature = "dev", plugin(clippy))]
-#![cfg_attr(feature = "engine", feature(const_fn))]
 
 /// rustr version
 /// 
@@ -21,7 +20,8 @@ macro_rules! rustr_version{
 #[macro_use]
 pub mod macros;
 
-#[allow(non_camel_case_types,non_upper_case_globals,non_snake_case,type_complexity,expl_impl_clone_on_copy,used_underscore_binding)]
+#[allow(non_camel_case_types,non_upper_case_globals,non_snake_case)]
+#[cfg_attr(feature = "dev",allow(type_complexity,expl_impl_clone_on_copy,used_underscore_binding))]
 pub mod rdll;
 pub mod protect;
 pub mod storage;

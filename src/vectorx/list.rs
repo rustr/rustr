@@ -67,7 +67,7 @@ impl<T: SEXPbucket> RListM<T> {
     }
 }
 
-#[allow(explicit_counter_loop)]
+#[cfg_attr(feature = "dev",allow(explicit_counter_loop))]
 impl<T: SEXPbucket, E: UIntoR + Clone> From<Vec<E>> for RListM<T> {
     fn from(x: Vec<E>) -> RListM<T> {
         let size_x = x.len();

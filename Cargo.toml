@@ -1,6 +1,6 @@
 [package]
 name = "rustr"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["qinwf <mail@qinwenfeng.com>"]
 exclude = ["TODO.md","target"]
 keywords = ["ffi", "r", "statistic","binding", "math"]
@@ -21,6 +21,6 @@ date = ["chrono"]
 engine = []
 
 [dependencies]
-clippy = {version = "0.0.55", optional = true}
+clippy = {version = "0.0.56", optional = true}
 chrono = {version = "0.2", optional = true}
 
