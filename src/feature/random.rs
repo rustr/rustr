@@ -8,6 +8,12 @@ pub struct RRand {
     data: PhantomData<()>,
 }
 
+impl Default for RRand {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl RRand {
     pub fn new() -> RRand {
         unsafe {

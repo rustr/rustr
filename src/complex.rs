@@ -73,7 +73,7 @@ impl Div for Rcomplex {
         } else {
             rhs.r
         };
-        let abi = if rhs.i < 0.0 {
+        let abis = if rhs.i < 0.0 {
             -rhs.i
         } else {
             rhs.i
@@ -81,7 +81,7 @@ impl Div for Rcomplex {
         let ratio: ::std::os::raw::c_double;
         let den: ::std::os::raw::c_double;
 
-        if abr <= abi {
+        if abr <= abis {
             ratio = rhs.r / rhs.i;
             den = rhs.i * (1.0 + ratio * ratio);
             Rcomplex {
