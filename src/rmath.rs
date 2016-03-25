@@ -57,8 +57,10 @@ pub fn punif(x: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qunif(p: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qunif(p, a, b, lt, lg) }
 }
-pub fn runif(a: cd, b: cd) -> cd {
-    unsafe { Rf_runif(a, b) }
+pub unsafe fn runif(a: cd, b: cd) -> cd {
+    {
+        Rf_runif(a, b)
+    }
 }
 
 // Gamma Distribution
@@ -71,8 +73,10 @@ pub fn pgamma(x: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qgamma(p: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qgamma(p, al, scl, lt, lg) }
 }
-pub fn rgamma(a: cd, scl: cd) -> cd {
-    unsafe { Rf_rgamma(a, scl) }
+pub unsafe fn rgamma(a: cd, scl: cd) -> cd {
+    {
+        Rf_rgamma(a, scl)
+    }
 }
 
 pub fn log1pmx(x: cd) -> cd {
@@ -103,8 +107,10 @@ pub fn pbeta(x: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qbeta(a: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qbeta(a, p, q, lt, lg) }
 }
-pub fn rbeta(a: cd, b: cd) -> cd {
-    unsafe { Rf_rbeta(a, b) }
+pub unsafe fn rbeta(a: cd, b: cd) -> cd {
+    {
+        Rf_rbeta(a, b)
+    }
 }
 
 // Lognormal Distribution
@@ -117,8 +123,10 @@ pub fn plnorm(x: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qlnorm(p: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qlnorm(p, ml, sl, lt, lg) }
 }
-pub fn rlnorm(ml: cd, sl: cd) -> cd {
-    unsafe { Rf_rlnorm(ml, sl) }
+pub unsafe fn rlnorm(ml: cd, sl: cd) -> cd {
+    {
+        Rf_rlnorm(ml, sl)
+    }
 }
 
 // Chi-squared Distribution
@@ -131,8 +139,10 @@ pub fn pchisq(x: cd, df: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qchisq(p: cd, df: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qchisq(p, df, lt, lg) }
 }
-pub fn rchisq(df: cd) -> cd {
-    unsafe { Rf_rchisq(df) }
+pub unsafe fn rchisq(df: cd) -> cd {
+    {
+        Rf_rchisq(df)
+    }
 }
 
 // Non-central Chi-squared Distribution
@@ -145,8 +155,10 @@ pub fn pnchisq(x: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
 pub fn qnchisq(p: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qnchisq(p, df, n, lt, lg) }
 }
-pub fn rnchisq(df: cd, lb: cd) -> cd {
-    unsafe { Rf_rnchisq(df, lb) }
+pub unsafe fn rnchisq(df: cd, lb: cd) -> cd {
+    {
+        Rf_rnchisq(df, lb)
+    }
 }
 
 // F Distibution
@@ -296,7 +308,11 @@ pub fn qnbinom_mu(x: cd, sz: cd, mu: cd, lt: c_int, lg: c_int) -> cd {
     unsafe { Rf_qnbinom_mu(x, sz, mu, lt, lg) }
 }
 
-// inline r :cdnbinom_mu(sz :cd, mu: cd)				{ unsafe{  Rf_rnbinom_mu(sz, mu) } }
+pub unsafe fn rnbinom_mu(sz: cd, mu: cd) -> cd {
+    {
+        Rf_rnbinom_mu(sz, mu)
+    }
+}
 
 
 // Poisson Distribution

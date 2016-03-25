@@ -78,7 +78,7 @@ pub mod rstatic;
 extern crate chrono;
 
 #[cfg(feature = "random")]
-extern crate random;
+extern crate rand;
 
 pub mod feature {
 
