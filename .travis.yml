@@ -35,7 +35,7 @@ script:
 env:
   global:
     # override the default `--features unstable` used for the nightly branch (optional)
-    - TRAVIS_CARGO_NIGHTLY_FEATURE="date engine"
+    - TRAVIS_CARGO_NIGHTLY_FEATURE="date engine random"
 
 after_failure:
   - ./travis-tool.sh dump_logs
