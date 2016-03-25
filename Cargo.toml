@@ -19,8 +19,9 @@ default = []
 dev = ["clippy"]
 date = ["chrono"]
 engine = []
+random = ["rand"]
 
 [dependencies]
 clippy = {version = "0.0.56", optional = true}
 chrono = {version = "0.2", optional = true}
-
+rand = {version = "0.3.14", optional = true}

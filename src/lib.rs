@@ -77,6 +77,9 @@ pub mod rstatic;
 #[cfg(feature = "date")]
 extern crate chrono;
 
+#[cfg(feature = "random")]
+extern crate random;
+
 pub mod feature {
 
     //! Features
@@ -91,6 +94,8 @@ pub mod feature {
     pub mod datetime;
 	#[cfg(feature = "engine")]
     pub mod engine;
+	#[cfg(feature = "random")]
+    pub mod random;
 }
 
 

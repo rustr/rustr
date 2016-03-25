@@ -13,704 +13,492 @@ use rdll::*;
 // Random Number Generators
 pub unsafe fn norm_rand() -> cd {
 
-     ::rdll::norm_rand()
+    ::rdll::norm_rand()
 
 }
 pub unsafe fn unif_rand() -> cd {
 
-     ::rdll::unif_rand()
+    ::rdll::unif_rand()
 
 }
 pub unsafe fn exp_rand() -> cd {
 
-     ::rdll::exp_rand()
+    ::rdll::exp_rand()
 
 }
 
 // Normal Distribution
-pub unsafe fn dnorm(x: cd, mu: cd, sigma: cd, lg: c_int) -> cd {
-
-     Rf_dnorm4(x, mu, sigma, lg)
-
+pub fn dnorm(x: cd, mu: cd, sigma: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnorm4(x, mu, sigma, lg) }
 }
-pub unsafe fn pnorm(x: cd, mu: cd, sigma: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnorm5(x, mu, sigma, lt, lg)
-
+pub fn pnorm(x: cd, mu: cd, sigma: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnorm5(x, mu, sigma, lt, lg) }
 }
-pub unsafe fn qnorm(p: cd, mu: cd, sigma: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnorm5(p, mu, sigma, lt, lg)
-
+pub fn qnorm(p: cd, mu: cd, sigma: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnorm5(p, mu, sigma, lt, lg) }
 }
 pub unsafe fn rnorm(mu: cd, sigma: cd) -> cd {
 
-     Rf_rnorm(mu, sigma)
+    Rf_rnorm(mu, sigma)
 
 }
 
-pub unsafe fn pnorm_both(x: cd, cum: *mut cd, ccum: *mut cd, lt: c_int, lg: c_int) {
-
-     Rf_pnorm_both(x, cum, ccum, lt, lg)
-
+pub fn pnorm_both(x: cd, cum: *mut cd, ccum: *mut cd, lt: c_int, lg: c_int) {
+    unsafe { Rf_pnorm_both(x, cum, ccum, lt, lg) }
 }
 
 // Uniform Distribution
-pub unsafe fn dunif(x: cd, a: cd, b: cd, lg: c_int) -> cd {
-
-     Rf_dunif(x, a, b, lg)
-
+pub fn dunif(x: cd, a: cd, b: cd, lg: c_int) -> cd {
+    unsafe { Rf_dunif(x, a, b, lg) }
 }
-pub unsafe fn punif(x: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_punif(x, a, b, lt, lg)
-
+pub fn punif(x: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_punif(x, a, b, lt, lg) }
 }
-pub unsafe fn qunif(p: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qunif(p, a, b, lt, lg)
-
+pub fn qunif(p: cd, a: cd, b: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qunif(p, a, b, lt, lg) }
 }
-pub unsafe fn runif(a: cd, b: cd) -> cd {
-
-     Rf_runif(a, b)
-
+pub fn runif(a: cd, b: cd) -> cd {
+    unsafe { Rf_runif(a, b) }
 }
 
 // Gamma Distribution
-pub unsafe fn dgamma(x: cd, shp: cd, scl: cd, lg: c_int) -> cd {
-
-     Rf_dgamma(x, shp, scl, lg)
-
+pub fn dgamma(x: cd, shp: cd, scl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dgamma(x, shp, scl, lg) }
 }
-pub unsafe fn pgamma(x: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pgamma(x, al, scl, lt, lg)
-
+pub fn pgamma(x: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pgamma(x, al, scl, lt, lg) }
 }
-pub unsafe fn qgamma(p: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qgamma(p, al, scl, lt, lg)
-
+pub fn qgamma(p: cd, al: cd, scl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qgamma(p, al, scl, lt, lg) }
 }
-pub unsafe fn rgamma(a: cd, scl: cd) -> cd {
-
-     Rf_rgamma(a, scl)
-
+pub fn rgamma(a: cd, scl: cd) -> cd {
+    unsafe { Rf_rgamma(a, scl) }
 }
 
-pub unsafe fn log1pmx(x: cd) -> cd {
-
-     Rf_log1pmx(x)
-
+pub fn log1pmx(x: cd) -> cd {
+    unsafe { Rf_log1pmx(x) }
 }
 // pub unsafe fn rf_log1pexp(x: cd) -> cd {
 //
 //     log1pexp(x)
 //
 // }  // <-- ../nmath/plogis.c
-pub unsafe fn lgamma1p(a: cd) -> cd {
-
-     Rf_lgamma1p(a)
-
+pub fn lgamma1p(a: cd) -> cd {
+    unsafe { Rf_lgamma1p(a) }
 }
-pub unsafe fn logspace_add(lx: cd, ly: cd) -> cd {
-
-     Rf_logspace_add(lx, ly)
-
+pub fn logspace_add(lx: cd, ly: cd) -> cd {
+    unsafe { Rf_logspace_add(lx, ly) }
 }
-pub unsafe fn logspace_sub(lx: cd, ly: cd) -> cd {
-
-     Rf_logspace_sub(lx, ly)
-
+pub fn logspace_sub(lx: cd, ly: cd) -> cd {
+    unsafe { Rf_logspace_sub(lx, ly) }
 }
 
 // Beta Distribution
-pub unsafe fn dbeta(x: cd, a: cd, b: cd, lg: c_int) -> cd {
-
-     Rf_dbeta(x, a, b, lg)
-
+pub fn dbeta(x: cd, a: cd, b: cd, lg: c_int) -> cd {
+    unsafe { Rf_dbeta(x, a, b, lg) }
 }
-pub unsafe fn pbeta(x: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pbeta(x, p, q, lt, lg)
-
+pub fn pbeta(x: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pbeta(x, p, q, lt, lg) }
 }
-pub unsafe fn qbeta(a: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qbeta(a, p, q, lt, lg)
-
+pub fn qbeta(a: cd, p: cd, q: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qbeta(a, p, q, lt, lg) }
 }
-pub unsafe fn rbeta(a: cd, b: cd) -> cd {
-
-     Rf_rbeta(a, b)
-
+pub fn rbeta(a: cd, b: cd) -> cd {
+    unsafe { Rf_rbeta(a, b) }
 }
 
 // Lognormal Distribution
-pub unsafe fn dlnorm(x: cd, ml: cd, sl: cd, lg: c_int) -> cd {
-
-     Rf_dlnorm(x, ml, sl, lg)
-
+pub fn dlnorm(x: cd, ml: cd, sl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dlnorm(x, ml, sl, lg) }
 }
-pub unsafe fn plnorm(x: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_plnorm(x, ml, sl, lt, lg)
-
+pub fn plnorm(x: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_plnorm(x, ml, sl, lt, lg) }
 }
-pub unsafe fn qlnorm(p: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qlnorm(p, ml, sl, lt, lg)
-
+pub fn qlnorm(p: cd, ml: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qlnorm(p, ml, sl, lt, lg) }
 }
-pub unsafe fn rlnorm(ml: cd, sl: cd) -> cd {
-
-     Rf_rlnorm(ml, sl)
-
+pub fn rlnorm(ml: cd, sl: cd) -> cd {
+    unsafe { Rf_rlnorm(ml, sl) }
 }
 
 // Chi-squared Distribution
-pub unsafe fn dchisq(x: cd, df: cd, lg: c_int) -> cd {
-
-     Rf_dchisq(x, df, lg)
-
+pub fn dchisq(x: cd, df: cd, lg: c_int) -> cd {
+    unsafe { Rf_dchisq(x, df, lg) }
 }
-pub unsafe fn pchisq(x: cd, df: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pchisq(x, df, lt, lg)
-
+pub fn pchisq(x: cd, df: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pchisq(x, df, lt, lg) }
 }
-pub unsafe fn qchisq(p: cd, df: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qchisq(p, df, lt, lg)
-
+pub fn qchisq(p: cd, df: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qchisq(p, df, lt, lg) }
 }
-pub unsafe fn rchisq(df: cd) -> cd {
-
-     Rf_rchisq(df)
-
+pub fn rchisq(df: cd) -> cd {
+    unsafe { Rf_rchisq(df) }
 }
 
 // Non-central Chi-squared Distribution
-pub unsafe fn dnchisq(x: cd, df: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dnchisq(x, df, n, lg)
-
+pub fn dnchisq(x: cd, df: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnchisq(x, df, n, lg) }
 }
-pub unsafe fn pnchisq(x: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnchisq(x, df, n, lt, lg)
-
+pub fn pnchisq(x: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnchisq(x, df, n, lt, lg) }
 }
-pub unsafe fn qnchisq(p: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnchisq(p, df, n, lt, lg)
-
+pub fn qnchisq(p: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnchisq(p, df, n, lt, lg) }
 }
-pub unsafe fn rnchisq(df: cd, lb: cd) -> cd {
-
-     Rf_rnchisq(df, lb)
-
+pub fn rnchisq(df: cd, lb: cd) -> cd {
+    unsafe { Rf_rnchisq(df, lb) }
 }
 
 // F Distibution
-pub unsafe fn df(x: cd, df1: cd, df2: cd, lg: c_int) -> cd {
-
-     Rf_df(x, df1, df2, lg)
-
+pub fn df(x: cd, df1: cd, df2: cd, lg: c_int) -> cd {
+    unsafe { Rf_df(x, df1, df2, lg) }
 }
-pub unsafe fn pf(x: cd, df1: cd, df2: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pf(x, df1, df2, lt, lg)
-
+pub fn pf(x: cd, df1: cd, df2: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pf(x, df1, df2, lt, lg) }
 }
-pub unsafe fn qf(p: cd, df1: cd, df2: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qf(p, df1, df2, lt, lg)
-
+pub fn qf(p: cd, df1: cd, df2: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qf(p, df1, df2, lt, lg) }
 }
 pub unsafe fn rf(df1: cd, df2: cd) -> cd {
 
-     Rf_rf(df1, df2)
+    Rf_rf(df1, df2)
 
 }
 
 // Student t Distibution
-pub unsafe fn dt(x: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dt(x, n, lg)
-
+pub fn dt(x: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dt(x, n, lg) }
 }
-pub unsafe fn pt(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pt(x, n, lt, lg)
-
+pub fn pt(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pt(x, n, lt, lg) }
 }
-pub unsafe fn qt(p: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qt(p, n, lt, lg)
-
+pub fn qt(p: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qt(p, n, lt, lg) }
 }
 pub unsafe fn rt(n: cd) -> cd {
 
-     Rf_rt(n)
+    Rf_rt(n)
 
 }
 
 // Binomial Distribution
-pub unsafe fn dbinom(x: cd, n: cd, p: cd, lg: c_int) -> cd {
-
-     Rf_dbinom(x, n, p, lg)
-
+pub fn dbinom(x: cd, n: cd, p: cd, lg: c_int) -> cd {
+    unsafe { Rf_dbinom(x, n, p, lg) }
 }
-pub unsafe fn pbinom(x: cd, n: cd, p: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pbinom(x, n, p, lt, lg)
-
+pub fn pbinom(x: cd, n: cd, p: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pbinom(x, n, p, lt, lg) }
 }
-pub unsafe fn qbinom(p: cd, n: cd, m: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qbinom(p, n, m, lt, lg)
-
+pub fn qbinom(p: cd, n: cd, m: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qbinom(p, n, m, lt, lg) }
 }
 pub unsafe fn rbinom(n: cd, p: cd) -> cd {
 
-     Rf_rbinom(n, p)
+    Rf_rbinom(n, p)
 
 }
 
 // Multnomial Distribution
 pub unsafe fn rmultinom(n: c_int, prob: *mut cd, k: c_int, rn: *mut c_int) {
 
-     Rf_rmultinom(n, prob, k, rn)
+    Rf_rmultinom(n, prob, k, rn)
 
 }
 
 // Cauchy Distribution
-pub unsafe fn dcauchy(x: cd, lc: cd, sl: cd, lg: c_int) -> cd {
-
-     Rf_dcauchy(x, lc, sl, lg)
-
+pub fn dcauchy(x: cd, lc: cd, sl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dcauchy(x, lc, sl, lg) }
 }
-pub unsafe fn pcauchy(x: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pcauchy(x, lc, sl, lt, lg)
-
+pub fn pcauchy(x: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pcauchy(x, lc, sl, lt, lg) }
 }
-pub unsafe fn qcauchy(p: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qcauchy(p, lc, sl, lt, lg)
-
+pub fn qcauchy(p: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qcauchy(p, lc, sl, lt, lg) }
 }
 pub unsafe fn rcauchy(lc: cd, sl: cd) -> cd {
 
-     Rf_rcauchy(lc, sl)
+    Rf_rcauchy(lc, sl)
 
 }
 
 // Exponential Distribution
-pub unsafe fn dexp(x: cd, sl: cd, lg: c_int) -> cd {
-
-     Rf_dexp(x, sl, lg)
-
+pub fn dexp(x: cd, sl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dexp(x, sl, lg) }
 }
-pub unsafe fn pexp(x: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pexp(x, sl, lt, lg)
-
+pub fn pexp(x: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pexp(x, sl, lt, lg) }
 }
-pub unsafe fn qexp(p: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qexp(p, sl, lt, lg)
-
+pub fn qexp(p: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qexp(p, sl, lt, lg) }
 }
 pub unsafe fn rexp(sl: cd) -> cd {
 
-     Rf_rexp(sl)
+    Rf_rexp(sl)
 
 }
 
 // Geometric Distribution
-pub unsafe fn dgeom(x: cd, p: cd, lg: c_int) -> cd {
-
-     Rf_dgeom(x, p, lg)
-
+pub fn dgeom(x: cd, p: cd, lg: c_int) -> cd {
+    unsafe { Rf_dgeom(x, p, lg) }
 }
-pub unsafe fn pgeom(x: cd, p: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pgeom(x, p, lt, lg)
-
+pub fn pgeom(x: cd, p: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pgeom(x, p, lt, lg) }
 }
-pub unsafe fn qgeom(p: cd, pb: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qgeom(p, pb, lt, lg)
-
+pub fn qgeom(p: cd, pb: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qgeom(p, pb, lt, lg) }
 }
 pub unsafe fn rgeom(p: cd) -> cd {
 
-     Rf_rgeom(p)
+    Rf_rgeom(p)
 
 }
 
 // Hypergeometric Distibution
-pub unsafe fn dhyper(x: cd, r: cd, b: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dhyper(x, r, b, n, lg)
-
+pub fn dhyper(x: cd, r: cd, b: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dhyper(x, r, b, n, lg) }
 }
-pub unsafe fn phyper(x: cd, r: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_phyper(x, r, b, n, lt, lg)
-
+pub fn phyper(x: cd, r: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_phyper(x, r, b, n, lt, lg) }
 }
-pub unsafe fn qhyper(p: cd, r: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qhyper(p, r, b, n, lt, lg)
-
+pub fn qhyper(p: cd, r: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qhyper(p, r, b, n, lt, lg) }
 }
 pub unsafe fn rhyper(r: cd, b: cd, n: cd) -> cd {
 
-     Rf_rhyper(r, b, n)
+    Rf_rhyper(r, b, n)
 
 }
 
 // Negative Binomial Distribution
-pub unsafe fn dnbinom(x: cd, sz: cd, p: cd, lg: c_int) -> cd {
-
-     Rf_dnbinom(x, sz, p, lg)
-
+pub fn dnbinom(x: cd, sz: cd, p: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnbinom(x, sz, p, lg) }
 }
-pub unsafe fn pnbinom(x: cd, sz: cd, p: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnbinom(x, sz, p, lt, lg)
-
+pub fn pnbinom(x: cd, sz: cd, p: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnbinom(x, sz, p, lt, lg) }
 }
-pub unsafe fn qnbinom(p: cd, sz: cd, pb: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnbinom(p, sz, pb, lt, lg)
-
+pub fn qnbinom(p: cd, sz: cd, pb: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnbinom(p, sz, pb, lt, lg) }
 }
 pub unsafe fn rnbinom(sz: cd, p: cd) -> cd {
 
-     Rf_rnbinom(sz, p)
+    Rf_rnbinom(sz, p)
 
 }
 
 
 
-pub unsafe fn dnbinom_mu(x: cd, sz: cd, mu: cd, lg: c_int) -> cd {
-
-     Rf_dnbinom_mu(x, sz, mu, lg)
-
+pub fn dnbinom_mu(x: cd, sz: cd, mu: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnbinom_mu(x, sz, mu, lg) }
 }
-pub unsafe fn pnbinom_mu(x: cd, sz: cd, mu: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnbinom_mu(x, sz, mu, lt, lg)
-
+pub fn pnbinom_mu(x: cd, sz: cd, mu: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnbinom_mu(x, sz, mu, lt, lg) }
 }
-pub unsafe fn qnbinom_mu(x: cd, sz: cd, mu: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnbinom_mu(x, sz, mu, lt, lg)
-
+pub fn qnbinom_mu(x: cd, sz: cd, mu: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnbinom_mu(x, sz, mu, lt, lg) }
 }
 
 // inline r :cdnbinom_mu(sz :cd, mu: cd)				{ unsafe{  Rf_rnbinom_mu(sz, mu) } }
 
 
 // Poisson Distribution
-pub unsafe fn dpois(x: cd, lb: cd, lg: c_int) -> cd {
-
-     Rf_dpois(x, lb, lg)
-
+pub fn dpois(x: cd, lb: cd, lg: c_int) -> cd {
+    unsafe { Rf_dpois(x, lb, lg) }
 }
-pub unsafe fn ppois(x: cd, lb: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_ppois(x, lb, lt, lg)
-
+pub fn ppois(x: cd, lb: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_ppois(x, lb, lt, lg) }
 }
-pub unsafe fn qpois(p: cd, lb: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qpois(p, lb, lt, lg)
-
+pub fn qpois(p: cd, lb: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qpois(p, lb, lt, lg) }
 }
 pub unsafe fn rpois(mu: cd) -> cd {
 
-     Rf_rpois(mu)
+    Rf_rpois(mu)
 
 }
 
 // Weibull Distribution
-pub unsafe fn dweibull(x: cd, sh: cd, sl: cd, lg: c_int) -> cd {
-
-     Rf_dweibull(x, sh, sl, lg)
-
+pub fn dweibull(x: cd, sh: cd, sl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dweibull(x, sh, sl, lg) }
 }
-pub unsafe fn pweibull(x: cd, sh: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pweibull(x, sh, sl, lt, lg)
-
+pub fn pweibull(x: cd, sh: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pweibull(x, sh, sl, lt, lg) }
 }
-pub unsafe fn qweibull(p: cd, sh: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qweibull(p, sh, sl, lt, lg)
-
+pub fn qweibull(p: cd, sh: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qweibull(p, sh, sl, lt, lg) }
 }
 pub unsafe fn rweibull(sh: cd, sl: cd) -> cd {
 
-     Rf_rweibull(sh, sl)
+    Rf_rweibull(sh, sl)
 
 }
 
 // Logistic Distribution
-pub unsafe fn dlogis(x: cd, lc: cd, sl: cd, lg: c_int) -> cd {
-
-     Rf_dlogis(x, lc, sl, lg)
-
+pub fn dlogis(x: cd, lc: cd, sl: cd, lg: c_int) -> cd {
+    unsafe { Rf_dlogis(x, lc, sl, lg) }
 }
-pub unsafe fn plogis(x: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_plogis(x, lc, sl, lt, lg)
-
+pub fn plogis(x: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_plogis(x, lc, sl, lt, lg) }
 }
-pub unsafe fn qlogis(p: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qlogis(p, lc, sl, lt, lg)
-
+pub fn qlogis(p: cd, lc: cd, sl: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qlogis(p, lc, sl, lt, lg) }
 }
 pub unsafe fn rlogis(lc: cd, sl: cd) -> cd {
 
-     Rf_rlogis(lc, sl)
+    Rf_rlogis(lc, sl)
 
 }
 
 // Non-central Beta Distribution
-pub unsafe fn dnbeta(x: cd, a: cd, b: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dnbeta(x, a, b, n, lg)
-
+pub fn dnbeta(x: cd, a: cd, b: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnbeta(x, a, b, n, lg) }
 }
-pub unsafe fn pnbeta(x: cd, a: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnbeta(x, a, b, n, lt, lg)
-
+pub fn pnbeta(x: cd, a: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnbeta(x, a, b, n, lt, lg) }
 }
-pub unsafe fn qnbeta(p: cd, a: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnbeta(p, a, b, n, lt, lg)
-
+pub fn qnbeta(p: cd, a: cd, b: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnbeta(p, a, b, n, lt, lg) }
 }
-// pub unsafe fn rnbeta(a: cd, b: cd, np: cd) -> cd {
+// pub  fn rnbeta(a: cd, b: cd, np: cd) -> cd {
 //
 //     Rf_rnbeta(a, b, np)
 //
 // }
 
 // Non-central F Distribution
-pub unsafe fn dnf(x: cd, df1: cd, df2: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dnf(x, df1, df2, n, lg)
-
+pub fn dnf(x: cd, df1: cd, df2: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnf(x, df1, df2, n, lg) }
 }
-pub unsafe fn pnf(x: cd, df1: cd, df2: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnf(x, df1, df2, n, lt, lg)
-
+pub fn pnf(x: cd, df1: cd, df2: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnf(x, df1, df2, n, lt, lg) }
 }
-pub unsafe fn qnf(p: cd, df1: cd, df2: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnf(p, df1, df2, n, lt, lg)
-
+pub fn qnf(p: cd, df1: cd, df2: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnf(p, df1, df2, n, lt, lg) }
 }
 
 // Non-central Student t Distribution
-pub unsafe fn dnt(x: cd, df: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dnt(x, df, n, lg)
-
+pub fn dnt(x: cd, df: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dnt(x, df, n, lg) }
 }
-pub unsafe fn pnt(x: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pnt(x, df, n, lt, lg)
-
+pub fn pnt(x: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pnt(x, df, n, lt, lg) }
 }
-pub unsafe fn qnt(p: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qnt(p, df, n, lt, lg)
-
+pub fn qnt(p: cd, df: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qnt(p, df, n, lt, lg) }
 }
 
 // Studentized Range Distribution
-pub unsafe fn ptukey(q: cd, rr: cd, cc: cd, df: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_ptukey(q, rr, cc, df, lt, lg)
-
+pub fn ptukey(q: cd, rr: cd, cc: cd, df: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_ptukey(q, rr, cc, df, lt, lg) }
 }
-pub unsafe fn qtukey(p: cd, rr: cd, cc: cd, df: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qtukey(p, rr, cc, df, lt, lg)
-
+pub fn qtukey(p: cd, rr: cd, cc: cd, df: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qtukey(p, rr, cc, df, lt, lg) }
 }
 
 // Wilcoxon Rank Sum Distribution
-pub unsafe fn dwilcox(x: cd, m: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dwilcox(x, m, n, lg)
-
+pub fn dwilcox(x: cd, m: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dwilcox(x, m, n, lg) }
 }
-pub unsafe fn pwilcox(q: cd, m: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_pwilcox(q, m, n, lt, lg)
-
+pub fn pwilcox(q: cd, m: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_pwilcox(q, m, n, lt, lg) }
 }
-pub unsafe fn qwilcox(x: cd, m: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qwilcox(x, m, n, lt, lg)
-
+pub fn qwilcox(x: cd, m: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qwilcox(x, m, n, lt, lg) }
 }
 pub unsafe fn rwilcox(m: cd, n: cd) -> cd {
 
-     Rf_rwilcox(m, n)
+    Rf_rwilcox(m, n)
 
 }
 
 // Wilcoxon Signed Rank Distribution
-pub unsafe fn dsignrank(x: cd, n: cd, lg: c_int) -> cd {
-
-     Rf_dsignrank(x, n, lg)
-
+pub fn dsignrank(x: cd, n: cd, lg: c_int) -> cd {
+    unsafe { Rf_dsignrank(x, n, lg) }
 }
-pub unsafe fn psignrank(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_psignrank(x, n, lt, lg)
-
+pub fn psignrank(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_psignrank(x, n, lt, lg) }
 }
-pub unsafe fn qsignrank(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
-
-     Rf_qsignrank(x, n, lt, lg)
-
+pub fn qsignrank(x: cd, n: cd, lt: c_int, lg: c_int) -> cd {
+    unsafe { Rf_qsignrank(x, n, lt, lg) }
 }
 pub unsafe fn rsignrank(n: cd) -> cd {
 
-     Rf_rsignrank(n)
+    Rf_rsignrank(n)
 
 }
 
 // Gamma and Related Functions
-pub unsafe fn gammafn(x: cd) -> cd {
-
-     Rf_gammafn(x)
-
+pub fn gammafn(x: cd) -> cd {
+    unsafe { Rf_gammafn(x) }
 }
-pub unsafe fn lgammafn(x: cd) -> cd {
-
-     Rf_lgammafn(x)
-
+pub fn lgammafn(x: cd) -> cd {
+    unsafe { Rf_lgammafn(x) }
 }
-pub unsafe fn lgammafn_sign(x: cd, sgn: *mut c_int) -> cd {
-
-     Rf_lgammafn_sign(x, sgn)
-
+pub fn lgammafn_sign(x: cd, sgn: *mut c_int) -> cd {
+    unsafe { Rf_lgammafn_sign(x, sgn) }
 }
 
-pub unsafe fn dpsifn(x: cd,
-                     n: c_int,
-                     k: c_int,
-                     m: c_int,
-                     ans: *mut cd,
-                     nz: *mut c_int,
-                     ierr: *mut c_int) {
-
-     Rf_dpsifn(x, n, k, m, ans, nz, ierr)
-
+pub fn dpsifn(x: cd,
+              n: c_int,
+              k: c_int,
+              m: c_int,
+              ans: *mut cd,
+              nz: *mut c_int,
+              ierr: *mut c_int) {
+    unsafe { Rf_dpsifn(x, n, k, m, ans, nz, ierr) }
 }
-pub unsafe fn psigamma(x: cd, deriv: cd) -> cd {
-
-     Rf_psigamma(x, deriv)
-
+pub fn psigamma(x: cd, deriv: cd) -> cd {
+    unsafe { Rf_psigamma(x, deriv) }
 }
-pub unsafe fn digamma(x: cd) -> cd {
-
-     Rf_digamma(x)
-
+pub fn digamma(x: cd) -> cd {
+    unsafe { Rf_digamma(x) }
 }
-pub unsafe fn trigamma(x: cd) -> cd {
-
-     Rf_trigamma(x)
-
+pub fn trigamma(x: cd) -> cd {
+    unsafe { Rf_trigamma(x) }
 }
-pub unsafe fn tetragamma(x: cd) -> cd {
-
-     Rf_tetragamma(x)
-
+pub fn tetragamma(x: cd) -> cd {
+    unsafe { Rf_tetragamma(x) }
 }
-pub unsafe fn pentagamma(x: cd) -> cd {
-
-     Rf_pentagamma(x)
-
+pub fn pentagamma(x: cd) -> cd {
+    unsafe { Rf_pentagamma(x) }
 }
 
-pub unsafe fn beta(a: cd, b: cd) -> cd {
-
-     Rf_beta(a, b)
-
+pub fn beta(a: cd, b: cd) -> cd {
+    unsafe { Rf_beta(a, b) }
 }
-pub unsafe fn lbeta(a: cd, b: cd) -> cd {
-
-     Rf_lbeta(a, b)
-
+pub fn lbeta(a: cd, b: cd) -> cd {
+    unsafe { Rf_lbeta(a, b) }
 }
 
-pub unsafe fn choose(n: cd, k: cd) -> cd {
-
-     Rf_choose(n, k)
-
+pub fn choose(n: cd, k: cd) -> cd {
+    unsafe { Rf_choose(n, k) }
 }
-pub unsafe fn lchoose(n: cd, k: cd) -> cd {
-
-     Rf_lchoose(n, k)
-
+pub fn lchoose(n: cd, k: cd) -> cd {
+    unsafe { Rf_lchoose(n, k) }
 }
 
 // Bessel Functions
-pub unsafe fn bessel_i(x: cd, al: cd, ex: cd) -> cd {
-
-     Rf_bessel_i(x, al, ex)
-
+pub fn bessel_i(x: cd, al: cd, ex: cd) -> cd {
+    unsafe { Rf_bessel_i(x, al, ex) }
 }
-pub unsafe fn bessel_j(x: cd, al: cd) -> cd {
-
-     Rf_bessel_j(x, al)
-
+pub fn bessel_j(x: cd, al: cd) -> cd {
+    unsafe { Rf_bessel_j(x, al) }
 }
-pub unsafe fn bessel_k(x: cd, al: cd, ex: cd) -> cd {
-
-     Rf_bessel_k(x, al, ex)
-
+pub fn bessel_k(x: cd, al: cd, ex: cd) -> cd {
+    unsafe { Rf_bessel_k(x, al, ex) }
 }
-pub unsafe fn bessel_y(x: cd, al: cd) -> cd {
-
-     Rf_bessel_y(x, al)
-
+pub fn bessel_y(x: cd, al: cd) -> cd {
+    unsafe { Rf_bessel_y(x, al) }
 }
-pub unsafe fn bessel_i_ex(x: cd, al: cd, ex: cd, bi: *mut cd) -> cd {
-
-     Rf_bessel_i_ex(x, al, ex, bi)
-
+pub fn bessel_i_ex(x: cd, al: cd, ex: cd, bi: *mut cd) -> cd {
+    unsafe { Rf_bessel_i_ex(x, al, ex, bi) }
 }
-pub unsafe fn bessel_j_ex(x: cd, al: cd, bj: *mut cd) -> cd {
-
-     Rf_bessel_j_ex(x, al, bj)
-
+pub fn bessel_j_ex(x: cd, al: cd, bj: *mut cd) -> cd {
+    unsafe { Rf_bessel_j_ex(x, al, bj) }
 }
-pub unsafe fn bessel_k_ex(x: cd, al: cd, ex: cd, bk: *mut cd) -> cd {
-
-     Rf_bessel_k_ex(x, al, ex, bk)
-
+pub fn bessel_k_ex(x: cd, al: cd, ex: cd, bk: *mut cd) -> cd {
+    unsafe { Rf_bessel_k_ex(x, al, ex, bk) }
 }
-pub unsafe fn bessel_y_ex(x: cd, al: cd, by: *mut cd) -> cd {
-
-     Rf_bessel_y_ex(x, al, by)
-
+pub fn bessel_y_ex(x: cd, al: cd, by: *mut cd) -> cd {
+    unsafe { Rf_bessel_y_ex(x, al, by) }
 }
 
 
@@ -745,49 +533,31 @@ pub unsafe fn bessel_y_ex(x: cd, al: cd, by: *mut cd) -> cd {
 // }
 // #endif
 
-pub unsafe fn imax2(x: c_int, y: c_int) -> c_int {
-
-     Rf_imax2(x, y)
-
+pub fn imax2(x: c_int, y: c_int) -> c_int {
+    unsafe { Rf_imax2(x, y) }
 }
-pub unsafe fn imin2(x: c_int, y: c_int) -> c_int {
-
-     Rf_imin2(x, y)
-
+pub fn imin2(x: c_int, y: c_int) -> c_int {
+    unsafe { Rf_imin2(x, y) }
 }
 
-pub unsafe fn fmax2(x: cd, y: cd) -> cd {
-
-     Rf_fmax2(x, y)
-
+pub fn fmax2(x: cd, y: cd) -> cd {
+    unsafe { Rf_fmax2(x, y) }
 }
-pub unsafe fn fmin2(x: cd, y: cd) -> cd {
-
-     Rf_fmin2(x, y)
-
+pub fn fmin2(x: cd, y: cd) -> cd {
+    unsafe { Rf_fmin2(x, y) }
 }
-pub unsafe fn sign(x: cd) -> cd {
-
-     Rf_sign(x)
-
+pub fn sign(x: cd) -> cd {
+    unsafe { Rf_sign(x) }
 }
-pub unsafe fn fprec(x: cd, dg: cd) -> cd {
-
-     Rf_fprec(x, dg)
-
+pub fn fprec(x: cd, dg: cd) -> cd {
+    unsafe { Rf_fprec(x, dg) }
 }
-pub unsafe fn fround(x: cd, dg: cd) -> cd {
-
-     Rf_fround(x, dg)
-
+pub fn fround(x: cd, dg: cd) -> cd {
+    unsafe { Rf_fround(x, dg) }
 }
-pub unsafe fn fsign(x: cd, y: cd) -> cd {
-
-     Rf_fsign(x, y)
-
+pub fn fsign(x: cd, y: cd) -> cd {
+    unsafe { Rf_fsign(x, y) }
 }
-pub unsafe fn ftrunc(x: cd) -> cd {
-
-     Rf_ftrunc(x)
-
+pub fn ftrunc(x: cd) -> cd {
+    unsafe { Rf_ftrunc(x) }
 }
