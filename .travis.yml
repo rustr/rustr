@@ -8,6 +8,7 @@ addons:
       - libdw-dev
 
 sudo: required
+dist: trusty
 
 # run builds for all the trains (and more)
 rust:
