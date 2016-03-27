@@ -22,8 +22,9 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [ ] stablize R in Rust with `feature::engine` module
 - [ ] more `RNew` `IntoR` `From` `Into` for types
 - [ ] R Object - DataFrame type
-- [ ] [`nalgebra`][1] crates types
-- [ ] [`num`][2] crates types
+- [ ] [`nalgebra`][1] crate types
+- [ ] [`num`][2] crate types
+- [ ] [`log`][3] crate `log` trait
 
 #### rustinr
 
@@ -52,7 +53,7 @@ This project is now under construction. **Issues** and **contributions** are wel
 
 ### Todo for future
 
-- [ ] date type with [chrono][3]
+- [ ] date type with [chrono][4]
 - [ ] sugar function
 - [ ] R6 & Rust type
 
@@ -61,4 +62,5 @@ Miss a feature? Talk on [forum](https://groups.google.com/forum/#!forum/rustr) o
 
 [1]: https://github.com/sebcrozet/nalgebra
 [2]: https://github.com/rust-num/num
-[3]: https://github.com/lifthrasiir/rust-chrono
+[3]: https://github.com/rust-lang-nursery/log
+[4]: https://github.com/lifthrasiir/rust-chrono
