@@ -80,6 +80,9 @@ extern crate chrono;
 #[cfg(feature = "random")]
 extern crate rand;
 
+#[cfg(feature = "logging")]
+extern crate log;
+
 pub mod feature {
 
     //! Features
@@ -95,6 +98,8 @@ pub mod feature {
 	#[cfg(feature = "engine")]
     pub mod engine;
 	#[cfg(feature = "random")]
+    pub mod random;
+	#[cfg(feature = "logging")]
     pub mod random;
 }
 

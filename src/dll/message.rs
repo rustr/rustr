@@ -2,6 +2,9 @@ use rdll::*;
 use std::ffi::CString;
 use util::*;
 use error::*;
+use traits::*;
+use protect::stackp::*;
+
 
 pub unsafe fn r_error_user(arg1: &str) -> RResult<()> {
     let cstr = try!(CString::new(arg1));
@@ -23,21 +26,55 @@ pub unsafe fn r_unimplemented(arg1: &str) {
     UNIMPLEMENTED(c_str(arg1).as_ptr());
 }
 
-pub fn r_warn_user(arg1: &str) -> RResult<()> {
+pub unsafe fn rf_warn_user(arg1: &str) -> RResult<()> {
     let cstr = try!(CString::new(arg1));
-    unsafe {
-        Rf_warning(cstr.as_ptr());
-        Ok(())
-    }
+    Rf_warning(cstr.as_ptr());
+    Ok(())
+}
+
+// may longjmp
+pub unsafe fn rf_warn(arg1: &str) {
+    Rf_warning(c_str(arg1).as_ptr());
 }
 
 pub fn r_warn(arg1: &str) {
     unsafe {
-        Rf_warning(c_str(arg1).as_ptr());
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("warning").as_ptr()),
+                                           c_str(arg1).uintor()));
+        let _ = Rf_eval(warning.s(), R_GlobalEnv);
+    }
+}
+
+pub fn r_warn_user(arg1: &str) -> RResult<()> {
+    let cstr = try!(CString::new(arg1));
+    unsafe {
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("warning").as_ptr()),
+                                           cstr.uintor()));
+        let _ = Rf_eval(warning.s(), R_GlobalEnv);
+         Ok(())
+    }
+}
+
+pub fn r_message(arg1: &str) {
+    unsafe {
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("message").as_ptr()),
+                                           c_str(arg1).uintor()));
+        let _ = Rf_eval(warning.s(), R_GlobalEnv);
     }
 }
 
 pub fn r_message_user(arg1: &str) -> RResult<()> {
+    let cstr = try!(CString::new(arg1));
+    unsafe {
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("message").as_ptr()),
+                                           cstr.uintor()));
+        let _ = Rf_eval(warning.s(), R_GlobalEnv);
+         Ok(())
+    }
+}
+
+
+pub fn r_message_box_user(arg1: &str) -> RResult<()> {
     let cstr = try!(CString::new(arg1));
     unsafe {
         R_ShowMessage(cstr.as_ptr());
@@ -45,7 +82,7 @@ pub fn r_message_user(arg1: &str) -> RResult<()> {
     }
 }
 
-pub fn r_message(arg1: &str) {
+pub fn r_message_box(arg1: &str) {
     unsafe {
         R_ShowMessage(c_str(arg1).as_ptr());
     }

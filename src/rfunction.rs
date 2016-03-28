@@ -31,6 +31,9 @@ impl<T: SEXPbucket> NewRObj for RFunM<T> {
             _ => rraise("cannot convert to function")
         }
     }
+    unsafe fn unew<E: ToSEXP>(x: E) -> Self {
+			RFunM { data: T::new(x.s()) }
+    }
 }
 
 impl<T: SEXPbucket> RFunM<T> {
@@ -51,6 +54,14 @@ impl<T: SEXPbucket> RFunM<T> {
     pub fn from_str<EE: SEXPbucket>(x: &str, env: EnvirM<EE>) -> RResult<RFunM<T>> {
         let sym = Symbol::from(x);
         unsafe { RFunM::new(Rf_findFun(sym.s(), env.s())) }
+    }
+    pub fn ufrom_str_global(x: &str) -> RFunM<T> {
+        let sym = Symbol::from(x);
+        unsafe { RFunM::unew(Rf_findFun(sym.s(), R_GlobalEnv)) }
+    }
+    pub fn ufrom_str<EE: SEXPbucket>(x: &str, env: EnvirM<EE>) -> RFunM<T> {
+        let sym = Symbol::from(x);
+        unsafe { RFunM::unew(Rf_findFun(sym.s(), env.s())) }
     }
     pub fn envir<S: SEXPbucket>(&self) -> RResult<EnvirM<S>> {
         unsafe {

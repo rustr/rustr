@@ -25,6 +25,9 @@ impl<T: SEXPbucket> NewRObj for S4M<T> {
             Ok(S4M { data: T::new(x.s()) })
         }
     }
+    unsafe fn unew<E: ToSEXP>(x: E) -> Self{
+    	S4M { data: T::new(x.s()) }
+    }
 }
 
 
