@@ -100,7 +100,7 @@ pub mod feature {
 	#[cfg(feature = "random")]
     pub mod random;
 	#[cfg(feature = "logging")]
-    pub mod random;
+    pub mod log;
 }
 
 

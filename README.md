@@ -24,7 +24,7 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [ ] R Object - DataFrame type
 - [ ] [`nalgebra`][1] crate types
 - [ ] [`num`][2] crate types
-- [ ] [`log`][3] crate `log` trait
+- [x] [`log`][3] crate `log` trait
 
 #### rustinr
 
