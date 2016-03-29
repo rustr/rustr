@@ -1,0 +1,39 @@
+# DO NOT CHANGE the "init" and "install" sections below
+
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+        
+install:
+  - ps: Bootstrap
+  - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe"
+  - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32"
+  - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe"
+  - rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
+  - md C:\Rust\lib\rustlib\i686-pc-windows-gnu
+  - xcopy C:\Rust32\lib\rustlib\i686-pc-windows-gnu C:\Rust\lib\rustlib\i686-pc-windows-gnu /s /e /h
+  - SET PATH=%PATH%;C:\Rust\bin
+  - SET RLIBPATH=C:\R\bin\%R_ARCH%
+# Adapt as necessary starting from here
+
+environment:
+  matrix:
+
+  - R_VERSION: devel
+    GCC_PATH: mingw_32
+    channel: nightly
+
+  - R_VERSION: devel
+    R_ARCH: x64
+    GCC_PATH: mingw_64
+    channel: nightly
+
+test_script:
+  - cargo build --features "date engine random logging"
+  - cargo test --verbose --features "date engine random logging"
+
+on_failure:
+  - travis-tool.sh dump_logs
