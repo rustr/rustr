@@ -32,6 +32,7 @@ before_install:
 #       export PATH=$HOME/.local/bin:$PATH
 # the main build
 script:
+  - if [[ "Darwin" == "$(uname -s)" ]]; then export PATH="/Library/Frameworks/R.framework/Resources/lib":"$PATH";fi
   - cargo build --features "$FEATURE"
   - cargo test  --verbose --features "$FEATURE"
 
