@@ -25,6 +25,8 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [ ] [`nalgebra`][1] crate types
 - [ ] [`num`][2] crate types
 - [x] [`log`][3] crate `log` trait
+- [ ] [`rusty-machine`][rm] crate `rusty-machine` types
+- [ ] [`ndarray`][nd] crate `ndarray` types
 
 #### rustinr
 
@@ -64,3 +66,5 @@ Miss a feature? Talk on [forum](https://groups.google.com/forum/#!forum/rustr) o
 [2]: https://github.com/rust-num/num
 [3]: https://github.com/rust-lang-nursery/log
 [4]: https://github.com/lifthrasiir/rust-chrono
+[rm]: https://github.com/AtheMathmo/rusty-machine
+[nd]: https://github.com/bluss/rust-ndarray
