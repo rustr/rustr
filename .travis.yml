@@ -32,7 +32,7 @@ before_install:
 #       export PATH=$HOME/.local/bin:$PATH
 # the main build
 script:
-  - tree -d -L 3 / 
+  - sudo ls / 
   - if [[ "Darwin" == "$(uname -s)" ]]; then export PATH="/Library/Frameworks/R.framework/Resources/lib":"$PATH"; RLIBPATH="/Library/Frameworks/R.framework/Resources/lib";fi
   - cargo build --features "$FEATURE"
   - cargo test  --verbose --features "$FEATURE"
