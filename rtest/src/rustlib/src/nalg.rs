@@ -11,4 +11,12 @@ pub fn dmat(d:DMat<f64>)->DMat<f64>{
    d
 }
 
+// #[rustr_export]
+pub fn mat3(d:Mat3<f64>)->Mat3<f64>{
+   d
+}
 
+// #[rustr_export]
+pub fn mat4(d:Mat4<f64>)->Mat4<f64>{
+   d
+}

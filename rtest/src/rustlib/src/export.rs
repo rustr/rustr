@@ -97,3 +97,25 @@ pub extern "C" fn rustr_dmat(d : SEXP)->SEXP{
  return res_sexp;
 }
 
+#[no_mangle]
+pub extern "C" fn rustr_mat3(d : SEXP)->SEXP{
+
+ let d_ : Mat3<f64> = unwrapr!( Mat3::rnew(d) );
+ let res  = mat3(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_mat4(d : SEXP)->SEXP{
+
+ let d_ : Mat4<f64> = unwrapr!( Mat4::rnew(d) );
+ let res  = mat4(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+

@@ -21,3 +21,7 @@ extern SEXP rustr_dvec(SEXP x);
 SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
 extern SEXP rustr_dmat(SEXP d);
 SEXP rtest_dmat(SEXP d){ return(rustr_dmat(d));}
+extern SEXP rustr_mat3(SEXP d);
+SEXP rtest_mat3(SEXP d){ return(rustr_mat3(d));}
+extern SEXP rustr_mat4(SEXP d);
+SEXP rtest_mat4(SEXP d){ return(rustr_mat4(d));}

@@ -22,6 +22,7 @@ engine = []
 random = ["rand"]
 logging = ["log"]
 ty_nalgebra =["nalgebra","num"]
+ty_num = ["num"]
 
 [dependencies]
 clippy = {version = "0.0.56", optional = true}

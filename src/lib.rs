@@ -117,6 +117,8 @@ pub mod types {
     //!
 	#[cfg(feature = "ty_nalgebra")]
     pub mod nalgebra;
+	#[cfg(feature = "ty_num")]
+    pub mod num;
 }
 
 pub mod sugar {

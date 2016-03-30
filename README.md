@@ -22,7 +22,7 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [ ] stablize R in Rust with `feature::engine` module
 - [ ] more `RNew` `IntoR` `From` `Into` for types
 - [ ] R Object - DataFrame type
-- [ ] [`nalgebra`][1] crate types
+- [x] [`nalgebra`][1] crate types
 - [ ] [`num`][2] crate types
 - [x] [`log`][3] crate `log` trait
 - [ ] [`rusty-machine`][rm] crate `rusty-machine` types
