@@ -37,6 +37,6 @@ pub fn dll_is_na(x:c_double)->bool{
     r_isna(x)
 }
 // #[rustr_export]
-pub fn dll_r_isnan(x:c_double)->bool{
+pub fn dll_is_nan(x:c_double)->bool{
     r_isnan(x)
 }

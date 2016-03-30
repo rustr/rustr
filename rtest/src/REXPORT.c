@@ -13,5 +13,5 @@ extern SEXP rustr_dll_r_finite(SEXP x);
 SEXP rtest_dll_r_finite(SEXP x){ return(rustr_dll_r_finite(x));}
 extern SEXP rustr_dll_is_na(SEXP x);
 SEXP rtest_dll_is_na(SEXP x){ return(rustr_dll_is_na(x));}
-extern SEXP rustr_dll_r_isnan(SEXP x);
-SEXP rtest_dll_r_isnan(SEXP x){ return(rustr_dll_r_isnan(x));}
+extern SEXP rustr_dll_is_nan(SEXP x);
+SEXP rtest_dll_is_nan(SEXP x){ return(rustr_dll_is_nan(x));}

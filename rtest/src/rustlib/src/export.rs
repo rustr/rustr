@@ -54,10 +54,10 @@ pub extern "C" fn rustr_dll_is_na(x : SEXP)->SEXP{
 }
 
 #[no_mangle]
-pub extern "C" fn rustr_dll_r_isnan(x : SEXP)->SEXP{
+pub extern "C" fn rustr_dll_is_nan(x : SEXP)->SEXP{
 
  let x_ : c_double = unwrapr!( c_double::rnew(x) );
- let res  = dll_r_isnan(x_);
+ let res  = dll_is_nan(x_);
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 
