@@ -94,7 +94,11 @@ impl<T: SEXPbucket> ExprVecM<T> {
 //    }
 // }
 
-
+impl<T: SEXPbucket> URNew for  ExprVecM<T> {
+    unsafe fn urnew(x: SEXP) -> Self {
+		ExprVecM{ data: T::new(x) }
+    }
+}
 impl<T: SEXPbucket> RNew for ExprVecM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {
         Self::new(x)

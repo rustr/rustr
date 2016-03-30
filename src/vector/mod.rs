@@ -128,7 +128,11 @@ impl<T: SEXPbucket> Iterator for $NumVecIter<T> {
 
 
 
-
+impl<T: SEXPbucket> URNew for $NumVecM<T> {
+    unsafe fn urnew(x: SEXP) -> Self {
+		$NumVecM{ data: T::new(x) }
+    }
+}
 
 
 impl<T: SEXPbucket> RNew for $NumVecM<T> {

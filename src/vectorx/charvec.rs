@@ -98,6 +98,11 @@ impl<T: SEXPbucket> From<CharVecM<T>> for Vec<CString> {
     }
 }
 
+impl<T: SEXPbucket> URNew for  CharVecM<T> {
+    unsafe fn urnew(x: SEXP) -> Self {
+		CharVecM{ data: T::new(x) }
+    }
+}
 
 impl<T: SEXPbucket> RNew for CharVecM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {

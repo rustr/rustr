@@ -97,6 +97,12 @@ impl<T: SEXPbucket, E: UIntoR + Clone> From<Vec<E>> for RListM<T> {
 // }
 
 
+impl<T: SEXPbucket> URNew for RListM<T> {
+    unsafe fn urnew(x: SEXP) -> Self {
+		RListM { data: T::new(x) }
+    }
+}
+
 impl<T: SEXPbucket> RNew for RListM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {
         Self::new(x)

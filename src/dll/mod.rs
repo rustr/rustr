@@ -23,11 +23,11 @@ pub fn r_finite(arg1: ::std::os::raw::c_double) -> bool {
 
 use symbol::*;
 use storage::*;
-use robject::*;
 use traits::*;
+use error::*;
 
-pub fn r_option<T: SEXPbucket>(x: SymbolM<T>) -> RObj {
-    unsafe { RObj::new(Rf_GetOption1(x.s())) }
+pub fn r_option<T: SEXPbucket,E:RNew>(x: SymbolM<T>) -> RResult<E> {
+    unsafe { RNew::rnew(Rf_GetOption1(x.s())) }
 }
 
 pub fn r_option_digits() -> ::std::os::raw::c_int {

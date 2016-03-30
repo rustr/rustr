@@ -105,6 +105,11 @@ impl<T: SEXPbucket> From<BoolVecM<T>> for Vec<bool> {
     }
 }
 
+impl<T: SEXPbucket> URNew for BoolVecM<T> {
+    unsafe fn urnew(x: SEXP) -> Self {
+		BoolVecM{ data: T::new(x) }
+    }
+}
 
 impl<T: SEXPbucket> RNew for BoolVecM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {
