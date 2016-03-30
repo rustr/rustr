@@ -4,14 +4,14 @@ use error::*;
 use traits::*;
 use ::protect::stackp::*;
 use std::ffi::*;
-use nalgebra::*;
+use nalgebra::{DVec,Vec1,Iterable};
 
 macro_rules! gen_fromr_vec {
     ($sexp:ident; $sexpget:ident; $err:expr; $into:ty ; $($x:ty),*) => (
 		$(
 // main block
 impl RNew for DVec<$x> {
-    fn rnew(x:SEXP) -> RResult<$collection<$x>> {
+    fn rnew(x:SEXP) -> RResult<DVec<$x>> {
         unsafe {
             if RTYPEOF(x) != $sexp {
                 return rerror(REKind::NotCompatible(concat!("expecting a ",$err).into()));
@@ -27,21 +27,21 @@ impl URNew for DVec<$x> {
             let mut vecs: DVec<$x> = DVec::new_uninitialized(lens as usize);
             let rptr = $sexpget(x);
             for ii in 0..lens {
-                vecs[ii] = *rptr.offset(ii as isize) as $x;
+                vecs[ii as usize] = *rptr.offset(ii as isize) as $x;
             }
             vecs
         }
     }
 
 
-impl UIntoR for $collection<$x> {
+impl UIntoR for DVec<$x> {
     unsafe fn uintor(&self) -> SEXP {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
             let rptr = $sexpget(rvec.s());
             let mut index = 0;
-            for ii in self {
+            for ii in self.iter() {
                 *rptr.offset(index) = ii.clone() as $into ;
 				index = index + 1;
             }
@@ -50,7 +50,7 @@ impl UIntoR for $collection<$x> {
     }
 }
 
-impl IntoR for $collection<$x> {
+impl IntoR for DVec<$x> {
     fn intor(&self) -> RResult<SEXP> {
         unsafe{Ok(Self::uintor(self))}
     }
@@ -84,13 +84,13 @@ impl URNew for DVec<u8> {
             if RTYPEOF(x) ==INTSXP{
 	            let rptr = INTEGER(x);
 	            for ii in 0..lens {
-	                vecs[ii] = *rptr.offset(ii as isize) as u8;
+	                vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
 	            }
 	             return vecs;
             }
             let rptr = RAW(x);
             for ii in 0..lens {
-				vecs[ii] = *rptr.offset(ii as isize) as u8;
+				vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
             }
             vecs
         }
@@ -103,7 +103,7 @@ impl UIntoR for DVec<u8> {
             let rvec = Shield::new(Rf_allocVector(INTSXP, size_x as R_xlen_t));
             let rptr = INTEGER(rvec.s());
             let mut index = 0;
-            for ii in self {
+            for ii in self.iter() {
                 *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int ;
 				index = index + 1;
             }
@@ -117,4 +117,64 @@ impl IntoR for DVec<u8> {
         unsafe{Ok(Self::uintor(self))}
     }
 }
+
+// stack vec
+
+macro_rules! gen_fromr_vec1 {
+    ($dvec:ident; $lens:expr; $sexp:ident; $sexpget:ident; $err:expr; $into:ty ; $($x:ty),*) => (
+		$(
+// main block
+impl RNew for $dvec<$x> {
+    fn rnew(x:SEXP) -> RResult<$dvec<$x>> {
+        unsafe {
+            if RTYPEOF(x) != $sexp {
+                return rerror(REKind::NotCompatible(concat!("expecting a ",$err).into()));
+            }
+            if Rf_xlength(x) != $lens{
+            	return rerror(REKind::NotCompatible(concat!("expecting length",$lens).into()));
+            }
+            Ok(Self::urnew(x))
+        }
+    }
+}
+
+impl URNew for $dvec<$x> {
+    unsafe fn urnew(x:SEXP) -> $dvec<$x> {
+            let mut vecs: $dvec<$x> = $dvec::new(0 as $x);
+            let rptr = $sexpget(x);
+            for ii in 0..$lens {
+                vecs[ii] = *rptr.offset(ii as isize) as $x;
+            }
+            vecs
+        }
+    }
+
+
+impl UIntoR for $dvec<$x> {
+    unsafe fn uintor(&self) -> SEXP {
+            let rvec = Shield::new(Rf_allocVector($sexp, $lens as R_xlen_t));
+            let rptr = $sexpget(rvec.s());
+            let mut index = 0;
+            for ii in self.iter() {
+                *rptr.offset(index) = ii.clone() as $into ;
+				index = index + 1;
+            }
+            rvec.s()
+
+    }
+}
+
+impl IntoR for $dvec<$x> {
+    fn intor(&self) -> RResult<SEXP> {
+        unsafe{Ok(Self::uintor(self))}
+    }
+}
+
+// end main block
+		)*
+    )
+}
+
+gen_fromr_vec1!(Vec1;1;INTSXP; INTEGER; "integer vector"; ::std::os::raw::c_int; u64,u32,u16,i64,i32,i16,i8,usize,isize);
+gen_fromr_vec1!(Vec1;1;REALSXP; REAL; "numeric vector"; ::std::os::raw::c_double; f64,f32);
 
