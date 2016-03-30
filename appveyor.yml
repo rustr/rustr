@@ -10,11 +10,15 @@ init:
 install:
   - ps: Bootstrap
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe"
-  - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
-  - del C:\Rust\bin /q 
+  - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32"
+  - md C:\Rust\lib\rustlib\i686-pc-windows-gnu
+  - xcopy C:\Rust32\lib\rustlib\i686-pc-windows-gnu C:\Rust\lib\rustlib\i686-pc-windows-gnu /s /e /h
+  - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32"
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe"
   - rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
   - SET PATH=%PATH%;C:\Rust\bin
+  - del rust-nightly-i686-pc-windows-gnu.exe
+  - del rust-nightly-x86_64-pc-windows-gnu.exe
   - SET RLIBPATH=C:\R\bin\%R_ARCH%
 # Adapt as necessary starting from here
 
