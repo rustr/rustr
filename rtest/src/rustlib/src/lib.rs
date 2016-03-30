@@ -1,8 +1,16 @@
 #[macro_use]
 extern crate rustr;
+extern crate nalgebra;
+
 pub mod export;
 pub use rustr::*;
 pub use std::os::raw::*;
+
+pub mod nalg;
+pub use self::nalg::*;
+pub use nalgebra::{DVec,Vec3,Vec4,DVec1,DVec2,DVec3};
+pub use nalgebra::{DMat,Mat3,Mat4};
+pub use rustr::types::nalgebra::*;
 
 // #[rustr_export]
 pub fn say_hi()->RResult<String>{

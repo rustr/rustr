@@ -75,3 +75,25 @@ pub extern "C" fn rustr_dll_option(x : SEXP)->SEXP{
  return res_sexp;
 }
 
+#[no_mangle]
+pub extern "C" fn rustr_dvec(x : SEXP)->SEXP{
+
+ let x_ : DVec<f64> = unwrapr!( DVec::rnew(x) );
+ let res  = dvec(x_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_dmat(d : SEXP)->SEXP{
+
+ let d_ : DMat<f64> = unwrapr!( DMat::rnew(d) );
+ let res  = dmat(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+

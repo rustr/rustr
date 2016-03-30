@@ -5,6 +5,7 @@ use traits::*;
 use ::protect::stackp::*;
 use nalgebra::{DMat,Mat1,Mat2,Mat3,Mat4,Mat5,Mat6};
 use num::Zero;
+//use ::rprint;
 
 macro_rules! gen_fromr_vec {
     ($sexp:ident; $sexpget:ident; $err:expr; $into:ty ; $($x:ty),*) => (
@@ -32,7 +33,7 @@ impl URNew for DMat<$x> {
             let rptr = $sexpget(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as $x;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[1]+ii) as isize) as $x;
             	}
             }
             vecs
@@ -41,11 +42,11 @@ impl URNew for DMat<$x> {
 
 impl UIntoR for DMat<$x> {
     unsafe fn uintor(&self) -> SEXP {
-            let rvec = Shield::new(Rf_allocMatrix($sexp, self.nrows() as R_xlen_t, self.nrows() as R_xlen_t));
+            let rvec = Shield::new(Rf_allocMatrix($sexp, self.nrows() as R_xlen_t, self.ncols() as R_xlen_t));
             let rptr = $sexpget(rvec.s());
             for ii in 0..self.ncols() {
             	for jj in 0..self.nrows(){
-					*rptr.offset((jj*self.nrows()+ii) as isize) = self[(ii as usize, jj as usize)] as $into;
+					*rptr.offset((jj*self.ncols()+ii) as isize) = self[(jj as usize, ii as usize)] as $into;
             	}
             }
             rvec.s()
@@ -91,7 +92,7 @@ impl URNew for DMat<u8> {
 	            let rptr = INTEGER(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
             	}
             }
 	             return vecs;
@@ -99,7 +100,7 @@ impl URNew for DMat<u8> {
             let rptr = RAW(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[1]+ii) as isize) as u8;
             	}
             }
             vecs
@@ -113,7 +114,7 @@ impl UIntoR for DMat<u8> {
             let rptr = INTEGER(rvec.s());
             for ii in 0..self.ncols() {
             	for jj in 0..self.nrows(){
-					*rptr.offset((jj*self.nrows()+ii) as isize) = self[(ii as usize, jj as usize)] as ::std::os::raw::c_int;
+					*rptr.offset((jj*self.ncols()+ii) as isize) = self[(jj as usize, ii as usize)] as ::std::os::raw::c_int;
             	}
             }
             rvec.s()
@@ -159,7 +160,7 @@ impl URNew for $dvec<$x> {
             let rptr = $sexpget(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as $x;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as $x;
             	}
             }
             vecs
@@ -173,7 +174,7 @@ impl UIntoR for $dvec<$x> {
             let rptr = $sexpget(rvec.s());
             for ii in 0..$lens {
             	for jj in 0..$lens{
-					*rptr.offset((jj* $lens+ii) as isize) = self[(ii as usize, jj as usize)] as $into;
+					*rptr.offset((jj* $lens+ii) as isize) = self[(jj as usize, ii as usize)] as $into;
             	}
             }
             rvec.s()
@@ -240,7 +241,7 @@ impl URNew for $dvec<u8> {
 	            let rptr = INTEGER(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
             	}
             }
 	             return vecs;
@@ -248,7 +249,7 @@ impl URNew for $dvec<u8> {
             let rptr = RAW(x);
             for ii in 0..dims[1] {
             	for jj in 0..dims[0]{
-					vecs[(ii as usize, jj as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
+					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
             	}
             }
             vecs
@@ -263,7 +264,7 @@ impl UIntoR for $dvec<u8> {
             let rptr = INTEGER(rvec.s());
             for ii in 0..$lens {
             	for jj in 0..$lens{
-					*rptr.offset((jj* $lens+ii) as isize) = self[(ii as usize, jj as usize)] as  ::std::os::raw::c_int;
+					*rptr.offset((jj* $lens+ii) as isize) = self[(jj as usize, ii as usize)] as  ::std::os::raw::c_int;
             	}
             }
             rvec.s()
