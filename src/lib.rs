@@ -106,6 +106,9 @@ pub mod feature {
 #[cfg(feature = "ty_nalgebra")]
 extern crate nalgebra;
 
+#[cfg(any(feature = "ty_num",feature = "ty_nalgebra"))]
+extern crate num;
+
 pub mod types {
 
     //! Types from other crates

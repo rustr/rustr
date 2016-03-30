@@ -21,7 +21,7 @@ date = ["chrono"]
 engine = []
 random = ["rand"]
 logging = ["log"]
-ty_nalgebra =["nalgebra"]
+ty_nalgebra =["nalgebra","num"]
 
 [dependencies]
 clippy = {version = "0.0.56", optional = true}
@@ -29,3 +29,4 @@ chrono = {version = "0.2", optional = true}
 rand = {version = "0.3.14", optional = true}
 log = {version = "0.3.5", optional = true}
 nalgebra = {version = "0.5.1", optional = true}
+num = {version = "0.1.31", optional = true}
