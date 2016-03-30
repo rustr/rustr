@@ -6,7 +6,8 @@ use ::protect::stackp::*;
 use error::*;
 use error::REKind::NotCompatible;
 use std::ops::Range;
-use std::ffi::CString;
+use std::ffi::*;
+use util::c_str;
 
 pub type CharVec = CharVecM<Preserve>;
 
@@ -30,6 +31,12 @@ impl<T: SEXPbucket> CharVecM<T> {
             }
             Some(CString::urnew(STRING_ELT(self.s(), ind)))
         }
+    }
+    pub unsafe fn uat(&self, ind: R_xlen_t) -> Result<String, IntoStringError> {
+        CString::urnew(STRING_ELT(self.s(), ind)).into_string()
+    }
+    pub unsafe fn uset(&mut self, ind: R_xlen_t, value: &str) {
+        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkString(c_str(value).as_ptr())).s())
     }
     pub unsafe fn uatc(&self, ind: R_xlen_t) -> CString {
         CString::urnew(STRING_ELT(self.s(), ind))
