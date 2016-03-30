@@ -32,3 +32,11 @@ pub fn message_r_printf(){
 pub fn dll_r_finite(x:c_double)->bool{
     r_finite(x)
 }
+// #[rustr_export]
+pub fn dll_is_na(x:c_double)->bool{
+    r_isna(x)
+}
+// #[rustr_export]
+pub fn dll_r_isnan(x:c_double)->bool{
+    r_isnan(x)
+}

@@ -11,3 +11,7 @@ extern SEXP rustr_message_r_printf();
 SEXP rtest_message_r_printf(){ rustr_message_r_printf();return(R_NilValue);}
 extern SEXP rustr_dll_r_finite(SEXP x);
 SEXP rtest_dll_r_finite(SEXP x){ return(rustr_dll_r_finite(x));}
+extern SEXP rustr_dll_is_na(SEXP x);
+SEXP rtest_dll_is_na(SEXP x){ return(rustr_dll_is_na(x));}
+extern SEXP rustr_dll_r_isnan(SEXP x);
+SEXP rtest_dll_r_isnan(SEXP x){ return(rustr_dll_r_isnan(x));}
