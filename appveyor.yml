@@ -36,6 +36,7 @@ environment:
     channel: nightly
 
 build_script:
+  - cp ../travis-tool.sh travis-tool.sh
   - travis-tool.sh install_github rustr/rustinr
 
 test_script:
