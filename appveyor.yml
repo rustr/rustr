@@ -34,6 +34,8 @@ environment:
     GCC_PATH: mingw_64
     channel: nightly
 
+build: false
+
 test_script:
   - cargo build --features "date engine random logging"
   - cargo test --verbose --features "date engine random logging"
