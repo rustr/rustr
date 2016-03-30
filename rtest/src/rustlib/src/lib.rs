@@ -2,6 +2,7 @@
 extern crate rustr;
 pub mod export;
 pub use rustr::*;
+pub use std::os::raw::*;
 
 // #[rustr_export]
 pub fn say_hi()->RResult<String>{
@@ -25,3 +26,9 @@ pub fn message_r_printf(){
     r_printf("this is printf from rust")
 }
 
+// dll --------------------------
+
+// #[rustr_export]
+pub fn dll_r_finite(x:c_double)->bool{
+    r_finite(x)
+}

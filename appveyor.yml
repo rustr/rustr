@@ -37,13 +37,13 @@ environment:
 
 build_script:
   - cp ../travis-tool.sh travis-tool.sh
-  - travis-tool.sh.cmd install_deps
   - travis-tool.sh.cmd install_github rustr/rustinr
   
 test_script:
   # - cargo build --features "date engine random logging"
   # - cargo test --verbose --features "date engine random logging"
   - cd rtest
+  - ../travis-tool.sh.cmd install_deps
   - ../travis-tool.sh.cmd run_tests
   - cd ..
 
