@@ -10,3 +10,10 @@ pub extern "C" fn rustr_say_hi()->SEXP{
  return res_sexp;
 }
 
+#[no_mangle]
+pub extern "C" fn rustr_message_warning(){
+
+  message_warning();
+
+ }
+
