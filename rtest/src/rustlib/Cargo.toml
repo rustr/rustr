@@ -2,9 +2,10 @@
 name = "rustlib"
 version = "0.1.0"
 
-[dependencies]
-rustr = {path="../../../../../../"}
-
 [lib]
 name = "rustlib"
 crate-type = ["staticlib","rlib"]
+
+[dependencies.rustr]
+path = "../../../../../../"
+features = ["date", "engine", "random", "logging"]
