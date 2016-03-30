@@ -9,3 +9,8 @@ expect_true(!rtest:::dll_is_na(10))
 expect_true(!rtest:::dll_is_na(NaN))
 expect_true(!rtest:::dll_is_na(Inf))
 expect_true(!rtest:::dll_is_na(-Inf))
+
+expect_true(!rtest:::dll_is_nan(10))
+expect_true(rtest:::dll_is_nan(NaN))
+expect_true(!rtest:::dll_is_nan(Inf))
+expect_true(!rtest:::dll_is_nan(-Inf))
