@@ -6,7 +6,7 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
-        
+
 install:
   - ps: Bootstrap
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe"
@@ -34,11 +34,14 @@ environment:
     GCC_PATH: mingw_64
     channel: nightly
 
-build: false
+build_script:
+  - travis-tool.sh install_github rustr/rustinr
 
 test_script:
   - cargo build --features "date engine random logging"
   - cargo test --verbose --features "date engine random logging"
+  - cd rtest
+  - travis-tool.sh run_tests
 
 on_failure:
   - travis-tool.sh dump_logs

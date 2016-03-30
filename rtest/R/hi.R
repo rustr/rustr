@@ -1,0 +1,4 @@
+hi <-
+function() {
+        "hi"
+    }
