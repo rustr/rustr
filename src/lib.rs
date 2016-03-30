@@ -103,6 +103,18 @@ pub mod feature {
     pub mod log;
 }
 
+#[cfg(feature = "ty_nalgebra")]
+extern crate nalgebra;
+
+pub mod types {
+
+    //! Types from other crates
+    //!
+    //!
+    //!
+	#[cfg(feature = "ty_nalgebra")]
+    pub mod nalgebra;
+}
 
 pub mod sugar {
     //! Sugar for rustr
