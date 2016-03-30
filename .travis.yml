@@ -42,6 +42,7 @@ script:
   # - cargo build --features "$FEATURE"
   # - cargo test  --verbose --features "$FEATURE"
   - cd rtest
+  - ../travis-tool.sh install_deps
   - ../travis-tool.sh run_tests
   - cd ..
   
