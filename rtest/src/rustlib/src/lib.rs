@@ -14,3 +14,8 @@ pub fn say_hi()->RResult<String>{
 pub fn message_warning(){
     r_warn("this is warning from rust")
 }
+
+// #[rustr_export]
+pub fn message_message(){
+    r_message("this is message from rust")
+}

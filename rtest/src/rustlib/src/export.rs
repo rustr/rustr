@@ -17,3 +17,10 @@ pub extern "C" fn rustr_message_warning(){
 
  }
 
+#[no_mangle]
+pub extern "C" fn rustr_message_message(){
+
+  message_message();
+
+ }
+
