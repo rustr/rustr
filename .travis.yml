@@ -39,8 +39,8 @@ before_install:
 # the main build
 script:
   - if [[ "Darwin" == "$(uname -s)" ]]; then export RLIBPATH="/Library/Frameworks/R.framework/Resources/lib";fi
-  - cargo build --features "$FEATURE"
-  - cargo test  --verbose --features "$FEATURE"
+  # - cargo build --features "$FEATURE"
+  # - cargo test  --verbose --features "$FEATURE"
   - cd rtest
   - ../travis-tool.sh run_tests
   - cd ..

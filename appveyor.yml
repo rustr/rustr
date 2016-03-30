@@ -26,6 +26,7 @@ environment:
   matrix:
 
   - R_VERSION: devel
+    R_ARCH: i386
     GCC_PATH: mingw_32
     channel: nightly
 
@@ -36,13 +37,17 @@ environment:
 
 build_script:
   - travis-tool.sh install_github rustr/rustinr
+  - cp travis-tool.sh rtest/travis-tool.sh
 
 test_script:
   - cargo build --features "date engine random logging"
   - cargo test --verbose --features "date engine random logging"
   - cd rtest
-  - ../travis-tool.sh run_tests
+  - travis-tool.sh run_tests
   - cd ..
 
 on_failure:
+  - cd rtest 
   - travis-tool.sh dump_logs
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
