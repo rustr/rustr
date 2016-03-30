@@ -19,3 +19,9 @@ pub fn message_warning(){
 pub fn message_message(){
     r_message("this is message from rust")
 }
+
+// #[rustr_export]
+pub fn message_r_printf(){
+    r_printf("this is printf from rust")
+}
+

@@ -24,3 +24,10 @@ pub extern "C" fn rustr_message_message(){
 
  }
 
+#[no_mangle]
+pub extern "C" fn rustr_message_r_printf(){
+
+  message_r_printf();
+
+ }
+
