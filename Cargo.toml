@@ -2,7 +2,7 @@
 name = "rustr"
 version = "0.1.2"
 authors = ["qinwf <mail@qinwenfeng.com>"]
-exclude = ["TODO.md","target","test_scripts.md",".travis.yml"]
+include = ["src/**/*", "Cargo.toml","build.rs", "tests/**/*","examples/**/*"]
 keywords = ["ffi", "r", "statistic","binding", "math"]
 license = "Apache-2.0"
 description = "Rust and R integration"
