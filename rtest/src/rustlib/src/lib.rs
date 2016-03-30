@@ -40,3 +40,8 @@ pub fn dll_is_na(x:c_double)->bool{
 pub fn dll_is_nan(x:c_double)->bool{
     r_isnan(x)
 }
+
+// #[rustr_export]
+pub fn dll_option(x:String)->RResult<SEXP>{
+    r_option::<SEXP>(x.into())
+}

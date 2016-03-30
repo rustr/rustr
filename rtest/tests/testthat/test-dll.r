@@ -14,3 +14,7 @@ expect_true(!rtest:::dll_is_nan(10))
 expect_true(rtest:::dll_is_nan(NaN))
 expect_true(!rtest:::dll_is_nan(Inf))
 expect_true(!rtest:::dll_is_nan(-Inf))
+
+options(happy=T)
+expect_true(rtest:::dll_option("happy"))
+

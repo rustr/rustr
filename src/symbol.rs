@@ -57,6 +57,12 @@ impl<'a, T: SEXPbucket> From<&'a str> for SymbolM<T> {
     }
 }
 
+impl<T: SEXPbucket> From<String> for SymbolM<T> {
+    fn from(x: String) -> SymbolM<T> {
+        unsafe { SymbolM { data: T::new(Rf_install(c_str(&x).as_ptr())) } }
+    }
+}
+
 impl<T: SEXPbucket> From<SymbolM<T>> for CString {
     fn from(x: SymbolM<T>) -> CString {
         unsafe { CStr::from_ptr(R_CHAR(PRINTNAME(x.data.s()))).to_owned() }

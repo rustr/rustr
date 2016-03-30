@@ -12,3 +12,5 @@ dll_r_finite = function(x){ .Call('rtest_dll_r_finite',PACKAGE = 'rtest', x)}
 dll_is_na = function(x){ .Call('rtest_dll_is_na',PACKAGE = 'rtest', x)}
 
 dll_is_nan = function(x){ .Call('rtest_dll_is_nan',PACKAGE = 'rtest', x)}
+
+dll_option = function(x){ .Call('rtest_dll_option',PACKAGE = 'rtest', x)}

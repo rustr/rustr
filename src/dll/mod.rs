@@ -22,11 +22,10 @@ pub fn r_finite(arg1: ::std::os::raw::c_double) -> bool {
 }
 
 use symbol::*;
-use storage::*;
 use traits::*;
 use error::*;
 
-pub fn r_option<T: SEXPbucket,E:RNew>(x: SymbolM<T>) -> RResult<E> {
+pub fn r_option<E:RNew>(x: Symbol) -> RResult<E> {
     unsafe { RNew::rnew(Rf_GetOption1(x.s())) }
 }
 

@@ -64,3 +64,14 @@ pub extern "C" fn rustr_dll_is_nan(x : SEXP)->SEXP{
  return res_sexp;
 }
 
+#[no_mangle]
+pub extern "C" fn rustr_dll_option(x : SEXP)->SEXP{
+
+ let x_ : String = unwrapr!( String::rnew(x) );
+ let res  = unwrapr!( dll_option(x_));
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
