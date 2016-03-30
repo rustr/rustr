@@ -353,6 +353,7 @@ impl UIntoR for $dvec<u8> {
             let rptr = INTEGER(rvec.s());
             let mut index = 0;
             for ii in self.iter() {
+                *rptr.offset(index) = *ii as ::std::os::raw::c_int ;
 				index = index + 1;
             }
             rvec.s()
