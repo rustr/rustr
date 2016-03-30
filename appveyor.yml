@@ -41,7 +41,8 @@ test_script:
   - cargo build --features "date engine random logging"
   - cargo test --verbose --features "date engine random logging"
   - cd rtest
-  - travis-tool.sh run_tests
+  - ../travis-tool.sh run_tests
+  - cd ..
 
 on_failure:
   - travis-tool.sh dump_logs

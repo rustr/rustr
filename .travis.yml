@@ -36,7 +36,9 @@ script:
   - cargo build --features "$FEATURE"
   - cargo test  --verbose --features "$FEATURE"
   - cd rtest
-  - travis-tool.sh run_tests
+  - ../travis-tool.sh run_tests
+  - cd ..
+  
 env:
   global:
     # override the default `--features unstable` used for the nightly branch (optional)
