@@ -15,6 +15,18 @@ dll_is_nan = function(x){ .Call('rtest_dll_is_nan',PACKAGE = 'rtest', x)}
 
 dll_option = function(x){ .Call('rtest_dll_option',PACKAGE = 'rtest', x)}
 
+dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
+
+dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}
+
+mat3 = function(d){ .Call('rtest_mat3',PACKAGE = 'rtest', d)}
+
+mat4 = function(d){ .Call('rtest_mat4',PACKAGE = 'rtest', d)}
+
+charvec_at = function(x,y){ .Call('rtest_charvec_at',PACKAGE = 'rtest', x,y)}
+
+numvec_at = function(x,y){ .Call('rtest_numvec_at',PACKAGE = 'rtest', x,y)}
+
 clist = function(){ .Call('rtest_clist',PACKAGE = 'rtest')}
 
 nlist = function(){ .Call('rtest_nlist',PACKAGE = 'rtest')}
@@ -35,14 +47,6 @@ boolvec = function(){ .Call('rtest_boolvec',PACKAGE = 'rtest')}
 
 nboolvec = function(){ .Call('rtest_nboolvec',PACKAGE = 'rtest')}
 
-dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
+numvec = function(){ .Call('rtest_numvec',PACKAGE = 'rtest')}
 
-dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}
-
-mat3 = function(d){ .Call('rtest_mat3',PACKAGE = 'rtest', d)}
-
-mat4 = function(d){ .Call('rtest_mat4',PACKAGE = 'rtest', d)}
-
-charvec_at = function(x,y){ .Call('rtest_charvec_at',PACKAGE = 'rtest', x,y)}
-
-numvec_at = function(x,y){ .Call('rtest_numvec_at',PACKAGE = 'rtest', x,y)}
+nnumvec = function(){ .Call('rtest_nnumvec',PACKAGE = 'rtest')}

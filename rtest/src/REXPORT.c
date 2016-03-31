@@ -17,6 +17,18 @@ extern SEXP rustr_dll_is_nan(SEXP x);
 SEXP rtest_dll_is_nan(SEXP x){ return(rustr_dll_is_nan(x));}
 extern SEXP rustr_dll_option(SEXP x);
 SEXP rtest_dll_option(SEXP x){ return(rustr_dll_option(x));}
+extern SEXP rustr_dvec(SEXP x);
+SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
+extern SEXP rustr_dmat(SEXP d);
+SEXP rtest_dmat(SEXP d){ return(rustr_dmat(d));}
+extern SEXP rustr_mat3(SEXP d);
+SEXP rtest_mat3(SEXP d){ return(rustr_mat3(d));}
+extern SEXP rustr_mat4(SEXP d);
+SEXP rtest_mat4(SEXP d){ return(rustr_mat4(d));}
+extern SEXP rustr_charvec_at(SEXP x, SEXP y);
+SEXP rtest_charvec_at(SEXP x, SEXP y){ return(rustr_charvec_at(x,y));}
+extern SEXP rustr_numvec_at(SEXP x, SEXP y);
+SEXP rtest_numvec_at(SEXP x, SEXP y){ return(rustr_numvec_at(x,y));}
 extern SEXP rustr_clist();
 SEXP rtest_clist(){ return(rustr_clist());}
 extern SEXP rustr_nlist();
@@ -37,15 +49,7 @@ extern SEXP rustr_boolvec();
 SEXP rtest_boolvec(){ return(rustr_boolvec());}
 extern SEXP rustr_nboolvec();
 SEXP rtest_nboolvec(){ return(rustr_nboolvec());}
-extern SEXP rustr_dvec(SEXP x);
-SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
-extern SEXP rustr_dmat(SEXP d);
-SEXP rtest_dmat(SEXP d){ return(rustr_dmat(d));}
-extern SEXP rustr_mat3(SEXP d);
-SEXP rtest_mat3(SEXP d){ return(rustr_mat3(d));}
-extern SEXP rustr_mat4(SEXP d);
-SEXP rtest_mat4(SEXP d){ return(rustr_mat4(d));}
-extern SEXP rustr_charvec_at(SEXP x, SEXP y);
-SEXP rtest_charvec_at(SEXP x, SEXP y){ return(rustr_charvec_at(x,y));}
-extern SEXP rustr_numvec_at(SEXP x, SEXP y);
-SEXP rtest_numvec_at(SEXP x, SEXP y){ return(rustr_numvec_at(x,y));}
+extern SEXP rustr_numvec();
+SEXP rtest_numvec(){ return(rustr_numvec());}
+extern SEXP rustr_nnumvec();
+SEXP rtest_nnumvec(){ return(rustr_nnumvec());}
