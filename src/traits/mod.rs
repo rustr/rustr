@@ -242,7 +242,7 @@ pub trait FromRObj<T:SEXPbucket, E:ToSEXP> : Sized+NewRObj{
 
 pub trait NewRObj : Sized{
     fn new<E: ToSEXP>(x: E) -> RResult<Self>;
-    unsafe fn unew<E: ToSEXP>(x:E)->Self;
+    unsafe fn unew<E: ToSEXP>(x: E) -> Self;
 }
 
 pub trait Shallow: Sized + ToSEXP {

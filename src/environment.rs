@@ -23,8 +23,8 @@ use std::str::FromStr;
 
 gen_traits_sexp!(EnvirM);
 
-impl<T: SEXPbucket>  FromStr for EnvirM<T> {
-	type Err = RError;
+impl<T: SEXPbucket> FromStr for EnvirM<T> {
+    type Err = RError;
     fn from_str(name: &str) -> RResult<EnvirM<T>> {
         unsafe {
 
@@ -40,9 +40,7 @@ impl<T: SEXPbucket>  FromStr for EnvirM<T> {
                                      R_GlobalEnv);
                 match res {
                     Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
-                    Err(_) => {
-                        rraise("fail to create enviroment")
-                    } 
+                    Err(_) => rraise("fail to create enviroment"), 
                 }
             }
         }
@@ -90,9 +88,7 @@ impl<T: SEXPbucket> EnvirM<T> {
                                  R_GlobalEnv);
             match res {
                 Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
-                Err(e) => {
-                    rraise(e)
-                } 
+                Err(e) => rraise(e), 
             }
         }
     }
@@ -102,32 +98,23 @@ impl<T: SEXPbucket> EnvirM<T> {
     fn is_user_database(&self) -> bool {
         unsafe {
             OBJECT(self.data.s()) == 1 &&
-                   Rf_inherits(self.data.s(), c_str("UserDefinedDatabase").as_ptr()) ==
-                   Rboolean::TRUE
+            Rf_inherits(self.data.s(), c_str("UserDefinedDatabase").as_ptr()) == Rboolean::TRUE
         }
     }
     pub fn global() -> EnvirM<NoProtect> {
-        unsafe {
-            EnvirM { data: NoProtect::new(R_GlobalEnv) }
-        }
+        unsafe { EnvirM { data: NoProtect::new(R_GlobalEnv) } }
     }
 
     pub fn empty() -> EnvirM<T> {
-        unsafe {
-            EnvirM { data: T::new(R_EmptyEnv) }
-        }
+        unsafe { EnvirM { data: T::new(R_EmptyEnv) } }
     }
 
     pub fn base() -> EnvirM<T> {
-        unsafe {
-            EnvirM { data: T::new(R_BaseEnv) }
-        }
+        unsafe { EnvirM { data: T::new(R_BaseEnv) } }
     }
 
     pub fn base_namespace() -> EnvirM<T> {
-        unsafe {
-            EnvirM { data: T::new(R_BaseNamespace) }
-        }
+        unsafe { EnvirM { data: T::new(R_BaseNamespace) } }
     }
     pub fn namespace_env(package: &str) -> RResult<EnvirM<T>> {
         unsafe {
@@ -136,17 +123,13 @@ impl<T: SEXPbucket> EnvirM<T> {
                                  R_GlobalEnv);
             match env {
                 Ok(aa) => Ok(EnvirM { data: T::new(aa) }),
-                Err(e) => {
-                    rraise(e)
-                } 
+                Err(e) => rraise(e), 
             }
         }
 
     }
     pub fn parent(&self) -> EnvirM<T> {
-        unsafe {
-            EnvirM { data: T::new(ENCLOS(self.data.s())) }
-        }
+        unsafe { EnvirM { data: T::new(ENCLOS(self.data.s())) } }
     }
 
     /**
@@ -175,7 +158,7 @@ impl<T: SEXPbucket> EnvirM<T> {
                 }
             } else {
 
-               D::rnew(R_lsInternal(self.data.s(), all))
+                D::rnew(R_lsInternal(self.data.s(), all))
             }
         }
     }
@@ -224,9 +207,7 @@ impl<T: SEXPbucket> EnvirM<T> {
         if !self.exists(name) {
             return rraise(format!("no such binding: {:?}", name));
         }
-        unsafe {
-            Ok(R_BindingIsLocked(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE)
-        }
+        unsafe { Ok(R_BindingIsLocked(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE) }
 
     }
 
@@ -251,19 +232,14 @@ impl<T: SEXPbucket> EnvirM<T> {
 
     }
     pub fn is_locked(&self) -> bool {
-        unsafe {
-            R_EnvironmentIsLocked(self.data.s()) == Rboolean::TRUE
-        }
+        unsafe { R_EnvironmentIsLocked(self.data.s()) == Rboolean::TRUE }
     }
 
     pub fn binding_is_active(&self, name: &str) -> RResult<bool> {
         if !self.exists(name) {
             return rraise(format!("no such binding: {:?}", name));
         }
-        unsafe {
-            Ok(R_BindingIsActive(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE)
-
-        }
+        unsafe { Ok(R_BindingIsActive(Symbol::from(name).s(), self.data.s()) == Rboolean::TRUE) }
     }
     pub fn lock(&self, bindings: Rboolean) {
         unsafe {

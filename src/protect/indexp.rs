@@ -37,7 +37,7 @@ impl Armor {
         R_ProtectWithIndex(x, index);
     }
 
-    pub fn reassign<T: ToSEXP>(& mut self, x: T) -> & SEXP {
+    pub fn reassign<T: ToSEXP>(&mut self, x: T) -> &SEXP {
         unsafe {
             self.data = x.s();
             R_Reprotect(self.data, self.index);

@@ -20,42 +20,48 @@ impl<T: SEXPbucket> RListM<T> {
         Ok(RListM { data: T::new(x) })
     }
     pub fn alloc(x: usize) -> RListM<T> {
-        RListM { data: T::new(unsafe { Rf_allocVector(VECSXP, x  as R_xlen_t) }) }
+        RListM { data: T::new(unsafe { Rf_allocVector(VECSXP, x as R_xlen_t) }) }
     }
     pub fn alloc_matrix(x: usize, y: usize) -> RListM<T> {
-        RListM { data: T::new(unsafe { Rf_allocMatrix(VECSXP, x as ::std::os::raw::c_int, y as ::std::os::raw::c_int) }) }
+        RListM {
+            data: T::new(unsafe {
+                Rf_allocMatrix(VECSXP,
+                               x as ::std::os::raw::c_int,
+                               y as ::std::os::raw::c_int)
+            }),
+        }
     }
     pub fn at(&self, ind: usize) -> Option<SEXP> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind  as R_xlen_t {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t {
                 return None;
             }
-            Some(VECTOR_ELT(self.s(), ind  as R_xlen_t))
+            Some(VECTOR_ELT(self.s(), ind as R_xlen_t))
         }
     }
     pub unsafe fn uat(&self, ind: usize) -> SEXP {
-        VECTOR_ELT(self.s(), ind  as R_xlen_t)
+        VECTOR_ELT(self.s(), ind as R_xlen_t)
     }
     pub unsafe fn uset<TT: ToSEXP>(&mut self, ind: usize, value: TT) {
         SET_VECTOR_ELT(self.s(), ind as R_xlen_t, value.s());
     }
     pub fn set<TT: ToSEXP>(&mut self, ind: usize, value: TT) -> RResult<()> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind as R_xlen_t  {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t {
                 return rraise("index out of bound");
             }
-            SET_VECTOR_ELT(self.s(), ind  as R_xlen_t, value.s());
+            SET_VECTOR_ELT(self.s(), ind as R_xlen_t, value.s());
             Ok(())
         }
     }
     pub fn range(&self, ind: Range<usize>) -> Option<Vec<SEXP>> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind.end  as R_xlen_t {
+            if Rf_xlength(self.s()) <= ind.end as R_xlen_t {
                 return None;
             }
             let mut vecs = Vec::with_capacity((ind.end - ind.start) as usize);
             for ii in ind {
-                vecs.push(VECTOR_ELT(self.s(), ii  as R_xlen_t));
+                vecs.push(VECTOR_ELT(self.s(), ii as R_xlen_t));
             }
             Some(vecs)
         }

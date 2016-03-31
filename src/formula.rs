@@ -17,7 +17,7 @@ pub type RFml = RFmlM<Preserve>;
 
 gen_traits_sexp!(RFmlM);
 
-impl<T: SEXPbucket> FromStr for RFmlM<T>{
+impl<T: SEXPbucket> FromStr for RFmlM<T> {
     type Err = RError;
     fn from_str(string: &str) -> RResult<Self> {
         let char = try!(CString::new(string));

@@ -25,7 +25,7 @@ use symbol::*;
 use traits::*;
 use error::*;
 
-pub fn r_option<E:RNew>(x: Symbol) -> RResult<E> {
+pub fn r_option<E: RNew>(x: Symbol) -> RResult<E> {
     unsafe { RNew::rnew(Rf_GetOption1(x.s())) }
 }
 

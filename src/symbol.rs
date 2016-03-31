@@ -19,22 +19,16 @@ impl<T: SEXPbucket> SymbolM<T> {
         unsafe {
             let types = RTYPEOF(x.s());
             match types {
-                SYMSXP => {
-                    Ok(SymbolM { data: T::new(x.s()) })
-                }
+                SYMSXP => Ok(SymbolM { data: T::new(x.s()) }),
 
-                CHARSXP => {
-                    Ok(SymbolM { data: (T::new(Rf_installChar(x.s()))) })
-                }
+                CHARSXP => Ok(SymbolM { data: (T::new(Rf_installChar(x.s()))) }),
 
                 STRSXP => {
                     // todo: check that there is at least one element
                     Ok(SymbolM { data: T::new(Rf_installChar(STRING_ELT(x.s(), 0))) })
                 }
 
-                _ => {
-                    rraise("cannot convert to symbol (SYMSXP)")
-                }
+                _ => rraise("cannot convert to symbol (SYMSXP)"),
             }
         }
     }

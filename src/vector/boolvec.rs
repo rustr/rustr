@@ -17,10 +17,16 @@ impl<T: SEXPbucket> BoolVecM<T> {
         Ok(BoolVecM { data: T::new(x) })
     }
     pub fn alloc(x: usize) -> BoolVecM<T> {
-        BoolVecM { data: T::new(unsafe { Rf_allocVector(LGLSXP, x  as R_xlen_t) }) }
+        BoolVecM { data: T::new(unsafe { Rf_allocVector(LGLSXP, x as R_xlen_t) }) }
     }
     pub fn alloc_matrix(x: usize, y: usize) -> BoolVecM<T> {
-        BoolVecM { data: T::new(unsafe { Rf_allocMatrix(LGLSXP, x as ::std::os::raw::c_int, y as ::std::os::raw::c_int) }) }
+        BoolVecM {
+            data: T::new(unsafe {
+                Rf_allocMatrix(LGLSXP,
+                               x as ::std::os::raw::c_int,
+                               y as ::std::os::raw::c_int)
+            }),
+        }
     }
     pub fn at(&self, ind: usize) -> Option<bool> {
         unsafe {
@@ -42,11 +48,11 @@ impl<T: SEXPbucket> BoolVecM<T> {
     }
     pub fn set(&mut self, ind: usize, value: bool) -> RResult<()> {
         unsafe {
-            if Rf_xlength(self.s()) < ind as R_xlen_t  {
+            if Rf_xlength(self.s()) < ind as R_xlen_t {
                 return rraise("index out of bound");
             }
             let ptr = LOGICAL(self.s());
-            *ptr.offset(ind  as isize) = value as c_int;
+            *ptr.offset(ind as isize) = value as c_int;
             Ok(())
         }
     }
@@ -106,7 +112,7 @@ impl<T: SEXPbucket> From<BoolVecM<T>> for Vec<bool> {
 
 impl<T: SEXPbucket> URNew for BoolVecM<T> {
     unsafe fn urnew(x: SEXP) -> Self {
-		BoolVecM{ data: T::new(x) }
+        BoolVecM { data: T::new(x) }
     }
 }
 

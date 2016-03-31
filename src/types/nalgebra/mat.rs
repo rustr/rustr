@@ -3,9 +3,9 @@ use ::rtype::*;
 use error::*;
 use traits::*;
 use ::protect::stackp::*;
-use nalgebra::{DMat,Mat1,Mat2,Mat3,Mat4,Mat5,Mat6};
+use nalgebra::{DMat, Mat1, Mat2, Mat3, Mat4, Mat5, Mat6};
 use num::Zero;
-//use ::rprint;
+// use ::rprint;
 
 macro_rules! gen_fromr_vec {
     ($sexp:ident; $sexpget:ident; $err:expr; $into:ty ; $($x:ty),*) => (
@@ -70,13 +70,13 @@ gen_fromr_vec!(REALSXP; REAL; "numeric vector"; ::std::os::raw::c_double; f64,f3
 // u8
 
 impl RNew for DMat<u8> {
-    fn rnew(x:SEXP) -> RResult<DMat<u8>> {
+    fn rnew(x: SEXP) -> RResult<DMat<u8>> {
         unsafe {
             if RTYPEOF(x) != INTSXP && RTYPEOF(x) != RAWSXP {
                 return rerror(REKind::NotCompatible("expecting a INTSXP or RAWSXP".into()));
             }
             if !x.is_matrix() {
-                return rerror(REKind::NotCompatible(concat!("expecting a ","matrix").into()));
+                return rerror(REKind::NotCompatible(concat!("expecting a ", "matrix").into()));
             }
             Ok(Self::urnew(x))
         }
@@ -84,46 +84,50 @@ impl RNew for DMat<u8> {
 }
 
 impl URNew for DMat<u8> {
-    unsafe fn urnew(x:SEXP) -> DMat<u8> {
-			let res = Shield::new(Rf_getAttrib(x, R_DimSymbol));
-            let dims = Vec::urnew(res.s());
-            let mut vecs: DMat<u8> = DMat::new_uninitialized(dims[0],dims[1]);
-            if RTYPEOF(x) ==INTSXP{
-	            let rptr = INTEGER(x);
+    unsafe fn urnew(x: SEXP) -> DMat<u8> {
+        let res = Shield::new(Rf_getAttrib(x, R_DimSymbol));
+        let dims = Vec::urnew(res.s());
+        let mut vecs: DMat<u8> = DMat::new_uninitialized(dims[0], dims[1]);
+        if RTYPEOF(x) == INTSXP {
+            let rptr = INTEGER(x);
             for ii in 0..dims[1] {
-            	for jj in 0..dims[0]{
-					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[0]+ii) as isize) as u8;
-            	}
+                for jj in 0..dims[0] {
+                    vecs[(jj as usize, ii as usize)] =
+                        *rptr.offset((jj * dims[0] + ii) as isize) as u8;
+                }
             }
-	             return vecs;
-            }
-            let rptr = RAW(x);
-            for ii in 0..dims[1] {
-            	for jj in 0..dims[0]{
-					vecs[(jj as usize, ii as usize)] = *rptr.offset((jj*dims[1]+ii) as isize) as u8;
-            	}
-            }
-            vecs
+            return vecs;
         }
+        let rptr = RAW(x);
+        for ii in 0..dims[1] {
+            for jj in 0..dims[0] {
+                vecs[(jj as usize, ii as usize)] = *rptr.offset((jj * dims[1] + ii) as isize) as u8;
+            }
+        }
+        vecs
     }
+}
 
 
 impl UIntoR for DMat<u8> {
     unsafe fn uintor(&self) -> SEXP {
-            let rvec = Shield::new(Rf_allocMatrix(INTSXP, self.nrows()  as ::std::os::raw::c_int ,self.ncols()  as ::std::os::raw::c_int));
-            let rptr = INTEGER(rvec.s());
-            for ii in 0..self.ncols() {
-            	for jj in 0..self.nrows(){
-					*rptr.offset((jj*self.ncols()+ii) as isize) = self[(jj as usize, ii as usize)] as ::std::os::raw::c_int;
-            	}
+        let rvec = Shield::new(Rf_allocMatrix(INTSXP,
+                                              self.nrows() as ::std::os::raw::c_int,
+                                              self.ncols() as ::std::os::raw::c_int));
+        let rptr = INTEGER(rvec.s());
+        for ii in 0..self.ncols() {
+            for jj in 0..self.nrows() {
+                *rptr.offset((jj * self.ncols() + ii) as isize) =
+                    self[(jj as usize, ii as usize)] as ::std::os::raw::c_int;
             }
-            rvec.s()
+        }
+        rvec.s()
     }
 }
 
 impl IntoR for DMat<u8> {
     fn intor(&self) -> RResult<SEXP> {
-        unsafe{Ok(Self::uintor(self))}
+        unsafe { Ok(Self::uintor(self)) }
     }
 }
 
@@ -282,6 +286,9 @@ impl IntoR for $dvec<u8> {
     )
 }
 
-gen_fromr_vec1_u8!(Mat1;1);gen_fromr_vec1_u8!(Mat2;2);gen_fromr_vec1_u8!(Mat3;3);
-gen_fromr_vec1_u8!(Mat4;4);gen_fromr_vec1_u8!(Mat5;5);gen_fromr_vec1_u8!(Mat6;6);
-
+gen_fromr_vec1_u8!(Mat1;1);
+gen_fromr_vec1_u8!(Mat2;2);
+gen_fromr_vec1_u8!(Mat3;3);
+gen_fromr_vec1_u8!(Mat4;4);
+gen_fromr_vec1_u8!(Mat5;5);
+gen_fromr_vec1_u8!(Mat6;6);

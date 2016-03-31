@@ -9,10 +9,10 @@ pub struct Shelter {
     nprotected: ::std::os::raw::c_int,
 }
 
-impl Default for Shelter{
-	fn default()->Self{
-	 	Shelter { nprotected: 0 }
-	}
+impl Default for Shelter {
+    fn default() -> Self {
+        Shelter { nprotected: 0 }
+    }
 }
 
 impl Shelter {

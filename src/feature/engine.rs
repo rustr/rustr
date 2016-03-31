@@ -11,7 +11,7 @@ use dll::*;
 use traits::*;
 use error::REKind::*;
 
-pub static mut REng:bool = false;
+pub static mut REng: bool = false;
 
 pub struct REngine {
     verbose_m: bool, // constructor, or setter
@@ -53,27 +53,27 @@ impl REngine {
 
         if let Err(_) = env::var("R_HOME") {
 
-            if cfg!(target_os= "windows"){
+            if cfg!(target_os = "windows") {
 
-            unsafe {
+                unsafe {
 
-                let xs: String = try!(CStr::from_ptr(get_R_HOME()).to_owned().into_string());
+                    let xs: String = try!(CStr::from_ptr(get_R_HOME()).to_owned().into_string());
 
-                env::set_var("R_HOME", &xs)
+                    env::set_var("R_HOME", &xs)
 
+                }
+
+            } else {
+                panic!("can not find R_HOME")
             }
-
-        	} else{
-        		panic!("can not find R_HOME")
-        	}
         }
         let d = unsafe { Rf_initEmbeddedR(dd as c_int, args.as_ptr() as *mut *mut c_char) };
 
-//        if cfg!(unix) {
-//            unsafe {
-//                R_CStackLimit = ::std::os::raw::c_ulong::max_value();
-//            }
-//        }
+        //        if cfg!(unix) {
+        //            unsafe {
+        //                R_CStackLimit = ::std::os::raw::c_ulong::max_value();
+        //            }
+        //        }
 
         if d == 0 {
             return rraise("can not create REngine.");

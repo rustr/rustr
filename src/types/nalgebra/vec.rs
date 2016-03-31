@@ -3,7 +3,8 @@ use ::rtype::*;
 use error::*;
 use traits::*;
 use ::protect::stackp::*;
-use nalgebra::{DVec,Vec1,Vec2,Vec3,Vec4,Vec5,Vec6,DVec1,DVec2,DVec3,DVec4,DVec5,DVec6,Iterable,IterableMut};
+use nalgebra::{DVec, Vec1, Vec2, Vec3, Vec4, Vec5, Vec6, DVec1, DVec2, DVec3, DVec4, DVec5, DVec6,
+               Iterable, IterableMut};
 use num::Zero;
 
 macro_rules! gen_fromr_vec {
@@ -67,7 +68,7 @@ gen_fromr_vec!(REALSXP; REAL; "numeric vector"; ::std::os::raw::c_double; f64,f3
 // u8
 
 impl RNew for DVec<u8> {
-    fn rnew(x:SEXP) -> RResult<DVec<u8>> {
+    fn rnew(x: SEXP) -> RResult<DVec<u8>> {
         unsafe {
             if RTYPEOF(x) != INTSXP && RTYPEOF(x) != RAWSXP {
                 return rerror(REKind::NotCompatible("expecting a INTSXP or RAWSXP".into()));
@@ -78,43 +79,43 @@ impl RNew for DVec<u8> {
 }
 
 impl URNew for DVec<u8> {
-    unsafe fn urnew(x:SEXP) -> DVec<u8> {
-            let lens = Rf_xlength(x);
-            let mut vecs: DVec<u8> = DVec::new_uninitialized(lens as usize);
-            if RTYPEOF(x) ==INTSXP{
-	            let rptr = INTEGER(x);
-	            for ii in 0..lens {
-	                vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
-	            }
-	             return vecs;
-            }
-            let rptr = RAW(x);
+    unsafe fn urnew(x: SEXP) -> DVec<u8> {
+        let lens = Rf_xlength(x);
+        let mut vecs: DVec<u8> = DVec::new_uninitialized(lens as usize);
+        if RTYPEOF(x) == INTSXP {
+            let rptr = INTEGER(x);
             for ii in 0..lens {
-				vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
+                vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
             }
-            vecs
+            return vecs;
         }
+        let rptr = RAW(x);
+        for ii in 0..lens {
+            vecs[ii as usize] = *rptr.offset(ii as isize) as u8;
+        }
+        vecs
     }
+}
 
 
 impl UIntoR for DVec<u8> {
     unsafe fn uintor(&self) -> SEXP {
         let size_x = self.len();
-            let rvec = Shield::new(Rf_allocVector(INTSXP, size_x as R_xlen_t));
-            let rptr = INTEGER(rvec.s());
-            let mut index = 0;
-            for ii in self.iter() {
-                *rptr.offset(index) = *ii as ::std::os::raw::c_int ;
-				index = index + 1;
-            }
-            rvec.s()
+        let rvec = Shield::new(Rf_allocVector(INTSXP, size_x as R_xlen_t));
+        let rptr = INTEGER(rvec.s());
+        let mut index = 0;
+        for ii in self.iter() {
+            *rptr.offset(index) = *ii as ::std::os::raw::c_int;
+            index = index + 1;
+        }
+        rvec.s()
 
     }
 }
 
 impl IntoR for DVec<u8> {
     fn intor(&self) -> RResult<SEXP> {
-        unsafe{Ok(Self::uintor(self))}
+        unsafe { Ok(Self::uintor(self)) }
     }
 }
 
@@ -253,8 +254,12 @@ impl IntoR for $dvec<u8> {
     )
 }
 
-gen_fromr_vec1_u8!(Vec1;1);gen_fromr_vec1_u8!(Vec2;2);gen_fromr_vec1_u8!(Vec3;3);
-gen_fromr_vec1_u8!(Vec4;4);gen_fromr_vec1_u8!(Vec5;5);gen_fromr_vec1_u8!(Vec6;6);
+gen_fromr_vec1_u8!(Vec1;1);
+gen_fromr_vec1_u8!(Vec2;2);
+gen_fromr_vec1_u8!(Vec3;3);
+gen_fromr_vec1_u8!(Vec4;4);
+gen_fromr_vec1_u8!(Vec5;5);
+gen_fromr_vec1_u8!(Vec6;6);
 
 
 macro_rules! gen_fromr_dvec1 {
@@ -373,6 +378,9 @@ impl IntoR for $dvec<u8> {
 }
 
 
-gen_fromr_dvec1_u8!(DVec1;1);gen_fromr_dvec1_u8!(DVec2;2);gen_fromr_dvec1_u8!(DVec3;3);
-gen_fromr_dvec1_u8!(DVec4;4);gen_fromr_dvec1_u8!(DVec5;5);gen_fromr_dvec1_u8!(DVec6;6);
-
+gen_fromr_dvec1_u8!(DVec1;1);
+gen_fromr_dvec1_u8!(DVec2;2);
+gen_fromr_dvec1_u8!(DVec3;3);
+gen_fromr_dvec1_u8!(DVec4;4);
+gen_fromr_dvec1_u8!(DVec5;5);
+gen_fromr_dvec1_u8!(DVec6;6);

@@ -25,14 +25,12 @@ pub type RFun = RFunM<Preserve>;
 impl<T: SEXPbucket> NewRObj for RFunM<T> {
     fn new<E: ToSEXP>(x: E) -> RResult<Self> {
         match unsafe { RTYPEOF(x.s()) } {
-            CLOSXP | SPECIALSXP | BUILTINSXP => unsafe {
-                 Ok(RFunM { data: T::new(x.s()) })
-            },
-            _ => rraise("cannot convert to function")
+            CLOSXP | SPECIALSXP | BUILTINSXP => unsafe { Ok(RFunM { data: T::new(x.s()) }) },
+            _ => rraise("cannot convert to function"),
         }
     }
     unsafe fn unew<E: ToSEXP>(x: E) -> Self {
-			RFunM { data: T::new(x.s()) }
+        RFunM { data: T::new(x.s()) }
     }
 }
 
@@ -100,10 +98,8 @@ impl<T: SEXPbucket> RFunM<T> {
 impl<T: SEXPbucket> RNew for RFunM<T> {
     fn rnew(x: SEXP) -> RResult<Self> {
         match unsafe { RTYPEOF(x.s()) } {
-            CLOSXP | SPECIALSXP | BUILTINSXP => {
-                Ok(RFunM { data: T::new(unsafe { x.s() }) })
-            }
-            _ =>  rraise("cannot convert to function"),
+            CLOSXP | SPECIALSXP | BUILTINSXP => Ok(RFunM { data: T::new(unsafe { x.s() }) }),
+            _ => rraise("cannot convert to function"),
         }
     }
 }

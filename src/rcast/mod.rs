@@ -94,17 +94,11 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
 
             } // end m1 c2
 
-            VECSXP => {
-                convert_using_rfunction(x, "as.list")
-            }
+            VECSXP => convert_using_rfunction(x, "as.list"),
 
-            EXPRSXP => {
-                convert_using_rfunction(x, "as.expression")
-            }
+            EXPRSXP => convert_using_rfunction(x, "as.expression"),
 
-            LANGSXP => {
-               convert_using_rfunction(x, "as.call")
-            }
+            LANGSXP => convert_using_rfunction(x, "as.call"),
 
             LISTSXP => {
                 match RTYPEOF(x) {
@@ -113,9 +107,7 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
                         SET_RTYPEOF(y.s(), LISTSXP);
                         Ok(y.s())
                     }
-                    _ => {
-                        convert_using_rfunction(x, "as.pairlist")
-                    }
+                    _ => convert_using_rfunction(x, "as.pairlist"),
                 }
             }
 
@@ -130,7 +122,7 @@ pub fn r_true_cast(x: SEXP, into: Rtype) -> SEXPResult {
 pub fn r_cast(x: SEXP, into: Rtype) -> SEXPResult {
     unsafe {
         if RTYPEOF(x) == into {
-             Ok(x)
+            Ok(x)
         } else {
             // #ifdef RCPP_WARN_ON_COERCE
             let result = match r_true_cast(x, into) {

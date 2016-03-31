@@ -29,16 +29,16 @@ impl IntoR for bool {
 
 impl UIntoR for bool {
     unsafe fn uintor(&self) -> SEXP {
-       let rvec = Shield::new(Rf_allocVector(LGLSXP, 1));
-	   let ptr = LOGICAL(rvec.s());
-       *ptr.offset(0) = *self as ::std::os::raw::c_int;
-       rvec.s()
+        let rvec = Shield::new(Rf_allocVector(LGLSXP, 1));
+        let ptr = LOGICAL(rvec.s());
+        *ptr.offset(0) = *self as ::std::os::raw::c_int;
+        rvec.s()
     }
 }
 
 impl RNew for bool {
-    fn rnew(x:SEXP) -> RResult<bool> {
-		if RTYPEOF(x) != LGLSXP && unsafe {Rf_xlength(x) == 1} {
+    fn rnew(x: SEXP) -> RResult<bool> {
+        if RTYPEOF(x) != LGLSXP && unsafe { Rf_xlength(x) == 1 } {
             return rerror(NotCompatible("expecting a boolean".into()));
         }
         unsafe { Ok(Self::urnew(x)) }
@@ -46,7 +46,7 @@ impl RNew for bool {
 }
 
 impl URNew for bool {
-    unsafe fn urnew(x:SEXP) -> bool {
+    unsafe fn urnew(x: SEXP) -> bool {
         let ptr = LOGICAL(x);
         *ptr.offset(0) == 1
     }
@@ -698,9 +698,9 @@ impl<'a> IntoR for &'a str {
 
 impl<'a> UIntoR for &'a str {
     unsafe fn uintor(&self) -> SEXP {
-            let rvec = Shield::new(Rf_allocVector(STRSXP, 1));
-            SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(c_str(*self).as_ptr()));
-            rvec.s()
+        let rvec = Shield::new(Rf_allocVector(STRSXP, 1));
+        SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(c_str(*self).as_ptr()));
+        rvec.s()
     }
 }
 

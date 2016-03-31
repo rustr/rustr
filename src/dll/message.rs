@@ -48,10 +48,9 @@ pub fn r_warn(arg1: &str) {
 pub fn r_warn_user(arg1: &str) -> RResult<()> {
     let cstr = try!(CString::new(arg1));
     unsafe {
-        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("warning").as_ptr()),
-                                           cstr.uintor()));
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("warning").as_ptr()), cstr.uintor()));
         let _ = Rf_eval(warning.s(), R_GlobalEnv);
-         Ok(())
+        Ok(())
     }
 }
 
@@ -66,10 +65,9 @@ pub fn r_message(arg1: &str) {
 pub fn r_message_user(arg1: &str) -> RResult<()> {
     let cstr = try!(CString::new(arg1));
     unsafe {
-        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("message").as_ptr()),
-                                           cstr.uintor()));
+        let warning = Shield::new(Rf_lang2(::Rf_install(c_str("message").as_ptr()), cstr.uintor()));
         let _ = Rf_eval(warning.s(), R_GlobalEnv);
-         Ok(())
+        Ok(())
     }
 }
 
