@@ -52,7 +52,8 @@ env:
     - FEATURE="date engine random logging"
 
 after_failure:
-  - ./travis-tool.sh dump_logs
+  - cd rtest
+  - ../travis-tool.sh dump_logs
 
 notifications:
   email:

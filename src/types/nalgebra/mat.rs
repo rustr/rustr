@@ -42,7 +42,7 @@ impl URNew for DMat<$x> {
 
 impl UIntoR for DMat<$x> {
     unsafe fn uintor(&self) -> SEXP {
-            let rvec = Shield::new(Rf_allocMatrix($sexp, self.nrows() as R_xlen_t, self.ncols() as R_xlen_t));
+            let rvec = Shield::new(Rf_allocMatrix($sexp, self.nrows() as ::std::os::raw::c_int, self.ncols()  as ::std::os::raw::c_int));
             let rptr = $sexpget(rvec.s());
             for ii in 0..self.ncols() {
             	for jj in 0..self.nrows(){
@@ -110,7 +110,7 @@ impl URNew for DMat<u8> {
 
 impl UIntoR for DMat<u8> {
     unsafe fn uintor(&self) -> SEXP {
-            let rvec = Shield::new(Rf_allocMatrix(INTSXP, self.nrows()  as R_xlen_t,self.ncols()  as R_xlen_t));
+            let rvec = Shield::new(Rf_allocMatrix(INTSXP, self.nrows()  as ::std::os::raw::c_int ,self.ncols()  as ::std::os::raw::c_int));
             let rptr = INTEGER(rvec.s());
             for ii in 0..self.ncols() {
             	for jj in 0..self.nrows(){
