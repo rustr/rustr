@@ -6,6 +6,7 @@ use ::protect::stackp::*;
 use std::ffi::{CString, CStr};
 use std::collections::{HashMap, VecDeque, BTreeMap, BTreeSet, BinaryHeap, HashSet, LinkedList};
 use REKind::*;
+use util::*;
 
 impl IntoR for () {
     fn intor(&self) -> RResult<SEXP> {
@@ -692,6 +693,14 @@ impl<'a> IntoR for &'a str {
             SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(try!(CString::new(*self)).as_ptr()));
             Ok(rvec.s())
         }
+    }
+}
+
+impl<'a> UIntoR for &'a str {
+    unsafe fn uintor(&self) -> SEXP {
+            let rvec = Shield::new(Rf_allocVector(STRSXP, 1));
+            SET_STRING_ELT(rvec.s(), 0, Rf_mkChar(c_str(*self).as_ptr()));
+            rvec.s()
     }
 }
 

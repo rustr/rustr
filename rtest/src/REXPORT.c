@@ -21,6 +21,10 @@ extern SEXP rustr_clist();
 SEXP rtest_clist(){ return(rustr_clist());}
 extern SEXP rustr_nlist();
 SEXP rtest_nlist(){ return(rustr_nlist());}
+extern SEXP rustr_uclist();
+SEXP rtest_uclist(){ return(rustr_uclist());}
+extern SEXP rustr_unlist();
+SEXP rtest_unlist(){ return(rustr_unlist());}
 extern SEXP rustr_dvec(SEXP x);
 SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
 extern SEXP rustr_dmat(SEXP d);

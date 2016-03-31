@@ -66,3 +66,14 @@ pub fn nlist()-> RResult<RList>{
     Ok(rlist!(sd ~ "sd", Sd ~ "Sd"))
 }
 
+// #[rustr_export]
+pub fn uclist()-> RList{
+
+    unsafe{urlist!("sd","Sd")}
+}
+
+// #[rustr_export]
+pub fn unlist()-> RList{
+
+    unsafe{urlist!(sd ~ "sd", Sd ~ "Sd")}
+}

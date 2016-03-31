@@ -236,5 +236,25 @@ macro_rules! urlist {
       )*      
       res
       }
+    };
+        ($($id:ident ~ $tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = RList::alloc(size as R_xlen_t);
+	  let mut name = CharVec::alloc(size as R_xlen_t);
+
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1, $tts.uintor());
+      		name.uset(x-1, stringify!($id));
+      )*
+	
+	  Rf_setAttrib(res.s(), R_NamesSymbol,name.s());
+      res
+      }
     }
 }

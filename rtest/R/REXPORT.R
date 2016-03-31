@@ -19,6 +19,10 @@ clist = function(){ .Call('rtest_clist',PACKAGE = 'rtest')}
 
 nlist = function(){ .Call('rtest_nlist',PACKAGE = 'rtest')}
 
+uclist = function(){ .Call('rtest_uclist',PACKAGE = 'rtest')}
+
+unlist = function(){ .Call('rtest_unlist',PACKAGE = 'rtest')}
+
 dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
 
 dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}
