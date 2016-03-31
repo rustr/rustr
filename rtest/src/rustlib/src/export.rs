@@ -156,6 +156,26 @@ pub extern "C" fn rustr_uncharvec()->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_boolvec()->SEXP{
+
+  let res  = boolvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_nboolvec()->SEXP{
+
+  let res  = nboolvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_dvec(x : SEXP)->SEXP{
 
  let x_ : DVec<f64> = unwrapr!( DVec::rnew(x) );
@@ -193,6 +213,32 @@ pub extern "C" fn rustr_mat4(d : SEXP)->SEXP{
 
  let d_ : Mat4<f64> = unwrapr!( Mat4::rnew(d) );
  let res  = mat4(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_charvec_at(x : SEXP, y : SEXP)->SEXP{
+
+ let x_ : CharVec = unwrapr!( CharVec::rnew(x) );
+
+let y_ : usize = unwrapr!( usize::rnew(y) );
+ let res  = unwrapr!( charvec_at(x_, y_));
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_numvec_at(x : SEXP, y : SEXP)->SEXP{
+
+ let x_ : NumVec = unwrapr!( NumVec::rnew(x) );
+
+let y_ : usize = unwrapr!( usize::rnew(y) );
+ let res  = numvec_at(x_, y_);
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 

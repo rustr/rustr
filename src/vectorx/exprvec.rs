@@ -19,43 +19,43 @@ impl<T: SEXPbucket> ExprVecM<T> {
         }
         Ok(ExprVecM { data: T::new(x) })
     }
-    pub fn alloc(x: R_xlen_t) -> ExprVecM<T> {
-        ExprVecM { data: T::new(unsafe { Rf_allocVector(EXPRSXP, x) }) }
+    pub fn alloc(x: usize) -> ExprVecM<T> {
+        ExprVecM { data: T::new(unsafe { Rf_allocVector(EXPRSXP, x  as R_xlen_t) }) }
     }
     pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> ExprVecM<T> {
         ExprVecM { data: T::new(unsafe { Rf_allocMatrix(EXPRSXP, x, y) }) }
     }
-    pub fn at(&self, ind: R_xlen_t) -> Option<SEXP> {
+    pub fn at(&self, ind: usize) -> Option<SEXP> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind {
+            if Rf_xlength(self.s()) <= ind  as R_xlen_t{
                 return None;
             }
-            Some(VECTOR_ELT(self.s(), ind))
+            Some(VECTOR_ELT(self.s(), ind  as R_xlen_t))
         }
     }
-    pub unsafe fn uat(&self, ind: R_xlen_t) -> SEXP {
-        VECTOR_ELT(self.s(), ind)
+    pub unsafe fn uat(&self, ind: usize) -> SEXP {
+        VECTOR_ELT(self.s(), ind  as R_xlen_t)
     }
-    pub unsafe fn uset<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) {
-        SET_VECTOR_ELT(self.s(), ind, value.expr());
+    pub unsafe fn uset<TT: ToExpr>(&mut self, ind: usize, value: TT) {
+        SET_VECTOR_ELT(self.s(), ind as R_xlen_t, value.expr());
     }
-    pub fn set<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
+    pub fn set<TT: ToExpr>(&mut self, ind: usize, value: TT) -> RResult<()> {
         unsafe {
-            if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t  {
                 return rraise("index out of bound");
             }
-            SET_VECTOR_ELT(self.s(), ind - 1, value.expr());
+            SET_VECTOR_ELT(self.s(), (ind - 1) as R_xlen_t, value.expr());
             Ok(())
         }
     }
-    pub fn range(&self, ind: Range<R_xlen_t>) -> Option<Vec<SEXP>> {
+    pub fn range(&self, ind: Range<usize>) -> Option<Vec<SEXP>> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind.end {
+            if Rf_xlength(self.s()) <= ind.end  as R_xlen_t{
                 return None;
             }
             let mut vecs = Vec::with_capacity((ind.end - ind.start) as usize);
             for ii in ind {
-                vecs.push(VECTOR_ELT(self.s(), ii));
+                vecs.push(VECTOR_ELT(self.s(), ii as R_xlen_t));
             }
             Some(vecs)
         }

@@ -33,6 +33,10 @@ extern SEXP rustr_ucharvec();
 SEXP rtest_ucharvec(){ return(rustr_ucharvec());}
 extern SEXP rustr_uncharvec();
 SEXP rtest_uncharvec(){ return(rustr_uncharvec());}
+extern SEXP rustr_boolvec();
+SEXP rtest_boolvec(){ return(rustr_boolvec());}
+extern SEXP rustr_nboolvec();
+SEXP rtest_nboolvec(){ return(rustr_nboolvec());}
 extern SEXP rustr_dvec(SEXP x);
 SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
 extern SEXP rustr_dmat(SEXP d);
@@ -41,3 +45,7 @@ extern SEXP rustr_mat3(SEXP d);
 SEXP rtest_mat3(SEXP d){ return(rustr_mat3(d));}
 extern SEXP rustr_mat4(SEXP d);
 SEXP rtest_mat4(SEXP d){ return(rustr_mat4(d));}
+extern SEXP rustr_charvec_at(SEXP x, SEXP y);
+SEXP rtest_charvec_at(SEXP x, SEXP y){ return(rustr_charvec_at(x,y));}
+extern SEXP rustr_numvec_at(SEXP x, SEXP y);
+SEXP rtest_numvec_at(SEXP x, SEXP y){ return(rustr_numvec_at(x,y));}

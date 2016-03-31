@@ -17,11 +17,11 @@ impl<T: SEXPbucket> $NumVecM<T> {
             }
         Ok($NumVecM { data: T::new(x.clone()) })
     }
-	pub fn alloc(x: R_xlen_t)->$NumVecM<T>{
-    	$NumVecM { data: T::new(unsafe{Rf_allocVector($REALSXP,x)}) }
+	pub fn alloc(x: usize)->$NumVecM<T>{
+    	$NumVecM { data: T::new(unsafe{Rf_allocVector($REALSXP,x as R_xlen_t)}) }
     }
-    pub fn alloc_matrix(x: ::std::os::raw::c_int,y: ::std::os::raw::c_int)->$NumVecM<T>{
-    	$NumVecM { data: T::new(unsafe{Rf_allocMatrix($REALSXP,x ,y)}) }
+    pub fn alloc_matrix(x: usize,y: usize)->$NumVecM<T>{
+    	$NumVecM { data: T::new(unsafe{Rf_allocMatrix($REALSXP,x as ::std::os::raw::c_int,y as ::std::os::raw::c_int)}) }
     }
 	pub fn at(&self,  ind: usize) -> Option<$Rbyte> {
 		unsafe{
@@ -34,11 +34,11 @@ impl<T: SEXPbucket> $NumVecM<T> {
     }
 	pub fn set(&mut self,  ind: usize, value: $Rbyte) -> RResult<()> {
 		unsafe{
-        if Rf_xlength(self.s())<ind  as R_xlen_t || ind ==0 {
+        if Rf_xlength(self.s())<=ind  as R_xlen_t {
         	return rraise("index out of bound");
         }
         let ptr = $RAW(self.s());
-        * ptr.offset((ind-1) as isize)  = value as $Rbyte;
+        * ptr.offset((ind) as isize)  = value as $Rbyte;
         Ok(())}
     }
 	pub unsafe fn uat(&self, ind: usize) -> $Rbyte {

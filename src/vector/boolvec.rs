@@ -16,13 +16,12 @@ impl<T: SEXPbucket> BoolVecM<T> {
         }
         Ok(BoolVecM { data: T::new(x) })
     }
-    pub fn alloc(x: R_xlen_t) -> BoolVecM<T> {
-        BoolVecM { data: T::new(unsafe { Rf_allocVector(LGLSXP, x) }) }
+    pub fn alloc(x: usize) -> BoolVecM<T> {
+        BoolVecM { data: T::new(unsafe { Rf_allocVector(LGLSXP, x  as R_xlen_t) }) }
     }
-    pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> BoolVecM<T> {
-        BoolVecM { data: T::new(unsafe { Rf_allocMatrix(LGLSXP, x, y) }) }
+    pub fn alloc_matrix(x: usize, y: usize) -> BoolVecM<T> {
+        BoolVecM { data: T::new(unsafe { Rf_allocMatrix(LGLSXP, x as ::std::os::raw::c_int, y as ::std::os::raw::c_int) }) }
     }
-
     pub fn at(&self, ind: usize) -> Option<bool> {
         unsafe {
             if Rf_xlength(self.s()) <= ind as R_xlen_t {
@@ -43,11 +42,11 @@ impl<T: SEXPbucket> BoolVecM<T> {
     }
     pub fn set(&mut self, ind: usize, value: bool) -> RResult<()> {
         unsafe {
-            if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
+            if Rf_xlength(self.s()) < ind as R_xlen_t  {
                 return rraise("index out of bound");
             }
             let ptr = LOGICAL(self.s());
-            *ptr.offset((ind - 1) as isize) = value as c_int;
+            *ptr.offset(ind  as isize) = value as c_int;
             Ok(())
         }
     }
@@ -177,5 +176,48 @@ impl<T: SEXPbucket> ExactSizeIterator for BoolVecIter<T> {
     // We already have the number of iterations, so we can use it directly.
     fn len(&self) -> usize {
         self.size as usize
+    }
+}
+
+#[macro_export]
+macro_rules! boolvec {
+    ($($tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = BoolVec::alloc(size as usize);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1 as usize, $tts);
+      		
+      )*      
+	}
+      res
+      }
+    };
+    
+    ($($id:ident ~ $tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = BoolVec::alloc(size as usize);
+	  let mut name = CharVec::alloc(size as usize);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1 as usize , $tts);
+      		name.uset(x-1, stringify!($id));
+      )*
+	}
+	  unsafe{Rf_setAttrib(res.s(), R_NamesSymbol,name.s());}
+      res
+      }
     }
 }

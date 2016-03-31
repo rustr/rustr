@@ -5,9 +5,13 @@ extern crate nalgebra;
 pub mod export;
 pub use rustr::*;
 pub use std::os::raw::*;
-
+//
 pub mod nalg;
 pub use self::nalg::*;
+pub mod robj;
+pub use self::robj::*;
+//
+
 pub use nalgebra::{DVec,Vec3,Vec4,DVec1,DVec2,DVec3};
 pub use nalgebra::{DMat,Mat3,Mat4};
 pub use rustr::types::nalgebra::*;
@@ -104,5 +108,21 @@ pub fn ucharvec()-> CharVec{
 pub fn uncharvec()-> CharVec{
 
     unsafe{ucharvec!(sd ~ "sd", Sd ~ "Sd")}
+}
+
+// boolvec
+
+// charvec
+
+// #[rustr_export]
+pub fn boolvec()-> BoolVec{
+
+    {boolvec!(true,false)}
+}
+
+// #[rustr_export]
+pub fn nboolvec()-> BoolVec{
+
+    {boolvec!(sd ~ true, Sd ~ false)}
 }
 

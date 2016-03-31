@@ -19,43 +19,43 @@ impl<T: SEXPbucket> RListM<T> {
 
         Ok(RListM { data: T::new(x) })
     }
-    pub fn alloc(x: R_xlen_t) -> RListM<T> {
-        RListM { data: T::new(unsafe { Rf_allocVector(VECSXP, x) }) }
+    pub fn alloc(x: usize) -> RListM<T> {
+        RListM { data: T::new(unsafe { Rf_allocVector(VECSXP, x  as R_xlen_t) }) }
     }
-    pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> RListM<T> {
-        RListM { data: T::new(unsafe { Rf_allocMatrix(VECSXP, x, y) }) }
+    pub fn alloc_matrix(x: usize, y: usize) -> RListM<T> {
+        RListM { data: T::new(unsafe { Rf_allocMatrix(VECSXP, x as ::std::os::raw::c_int, y as ::std::os::raw::c_int) }) }
     }
-    pub fn at(&self, ind: R_xlen_t) -> Option<SEXP> {
+    pub fn at(&self, ind: usize) -> Option<SEXP> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind {
+            if Rf_xlength(self.s()) <= ind  as R_xlen_t {
                 return None;
             }
-            Some(VECTOR_ELT(self.s(), ind))
+            Some(VECTOR_ELT(self.s(), ind  as R_xlen_t))
         }
     }
-    pub unsafe fn uat(&self, ind: R_xlen_t) -> SEXP {
-        VECTOR_ELT(self.s(), ind)
+    pub unsafe fn uat(&self, ind: usize) -> SEXP {
+        VECTOR_ELT(self.s(), ind  as R_xlen_t)
     }
-    pub unsafe fn uset<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) {
-        SET_VECTOR_ELT(self.s(), ind, value.s());
+    pub unsafe fn uset<TT: ToSEXP>(&mut self, ind: usize, value: TT) {
+        SET_VECTOR_ELT(self.s(), ind as R_xlen_t, value.s());
     }
-    pub fn set<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
+    pub fn set<TT: ToSEXP>(&mut self, ind: usize, value: TT) -> RResult<()> {
         unsafe {
-            if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t  {
                 return rraise("index out of bound");
             }
-            SET_VECTOR_ELT(self.s(), ind - 1, value.s());
+            SET_VECTOR_ELT(self.s(), ind  as R_xlen_t, value.s());
             Ok(())
         }
     }
-    pub fn range(&self, ind: Range<R_xlen_t>) -> Option<Vec<SEXP>> {
+    pub fn range(&self, ind: Range<usize>) -> Option<Vec<SEXP>> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind.end {
+            if Rf_xlength(self.s()) <= ind.end  as R_xlen_t {
                 return None;
             }
             let mut vecs = Vec::with_capacity((ind.end - ind.start) as usize);
             for ii in ind {
-                vecs.push(VECTOR_ELT(self.s(), ii));
+                vecs.push(VECTOR_ELT(self.s(), ii  as R_xlen_t));
             }
             Some(vecs)
         }
@@ -183,7 +183,7 @@ macro_rules! rlist {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = RList::alloc(size as R_xlen_t);
+      let mut res = RList::alloc(size as usize);
 	  unsafe{
       let mut x = 0;
       $(
@@ -202,8 +202,8 @@ macro_rules! rlist {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = RList::alloc(size as R_xlen_t);
-	  let mut name = CharVec::alloc(size as R_xlen_t);
+      let mut res = RList::alloc(size as usize);
+	  let mut name = CharVec::alloc(size as usize);
 	  unsafe{
       let mut x = 0;
       $(
@@ -226,7 +226,7 @@ macro_rules! urlist {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = RList::alloc(size as R_xlen_t);
+      let mut res = RList::alloc(size as usize);
       let mut x = 0;
       $(
 			// skip a warning message 
@@ -242,8 +242,8 @@ macro_rules! urlist {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = RList::alloc(size as R_xlen_t);
-	  let mut name = CharVec::alloc(size as R_xlen_t);
+      let mut res = RList::alloc(size as usize);
+	  let mut name = CharVec::alloc(size as usize);
 
       let mut x = 0;
       $(

@@ -18,57 +18,91 @@ impl<T: SEXPbucket> CharVecM<T> {
         }
         Ok(CharVecM { data: T::new(x) })
     }
-    pub fn alloc(x: R_xlen_t) -> CharVecM<T> {
-        CharVecM { data: T::new(unsafe { Rf_allocVector(STRSXP, x) }) }
+    pub fn alloc(x: usize) -> CharVecM<T> {
+        CharVecM { data: T::new(unsafe { Rf_allocVector(STRSXP, x as R_xlen_t) }) }
     }
-    pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> CharVecM<T> {
-        CharVecM { data: T::new(unsafe { Rf_allocMatrix(STRSXP, x, y) }) }
-    }
-    pub fn atc(&self, ind: R_xlen_t) -> Option<CString> {
-        unsafe {
-            if Rf_xlength(self.s()) <= ind {
-                return None;
-            }
-            Some(CString::urnew(STRING_ELT(self.s(), ind)))
+    pub fn alloc_matrix(x: usize, y: usize) -> CharVecM<T> {
+        CharVecM {
+            data: T::new(unsafe {
+                Rf_allocMatrix(STRSXP,
+                               x as ::std::os::raw::c_int,
+                               y as ::std::os::raw::c_int)
+            }),
         }
     }
-    pub unsafe fn uat(&self, ind: R_xlen_t) -> Result<String, IntoStringError> {
-        CString::urnew(STRING_ELT(self.s(), ind)).into_string()
+    pub unsafe fn uat(&self, ind: usize) -> Result<String, IntoStringError> {
+        CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ind as R_xlen_t))).to_owned().into_string()
     }
-    pub unsafe fn uset(&mut self, ind: R_xlen_t, value: &str) {
-        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkChar(c_str(value).as_ptr())).s())
+    pub unsafe fn uset(&mut self, ind: usize, value: &str) {
+        SET_STRING_ELT(self.s(),
+                       ind as R_xlen_t,
+                       Shield::new(Rf_mkChar(c_str(value).as_ptr())).s())
     }
-    pub unsafe fn uatc(&self, ind: R_xlen_t) -> CString {
-        CString::urnew(STRING_ELT(self.s(), ind))
-    }
-    pub unsafe fn usetc(&mut self, ind: R_xlen_t, value: CString) {
-        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkChar(value.as_ptr())).s())
-    }
-    pub fn setc(&mut self, ind: R_xlen_t, value: CString) -> RResult<()> {
+    pub fn at(&self, ind: usize) -> RResult<String> {
         unsafe {
-            if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t {
+                return rraise("index out of bound");
+            }
+            Ok(try!(CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ind as R_xlen_t)))
+                        .to_owned()
+                        .into_string()))
+        }
+    }
+    pub fn set(&mut self, ind: usize, value: &str) -> RResult<()> {
+        unsafe {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t {
+                return rraise("index out of bound");
+            }
+
+            SET_STRING_ELT(self.s(),
+                           ind as R_xlen_t,
+                           Shield::new(Rf_mkChar(c_str(value).as_ptr())).s());
+            Ok(())
+        }
+    }
+    pub unsafe fn atc(&self, ind: usize) -> RResult<CString> {
+        if Rf_xlength(self.s()) <= ind as R_xlen_t {
+            return rraise("index out of bound");
+        }
+        Ok(CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ind as R_xlen_t))).to_owned())
+    }
+    pub unsafe fn uatc(&self, ind: usize) -> CString {
+        CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ind as R_xlen_t))).to_owned()
+    }
+    pub unsafe fn usetc(&mut self, ind: usize, value: CString) {
+        SET_STRING_ELT(self.s(),
+                       ind as R_xlen_t,
+                       Shield::new(Rf_mkChar(value.as_ptr())).s())
+    }
+    pub fn setc(&mut self, ind: usize, value: CString) -> RResult<()> {
+        unsafe {
+            if Rf_xlength(self.s()) <= ind as R_xlen_t {
                 return rraise("index out of bound");
             }
             SET_STRING_ELT(self.s(),
-                           ind - 1,
+                           ind as R_xlen_t,
                            Shield::new(Rf_mkChar(value.as_ptr())).s());
             Ok(())
         }
     }
-    pub fn range(&self, ind: Range<R_xlen_t>) -> Option<Vec<CString>> {
+    pub fn range(&self, ind: Range<usize>) -> Option<Vec<CString>> {
         unsafe {
-            if Rf_xlength(self.s()) <= ind.end {
+            if Rf_xlength(self.s()) <= ind.end as R_xlen_t {
                 return None;
             }
             let mut vecs = Vec::with_capacity((ind.end - ind.start) as usize);
             for ii in ind {
-                vecs.push(CString::urnew(STRING_ELT(self.s(), ii)));
+                vecs.push(CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ii as R_xlen_t))).to_owned());
             }
             Some(vecs)
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = if from_last { Rboolean::TRUE} else { Rboolean::FALSE };
+        let last = if from_last {
+            Rboolean::TRUE
+        } else {
+            Rboolean::FALSE
+        };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }
 }
@@ -82,9 +116,7 @@ impl<T: SEXPbucket, E: Into<CString> + Clone> From<Vec<E>> for CharVecM<T> {
             let rvec = Shield::new(Rf_allocVector(STRSXP, size_x as R_xlen_t));
             let mut xs = 0;
             for ii in x {
-                SET_STRING_ELT(rvec.s(),
-                               xs,
-                               Shield::new(Rf_mkChar(ii.into().as_ptr())).s());
+                SET_STRING_ELT(rvec.s(), xs, Shield::new(Rf_mkChar(ii.into().as_ptr())).s());
                 xs += 1;
             }
             CharVecM { data: T::new(rvec.s()) }
@@ -105,9 +137,9 @@ impl<T: SEXPbucket> From<CharVecM<T>> for Vec<CString> {
     }
 }
 
-impl<T: SEXPbucket> URNew for  CharVecM<T> {
+impl<T: SEXPbucket> URNew for CharVecM<T> {
     unsafe fn urnew(x: SEXP) -> Self {
-		CharVecM{ data: T::new(x) }
+        CharVecM { data: T::new(x) }
     }
 }
 
@@ -183,7 +215,7 @@ macro_rules! charvec {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = CharVec::alloc(size as R_xlen_t);
+      let mut res = CharVec::alloc(size as usize);
 	  unsafe{
       let mut x = 0;
       $(
@@ -202,8 +234,8 @@ macro_rules! charvec {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = CharVec::alloc(size as R_xlen_t);
-	  let mut name = CharVec::alloc(size as R_xlen_t);
+      let mut res = CharVec::alloc(size as usize);
+	  let mut name = CharVec::alloc(size as usize);
 	  unsafe{
       let mut x = 0;
       $(
@@ -226,7 +258,7 @@ macro_rules! ucharvec {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = CharVec::alloc(size as R_xlen_t);
+      let mut res = CharVec::alloc(size as usize);
       let mut x = 0;
       $(
 			// skip a warning message 
@@ -242,8 +274,8 @@ macro_rules! ucharvec {
       {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
       	
       // init 
-      let mut res = CharVec::alloc(size as R_xlen_t);
-	  let mut name = CharVec::alloc(size as R_xlen_t);
+      let mut res = CharVec::alloc(size as usize);
+	  let mut name = CharVec::alloc(size as usize);
 
       let mut x = 0;
       $(
@@ -258,4 +290,3 @@ macro_rules! ucharvec {
       }
     }
 }
-
