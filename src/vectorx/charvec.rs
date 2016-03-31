@@ -36,13 +36,13 @@ impl<T: SEXPbucket> CharVecM<T> {
         CString::urnew(STRING_ELT(self.s(), ind)).into_string()
     }
     pub unsafe fn uset(&mut self, ind: R_xlen_t, value: &str) {
-        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkString(c_str(value).as_ptr())).s())
+        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkChar(c_str(value).as_ptr())).s())
     }
     pub unsafe fn uatc(&self, ind: R_xlen_t) -> CString {
         CString::urnew(STRING_ELT(self.s(), ind))
     }
     pub unsafe fn usetc(&mut self, ind: R_xlen_t, value: CString) {
-        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkString(value.as_ptr())).s())
+        SET_STRING_ELT(self.s(), ind, Shield::new(Rf_mkChar(value.as_ptr())).s())
     }
     pub fn setc(&mut self, ind: R_xlen_t, value: CString) -> RResult<()> {
         unsafe {
@@ -51,7 +51,7 @@ impl<T: SEXPbucket> CharVecM<T> {
             }
             SET_STRING_ELT(self.s(),
                            ind - 1,
-                           Shield::new(Rf_mkString(value.as_ptr())).s());
+                           Shield::new(Rf_mkChar(value.as_ptr())).s());
             Ok(())
         }
     }
@@ -84,7 +84,7 @@ impl<T: SEXPbucket, E: Into<CString> + Clone> From<Vec<E>> for CharVecM<T> {
             for ii in x {
                 SET_STRING_ELT(rvec.s(),
                                xs,
-                               Shield::new(Rf_mkString(ii.into().as_ptr())).s());
+                               Shield::new(Rf_mkChar(ii.into().as_ptr())).s());
                 xs += 1;
             }
             CharVecM { data: T::new(rvec.s()) }

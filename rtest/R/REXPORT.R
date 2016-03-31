@@ -15,6 +15,10 @@ dll_is_nan = function(x){ .Call('rtest_dll_is_nan',PACKAGE = 'rtest', x)}
 
 dll_option = function(x){ .Call('rtest_dll_option',PACKAGE = 'rtest', x)}
 
+clist = function(){ .Call('rtest_clist',PACKAGE = 'rtest')}
+
+nlist = function(){ .Call('rtest_nlist',PACKAGE = 'rtest')}
+
 dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
 
 dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}

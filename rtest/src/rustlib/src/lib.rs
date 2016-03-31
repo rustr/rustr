@@ -53,3 +53,16 @@ pub fn dll_is_nan(x:c_double)->bool{
 pub fn dll_option(x:String)->RResult<SEXP>{
     r_option::<SEXP>(x.into())
 }
+
+// #[rustr_export]
+pub fn clist()-> RResult<RList>{
+
+    Ok(rlist!("sd","Sd"))
+}
+
+// #[rustr_export]
+pub fn nlist()-> RResult<RList>{
+
+    Ok(rlist!(sd ~ "sd", Sd ~ "Sd"))
+}
+

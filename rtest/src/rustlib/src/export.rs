@@ -76,6 +76,26 @@ pub extern "C" fn rustr_dll_option(x : SEXP)->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_clist()->SEXP{
+
+  let res  = unwrapr!( clist());
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_nlist()->SEXP{
+
+  let res  = unwrapr!( nlist());
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_dvec(x : SEXP)->SEXP{
 
  let x_ : DVec<f64> = unwrapr!( DVec::rnew(x) );

@@ -7,7 +7,6 @@ use error::*;
 use error::REKind::NotCompatible;
 use std::ops::Range;
 
-
 pub type RList = RListM<Preserve>;
 
 
@@ -62,7 +61,11 @@ impl<T: SEXPbucket> RListM<T> {
         }
     }
     pub fn is_duplicated(&self, from_last: bool) -> R_xlen_t {
-        let last = if from_last { Rboolean::TRUE} else { Rboolean::FALSE };
+        let last = if from_last {
+            Rboolean::TRUE
+        } else {
+            Rboolean::FALSE
+        };
         unsafe { Rf_any_duplicated(self.s(), last) }
     }
 }
@@ -99,7 +102,7 @@ impl<T: SEXPbucket, E: UIntoR + Clone> From<Vec<E>> for RListM<T> {
 
 impl<T: SEXPbucket> URNew for RListM<T> {
     unsafe fn urnew(x: SEXP) -> Self {
-		RListM { data: T::new(x) }
+        RListM { data: T::new(x) }
     }
 }
 
@@ -165,5 +168,73 @@ impl<T: SEXPbucket> ExactSizeIterator for RListIter<T> {
     // We already have the number of iterations, so we can use it directly.
     fn len(&self) -> usize {
         self.size as usize
+    }
+}
+#[macro_export]
+macro_rules! replace_expr {
+    ($_t:expr, $sub:expr) => {$sub};
+}
+
+
+#[macro_export]
+macro_rules! rlist {
+    ($($tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = RList::alloc(size as R_xlen_t);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1, try!($tts.intor()));
+      		
+      )*      
+	}
+      res
+      }
+    };
+    
+    ($($id:ident ~ $tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = RList::alloc(size as R_xlen_t);
+	  let mut name = CharVec::alloc(size as R_xlen_t);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1, try!($tts.intor()));
+      		name.uset(x-1, stringify!($id));
+      )*
+	}
+	  unsafe{Rf_setAttrib(res.s(), R_NamesSymbol,name.s());}
+      res
+      }
+    }
+}
+
+#[macro_export]
+macro_rules! urlist {
+    ($($tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = RList::alloc(size as R_xlen_t);
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.uset(x-1, $tts.uintor());
+      		
+      )*      
+      res
+      }
     }
 }

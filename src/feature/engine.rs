@@ -6,7 +6,6 @@ use std::os::raw::*;
 use error::*;
 use std::env;
 use rtype::*;
-use Enum_Unnamed37::*;
 use util::*;
 use dll::*;
 use traits::*;
@@ -119,7 +118,7 @@ impl REngine {
     }
     pub fn eval<D: RNew>(&mut self, code: &str) -> RResult<D> {
         let mut ans: SEXP = unsafe { R_NilValue };
-        let mut status: Enum_Unnamed37 = Enum_Unnamed37::PARSE_OK;
+        let mut status: ParseStatus = ParseStatus::PARSE_OK;
         let mut error_occurred: c_int = 0;
         unsafe {
             self.code = code.into();
@@ -132,7 +131,7 @@ impl REngine {
 
             match status {
 
-                PARSE_OK => {
+                ParseStatus::PARSE_OK => {
                     // Loop is needed here as EXPSEXP might be of length > 1
                     for i in 0..Rf_xlength(cmdexpr) {
                         ans = R_tryEval(VECTOR_ELT(cmdexpr, i),
@@ -152,8 +151,8 @@ impl REngine {
                     }
                     self.code = "".into();
                 }
-                PARSE_INCOMPLETE => {}
-                PARSE_NULL => {
+                ParseStatus::PARSE_INCOMPLETE => {}
+                ParseStatus::PARSE_NULL => {
                     if self.verbose_m {
                         r_warn(&format!("%s: ParseStatus is null ({:?})\n", status));
                     }
@@ -162,7 +161,7 @@ impl REngine {
                     return rerror(EvalError("PARSE_NULL".into()));
 
                 }
-                PARSE_ERROR => {
+                ParseStatus::PARSE_ERROR => {
                     if self.verbose_m {
                         r_warn(&format!("Parse Error: \"{:?}\"\n", code));
                     }
@@ -171,7 +170,7 @@ impl REngine {
                     return rerror(EvalError("PARSE_ERROR".into()));
 
                 }
-                PARSE_EOF => {
+                ParseStatus::PARSE_EOF => {
                     if self.verbose_m {
                         r_warn(&format!("ParseStatus is eof ({:?})\n", status));
                     }

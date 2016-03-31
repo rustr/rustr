@@ -1191,14 +1191,14 @@ pub type Sint = ::std::os::raw::c_int;
 #[derive(Clone, Copy)]
 #[repr(u32)]
 #[derive(Debug)]
-pub enum Enum_Unnamed37 {
+pub enum ParseStatus {
     PARSE_NULL = 0,
     PARSE_OK = 1,
     PARSE_INCOMPLETE = 2,
     PARSE_ERROR = 3,
     PARSE_EOF = 4,
 }
-pub type ParseStatus = Enum_Unnamed37;
+//pub type ParseStatus = Enum_Unnamed37;
 pub type DL_FUNC =
     ::std::option::Option<extern "C" fn() -> *mut ::std::os::raw::c_void>;
 pub type R_NativePrimitiveArgType = ::std::os::raw::c_uint;
