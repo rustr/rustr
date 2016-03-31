@@ -53,3 +53,7 @@ extern SEXP rustr_numvec();
 SEXP rtest_numvec(){ return(rustr_numvec());}
 extern SEXP rustr_nnumvec();
 SEXP rtest_nnumvec(){ return(rustr_nnumvec());}
+extern SEXP rustr_intvec();
+SEXP rtest_intvec(){ return(rustr_intvec());}
+extern SEXP rustr_nintvec();
+SEXP rtest_nintvec(){ return(rustr_nintvec());}

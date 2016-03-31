@@ -24,3 +24,6 @@ expect_equal(0, rtest:::numvec_at(c(5,1,2,3),4L))
 
 expect_equal(c(1,2), rtest:::numvec())
 expect_equal(structure(c(1, 3), .Names = c("sd", "Sd")), rtest:::nnumvec())
+
+expect_equal(c(1L,2L), rtest:::intvec())
+expect_equal(structure(c(1L, 3L), .Names = c("sd", "Sd")), rtest:::nintvec())

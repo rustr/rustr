@@ -265,3 +265,23 @@ pub extern "C" fn rustr_nnumvec()->SEXP{
  return res_sexp;
 }
 
+#[no_mangle]
+pub extern "C" fn rustr_intvec()->SEXP{
+
+  let res  = intvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_nintvec()->SEXP{
+
+  let res  = nintvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+

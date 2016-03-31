@@ -50,3 +50,7 @@ nboolvec = function(){ .Call('rtest_nboolvec',PACKAGE = 'rtest')}
 numvec = function(){ .Call('rtest_numvec',PACKAGE = 'rtest')}
 
 nnumvec = function(){ .Call('rtest_nnumvec',PACKAGE = 'rtest')}
+
+intvec = function(){ .Call('rtest_intvec',PACKAGE = 'rtest')}
+
+nintvec = function(){ .Call('rtest_nintvec',PACKAGE = 'rtest')}

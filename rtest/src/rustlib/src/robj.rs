@@ -89,3 +89,15 @@ pub fn nnumvec()-> NumVec{
 
     {numvec!(sd ~ 1.0, Sd ~ 3.0)}
 }
+
+// #[rustr_export]
+pub fn intvec()-> IntVec{
+
+    {intvec!(1,2)}
+}
+
+// #[rustr_export]
+pub fn nintvec()-> IntVec{
+
+    {intvec!(sd ~ 1, Sd ~ 3)}
+}
