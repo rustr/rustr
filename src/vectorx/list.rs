@@ -26,7 +26,7 @@ impl<T: SEXPbucket> RListM<T> {
     pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> RListM<T> {
         RListM { data: T::new(unsafe { Rf_allocMatrix(VECSXP, x, y) }) }
     }
-    pub fn atc(&self, ind: R_xlen_t) -> Option<SEXP> {
+    pub fn at(&self, ind: R_xlen_t) -> Option<SEXP> {
         unsafe {
             if Rf_xlength(self.s()) <= ind {
                 return None;
@@ -34,13 +34,13 @@ impl<T: SEXPbucket> RListM<T> {
             Some(VECTOR_ELT(self.s(), ind))
         }
     }
-    pub unsafe fn uatc(&self, ind: R_xlen_t) -> SEXP {
+    pub unsafe fn uat(&self, ind: R_xlen_t) -> SEXP {
         VECTOR_ELT(self.s(), ind)
     }
-    pub unsafe fn usetc<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) {
+    pub unsafe fn uset<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) {
         SET_VECTOR_ELT(self.s(), ind, value.s());
     }
-    pub fn setc<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
+    pub fn set<TT: ToSEXP>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
         unsafe {
             if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
                 return rraise("index out of bound");

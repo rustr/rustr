@@ -25,7 +25,7 @@ impl<T: SEXPbucket> ExprVecM<T> {
     pub fn alloc_matrix(x: ::std::os::raw::c_int, y: ::std::os::raw::c_int) -> ExprVecM<T> {
         ExprVecM { data: T::new(unsafe { Rf_allocMatrix(EXPRSXP, x, y) }) }
     }
-    pub fn atc(&self, ind: R_xlen_t) -> Option<SEXP> {
+    pub fn at(&self, ind: R_xlen_t) -> Option<SEXP> {
         unsafe {
             if Rf_xlength(self.s()) <= ind {
                 return None;
@@ -33,13 +33,13 @@ impl<T: SEXPbucket> ExprVecM<T> {
             Some(VECTOR_ELT(self.s(), ind))
         }
     }
-    pub unsafe fn uatc(&self, ind: R_xlen_t) -> SEXP {
+    pub unsafe fn uat(&self, ind: R_xlen_t) -> SEXP {
         VECTOR_ELT(self.s(), ind)
     }
-    pub unsafe fn usetc<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) {
+    pub unsafe fn uset<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) {
         SET_VECTOR_ELT(self.s(), ind, value.expr());
     }
-    pub fn setc<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
+    pub fn set<TT: ToExpr>(&mut self, ind: R_xlen_t, value: TT) -> RResult<()> {
         unsafe {
             if Rf_xlength(self.s()) < ind as R_xlen_t || ind == 0 {
                 return rraise("index out of bound");
