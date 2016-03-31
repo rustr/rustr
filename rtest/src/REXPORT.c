@@ -25,6 +25,14 @@ extern SEXP rustr_uclist();
 SEXP rtest_uclist(){ return(rustr_uclist());}
 extern SEXP rustr_unlist();
 SEXP rtest_unlist(){ return(rustr_unlist());}
+extern SEXP rustr_charvec();
+SEXP rtest_charvec(){ return(rustr_charvec());}
+extern SEXP rustr_ncharvec();
+SEXP rtest_ncharvec(){ return(rustr_ncharvec());}
+extern SEXP rustr_ucharvec();
+SEXP rtest_ucharvec(){ return(rustr_ucharvec());}
+extern SEXP rustr_uncharvec();
+SEXP rtest_uncharvec(){ return(rustr_uncharvec());}
 extern SEXP rustr_dvec(SEXP x);
 SEXP rtest_dvec(SEXP x){ return(rustr_dvec(x));}
 extern SEXP rustr_dmat(SEXP d);

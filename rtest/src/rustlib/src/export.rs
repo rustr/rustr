@@ -116,6 +116,46 @@ pub extern "C" fn rustr_unlist()->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_charvec()->SEXP{
+
+  let res  = unwrapr!( charvec());
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_ncharvec()->SEXP{
+
+  let res  = unwrapr!( ncharvec());
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_ucharvec()->SEXP{
+
+  let res  = ucharvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_uncharvec()->SEXP{
+
+  let res  = uncharvec();
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_dvec(x : SEXP)->SEXP{
 
  let x_ : DVec<f64> = unwrapr!( DVec::rnew(x) );

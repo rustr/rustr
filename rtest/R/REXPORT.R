@@ -23,6 +23,14 @@ uclist = function(){ .Call('rtest_uclist',PACKAGE = 'rtest')}
 
 unlist = function(){ .Call('rtest_unlist',PACKAGE = 'rtest')}
 
+charvec = function(){ .Call('rtest_charvec',PACKAGE = 'rtest')}
+
+ncharvec = function(){ .Call('rtest_ncharvec',PACKAGE = 'rtest')}
+
+ucharvec = function(){ .Call('rtest_ucharvec',PACKAGE = 'rtest')}
+
+uncharvec = function(){ .Call('rtest_uncharvec',PACKAGE = 'rtest')}
+
 dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
 
 dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}

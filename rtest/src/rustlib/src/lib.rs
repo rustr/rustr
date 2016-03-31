@@ -54,6 +54,8 @@ pub fn dll_option(x:String)->RResult<SEXP>{
     r_option::<SEXP>(x.into())
 }
 
+// vector ----------------------------
+
 // #[rustr_export]
 pub fn clist()-> RResult<RList>{
 
@@ -77,3 +79,30 @@ pub fn unlist()-> RList{
 
     unsafe{urlist!(sd ~ "sd", Sd ~ "Sd")}
 }
+
+// charvec
+
+// #[rustr_export]
+pub fn charvec()-> RResult<CharVec>{
+
+    Ok(charvec!("sd","Sd"))
+}
+
+// #[rustr_export]
+pub fn ncharvec()-> RResult<CharVec>{
+
+    Ok(charvec!(sd ~ "sd", Sd ~ "Sd"))
+}
+
+// #[rustr_export]
+pub fn ucharvec()-> CharVec{
+
+    unsafe{ucharvec!("sd","Sd".into())}
+}
+
+// #[rustr_export]
+pub fn uncharvec()-> CharVec{
+
+    unsafe{ucharvec!(sd ~ "sd", Sd ~ "Sd")}
+}
+

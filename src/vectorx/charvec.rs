@@ -175,3 +175,87 @@ impl<T: SEXPbucket> ExactSizeIterator for CharVecIter<T> {
         self.size as usize
     }
 }
+
+#[macro_export]
+macro_rules! charvec {
+    ($($tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = CharVec::alloc(size as R_xlen_t);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.usetc(x-1, try!(::std::ffi::CString::new($tts)));
+      		
+      )*      
+	}
+      res
+      }
+    };
+    
+    ($($id:ident ~ $tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = CharVec::alloc(size as R_xlen_t);
+	  let mut name = CharVec::alloc(size as R_xlen_t);
+	  unsafe{
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.usetc(x-1,try!(::std::ffi::CString::new($tts)));
+      		name.uset(x-1, stringify!($id));
+      )*
+	}
+	  unsafe{Rf_setAttrib(res.s(), R_NamesSymbol,name.s());}
+      res
+      }
+    }
+}
+
+#[macro_export]
+macro_rules! ucharvec {
+    ($($tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = CharVec::alloc(size as R_xlen_t);
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.usetc(x-1, $crate::util::c_str($tts));
+      		
+      )*      
+      res
+      }
+    };
+        ($($id:ident ~ $tts:expr),*) => {
+      // count macro parameter learn from rust macro book	
+      {let size = <[()]>::len(&[$(replace_expr!($tts, ())),*]);
+      	
+      // init 
+      let mut res = CharVec::alloc(size as R_xlen_t);
+	  let mut name = CharVec::alloc(size as R_xlen_t);
+
+      let mut x = 0;
+      $(
+			// skip a warning message 
+			x += 1;
+      		res.usetc(x-1, $crate::util::c_str($tts));
+      		name.uset(x-1, stringify!($id));
+      )*
+	
+	  Rf_setAttrib(res.s(), R_NamesSymbol,name.s());
+      res
+      }
+    }
+}
+
