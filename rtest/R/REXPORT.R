@@ -35,6 +35,8 @@ uclist = function(){ .Call('rtest_uclist',PACKAGE = 'rtest')}
 
 unlist = function(){ .Call('rtest_unlist',PACKAGE = 'rtest')}
 
+list_data_frame = function(x){ .Call('rtest_list_data_frame',PACKAGE = 'rtest', x)}
+
 charvec = function(){ .Call('rtest_charvec',PACKAGE = 'rtest')}
 
 ncharvec = function(){ .Call('rtest_ncharvec',PACKAGE = 'rtest')}

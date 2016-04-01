@@ -65,8 +65,6 @@ pub mod reference;
 pub mod rmath;
 pub mod environment;
 pub mod rfunction;
-// TODO: RList
-pub mod dataframe;
 
 pub mod dll;
 pub use dll::*;

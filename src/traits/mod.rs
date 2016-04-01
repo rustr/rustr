@@ -26,7 +26,7 @@ pub use self::name::*;
 pub use self::rfield::*;
 pub use self::dim::*;
 pub use self::dimname::*;
-
+use util::c_str;
 pub trait Args: Named {}
 
 // RFun and n_("",&sdsd)
@@ -141,6 +141,9 @@ pub trait ToSEXP {
     }
     fn is_unordered(&self) -> bool {
         unsafe { rbool(Rf_isUnordered(self.s())) }
+    }
+    fn is_data_frame(&self)->bool{
+    	unsafe {rbool(Rf_inherits( self.s(), c_str("data.frame").as_ptr() ))}
     }
 }
 

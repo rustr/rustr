@@ -6,6 +6,9 @@ use ::protect::stackp::*;
 use error::*;
 use error::REKind::NotCompatible;
 use std::ops::Range;
+use util::*;
+use super::CharVec;
+use vector::IntVec;
 
 pub type RList = RListM<Preserve>;
 
@@ -73,6 +76,38 @@ impl<T: SEXPbucket> RListM<T> {
             Rboolean::FALSE
         };
         unsafe { Rf_any_duplicated(self.s(), last) }
+    }
+    pub fn as_data_frame(&mut self)->RResult<()>{
+    	if self.rsize() == 0{
+    		unsafe{
+            Rf_setAttrib(self.s(), R_NamesSymbol, Rf_allocVector(STRSXP, 0));
+            Rf_setAttrib(self.s(), R_RowNamesSymbol, Rf_allocVector(INTSXP, 0));
+            Rf_setAttrib(self.s(), R_ClassSymbol, Rf_mkString(c_str("data.frame").as_ptr()));
+    		}
+            return Ok(());
+    	}
+    	unsafe{
+    		if self.namesexp() == R_NilValue{
+    			let mut colname = CharVec::alloc(self.rsize() as usize);
+    			for ii in 0..(self.rsize() as usize){
+    				colname.uset(ii, &format!("col{}", ii+1));
+    			}
+    			self.uset_name(&colname);
+    		}
+ 			let colsize : usize = Rf_xlength(self.uat(0)) as usize ;
+ 			for ii in 0..(self.rsize() as usize){
+    			if colsize  != Rf_xlength(self.uat(ii)) as usize {
+    				return rraise("not all colunm are the same length.");
+    			}
+			}
+ 			let mut rowname = IntVec::alloc(colsize as usize);
+			for ii in 0..(self.rsize() as usize){
+    				rowname.uset(ii, (ii as ::std::os::raw::c_int)+1);
+			}
+            Rf_setAttrib(self.s(), R_RowNamesSymbol, rowname.s());
+			Rf_setAttrib(self.s(), R_ClassSymbol, Rf_mkString(c_str("data.frame").as_ptr()));
+    		Ok(())
+    	}
     }
 }
 

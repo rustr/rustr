@@ -37,6 +37,8 @@ extern SEXP rustr_uclist();
 SEXP rtest_uclist(){ return(rustr_uclist());}
 extern SEXP rustr_unlist();
 SEXP rtest_unlist(){ return(rustr_unlist());}
+extern SEXP rustr_list_data_frame(SEXP x);
+SEXP rtest_list_data_frame(SEXP x){ return(rustr_list_data_frame(x));}
 extern SEXP rustr_charvec();
 SEXP rtest_charvec(){ return(rustr_charvec());}
 extern SEXP rustr_ncharvec();

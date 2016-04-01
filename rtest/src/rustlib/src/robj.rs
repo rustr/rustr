@@ -36,6 +36,13 @@ pub fn unlist()-> RList{
     unsafe{urlist!(sd ~ "sd", Sd ~ "Sd")}
 }
 
+// #[rustr_export]
+pub fn list_data_frame(x:RList)-> RResult<RList>{
+   let mut y = x;
+   try!(y.as_data_frame());
+   Ok(y)
+}
+
 // charvec
 
 // #[rustr_export]

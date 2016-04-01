@@ -186,6 +186,17 @@ pub extern "C" fn rustr_unlist()->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_list_data_frame(x : SEXP)->SEXP{
+
+ let x_ : RList = unwrapr!( RList::rnew(x) );
+ let res  = unwrapr!( list_data_frame(x_));
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_charvec()->SEXP{
 
   let res  = unwrapr!( charvec());

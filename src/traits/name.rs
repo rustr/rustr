@@ -10,6 +10,9 @@ pub trait RName: ToSEXP + RSize {
     fn name(&self) -> CharVec {
         unsafe { CharVec::urnew(Rf_getAttrib(self.s(), R_NamesSymbol) )}
     }
+    unsafe fn namesexp(&self) -> SEXP {
+        Rf_getAttrib(self.s(), R_NamesSymbol) 
+    }
     fn set_name(&self, attr: &CharVec) -> RResult<()> {
         unsafe {
             if self.rsize() == Rf_xlength(self.s()) {
