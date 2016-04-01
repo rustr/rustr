@@ -213,6 +213,69 @@ gen_fromr_vec!(HashSet; insert;INTSXP; INTEGER; "integer vector"; ::std::os::raw
 gen_fromr_vec!(VecDeque; push_back; INTSXP; INTEGER; "integer vector"; ::std::os::raw::c_int; u64,u32,u16,i64,i32,i16,i8,usize,isize);
 gen_fromr_vec!(VecDeque; push_back; REALSXP; REAL; "numeric vector"; ::std::os::raw::c_double; f64,f32);
 
+// bool
+
+macro_rules! gen_fromr_vec_bool {
+    ($collection:ident; $push:ident; $sexp:ident; $sexpget:ident; $err:expr;  $($x:ty),*) => (
+		$(
+// main block
+impl RNew for $collection<$x> {
+    fn rnew(x:SEXP) -> RResult<$collection<$x>> {
+        unsafe {
+            if RTYPEOF(x) != $sexp {
+                return rerror(REKind::NotCompatible(concat!("expecting a ",$err).into()));
+            }
+            Ok(Self::urnew(x))
+        }
+    }
+}
+
+impl URNew for $collection<$x> {
+    unsafe fn urnew(x:SEXP) -> $collection<$x> {
+            let lens = Rf_xlength(x);
+            let mut vecs: $collection<$x> = $collection::with_capacity(lens as usize);
+            let rptr = $sexpget(x);
+            for ii in 0..lens {
+                vecs.$push(*rptr.offset(ii as isize) ==1 );
+            }
+            vecs
+        }
+    }
+
+
+impl UIntoR for $collection<$x> {
+    unsafe fn uintor(&self) -> SEXP {
+        let size_x = self.len();
+
+            let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
+            let rptr = $sexpget(rvec.s());
+            let mut index = 0;
+            for ii in self {
+                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int  ;
+				index = index + 1;
+            }
+            rvec.s()
+
+    }
+}
+
+impl IntoR for $collection<$x> {
+    fn intor(&self) -> RResult<SEXP> {
+        unsafe{Ok(Self::uintor(self))}
+    }
+}
+
+// end main block
+		)*
+    )
+}
+
+gen_fromr_vec_bool!(Vec; push; LGLSXP; LOGICAL; "boolean vector"; bool);
+gen_fromr_vec_bool!(BinaryHeap; push;LGLSXP; LOGICAL; "boolean vector"; bool);
+gen_fromr_vec_bool!(HashSet; insert;LGLSXP; LOGICAL; "boolean vector"; bool);
+gen_fromr_vec_bool!(VecDeque; push_back; LGLSXP; LOGICAL; "boolean vector"; bool);
+
+
 // u8
 macro_rules! gen_u8_collection{
 	($collection:ident; $push:ident)=>(
@@ -364,6 +427,66 @@ impl UIntoR for $collection<$x> {
 gen_fromr_linklist!(LinkedList;push_front;INTSXP; INTEGER; "integer vector"; ::std::os::raw::c_int; u64,u32,u16,i64,i32,i16,i8,usize,isize);
 gen_fromr_linklist!(LinkedList;push_front; REALSXP; REAL; "numeric vector"; ::std::os::raw::c_double; f64,f32);
 gen_fromr_linklist!(BTreeSet;insert;INTSXP; INTEGER; "integer vector"; ::std::os::raw::c_int; u64,u32,u16,i64,i32,i16,i8,usize,isize);
+
+// bool
+
+macro_rules! gen_fromr_linklist_bool {
+    ($collection:ident; $push:ident;$sexp:ident; $sexpget:ident; $err:expr;  $($x:ty),*) => (
+		$(
+// main block
+impl RNew for $collection<$x> {
+    fn rnew(x:SEXP) -> RResult<$collection<$x>> {
+        unsafe {
+            if RTYPEOF(x) != $sexp {
+                return rerror(REKind::NotCompatible(concat!("expecting a ",$err).into()));
+            }
+            Ok(Self::urnew(x))
+        }
+    }
+}
+
+impl URNew for $collection<$x> {
+    unsafe fn urnew(x:SEXP) -> $collection<$x> {
+            let lens = Rf_xlength(x);
+            let mut vecs: $collection<$x> = $collection::new();
+            let rptr = $sexpget(x);
+            for ii in 0..lens {
+                vecs.$push(*rptr.offset(ii as isize) ==1);
+            }
+            vecs
+    }
+}
+
+impl IntoR for $collection<$x> {
+    fn intor(&self) -> RResult<SEXP> {
+        unsafe{Ok(Self::uintor(self))}
+    }
+}
+
+impl UIntoR for $collection<$x> {
+    unsafe fn uintor(&self) -> SEXP {
+        let size_x = self.len();
+
+            let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
+            let rptr = $sexpget(rvec.s());
+            let mut index = 0;
+            for ii in self {
+                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int ;
+				index = index + 1;
+            }
+            rvec.s()
+
+    }
+}
+
+
+// end main block
+		)*
+    )
+}
+
+gen_fromr_linklist_bool!(LinkedList;push_front;INTSXP; INTEGER; "integer vector"; bool);
+gen_fromr_linklist_bool!(BTreeSet;insert;INTSXP; INTEGER; "integer vector"; bool);
 
 
 // u8
