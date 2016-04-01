@@ -17,16 +17,15 @@ This project is now under construction. **Issues** and **contributions** are wel
 #### rustr
 
 - [x] random numbers from R
-- [ ] check bindgen code
-- [ ] more methods for `R Vector Obejct` types
-- [ ] stablize R in Rust with `feature::engine` module
-- [ ] more `RNew` `IntoR` `From` `Into` for types
+- [x] check bindgen code
+- [x] more methods for `R Vector Obejct` types
+- [x] stablize R in Rust with `feature::engine` module
+- [x] more `RNew` `IntoR` `From` `Into` for types
 - [ ] R Object - DataFrame type
 - [x] [`nalgebra`][1] crate types
 - [x] [`num`][2] crate types
 - [x] [`log`][3] crate `log` trait
-- [ ] [`rusty-machine`][rm] crate `rusty-machine` types
-- [ ] [`ndarray`][nd] crate `ndarray` types
+
 
 #### rustinr
 
@@ -51,6 +50,7 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [ ] R Object - DataFrame type
 - [ ] [`nalgebra`][1] crates types
 - [ ] [`num`][2] crates types
+- [ ] [`rusty-machine`][rm] crate `rusty-machine` examples
 - [ ] R in Rust with `feature::engine` module
 
 ### Todo for future

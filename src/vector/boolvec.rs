@@ -185,6 +185,10 @@ impl<T: SEXPbucket> ExactSizeIterator for BoolVecIter<T> {
     }
 }
 
+
+
+/// Create a BoolVec
+///
 #[macro_export]
 macro_rules! boolvec {
     ($($tts:expr),*) => {

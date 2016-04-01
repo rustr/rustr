@@ -14,6 +14,8 @@ gen_traits_sexp!(IntVecM);
 gen_named_vec!(IntVecM, INTSXP, IntVecIter, INTEGER, c_int);
 
 
+/// Create a IntVec
+///
 #[macro_export]
 macro_rules! intvec {
     ($($tts:expr),*) => {

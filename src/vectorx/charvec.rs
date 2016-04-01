@@ -208,6 +208,9 @@ impl<T: SEXPbucket> ExactSizeIterator for CharVecIter<T> {
     }
 }
 
+
+/// Create a CharVec
+///
 #[macro_export]
 macro_rules! charvec {
     ($($tts:expr),*) => {
@@ -251,6 +254,8 @@ macro_rules! charvec {
     }
 }
 
+/// Create a CharVec with unsafe code
+///
 #[macro_export]
 macro_rules! ucharvec {
     ($($tts:expr),*) => {

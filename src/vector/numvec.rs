@@ -15,6 +15,9 @@ pub type NumVec = NumVecM<Preserve>;
 gen_traits_sexp!(NumVecM);
 gen_named_vec!(NumVecM, REALSXP, NumVecIter, REAL, c_double);
 
+
+/// Create a NumVec
+///
 #[macro_export]
 macro_rules! numvec {
     ($($tts:expr),*) => {

@@ -176,12 +176,16 @@ impl<T: SEXPbucket> ExactSizeIterator for RListIter<T> {
         self.size as usize
     }
 }
+
+/// Helper for the number of arguments 
+///
 #[macro_export]
 macro_rules! replace_expr {
     ($_t:expr, $sub:expr) => {$sub};
 }
 
-
+/// Create a RList
+///
 #[macro_export]
 macro_rules! rlist {
     ($($tts:expr),*) => {
@@ -224,6 +228,9 @@ macro_rules! rlist {
       }
     }
 }
+
+/// Create a rlist with unsafe code
+/// 
 
 #[macro_export]
 macro_rules! urlist {
