@@ -5,22 +5,25 @@ use rtype::*;
 use util::c_str;
 use storage::*;
 use error::*;
+use vectorx::*;
 
-pub trait RName : ToSEXP + RSize{
+pub trait RName: ToSEXP + RSize {
     fn get_name<D: RNew>(&self) -> RResult<D> {
         D::rnew(unsafe { Rf_getAttrib(self.s(), R_NamesSymbol) })
     }
-    fn set_name<T: ToSEXP>(&self, attr: T) {
+    fn name(&self) -> CharVec {
+        unsafe { CharVec::urnew(Rf_getAttrib(self.s(), R_NamesSymbol) )}
+    }
+    fn set_name(&self, attr: &CharVec) -> RResult<()> {
         unsafe {
-            if RTYPEOF(self.s()) == STRSXP && self.rsize() == Rf_xlength(self.s()) {
+            if self.rsize() == Rf_xlength(self.s()) {
                 Rf_setAttrib(self.s(), R_NamesSymbol, attr.s());
-            } else {
-                // slower, and R may throw error
-                let names_sym = Rf_install(c_str("names<-").as_ptr());
-                let new_vec = Shield::new(Rf_eval(Rf_lang3(names_sym, self.s(), attr.s()),
-                                                  R_GlobalEnv));
-                Rf_setAttrib(self.s(), R_NamesSymbol, new_vec.s());
+                return Ok(());
             }
+             rraise("CharVec length is not the same as the vector.")
         }
+    }
+    unsafe fn uset_name(&self, attr: &CharVec) {
+        Rf_setAttrib(self.s(), R_NamesSymbol, attr.s());
     }
 }
