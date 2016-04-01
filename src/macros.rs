@@ -145,6 +145,13 @@ impl< T: SEXPbucket> IntoR for $typ< T> {
     }
 }
 
+
+impl< T: SEXPbucket> UIntoR for $typ< T> {
+    unsafe fn uintor(&self) -> SEXP {
+        self.data.s()
+    }
+}
+
 impl<T: SEXPbucket> RAttribute for $typ<T> {}
 impl<T: SEXPbucket> RSlot for $typ<T> {}
 

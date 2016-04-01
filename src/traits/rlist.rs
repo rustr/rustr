@@ -6,6 +6,20 @@ use rtype::*;
 use super::ToSEXP;
 use std::collections::{VecDeque, BTreeSet, BinaryHeap, HashSet, LinkedList};
 use std::ffi::CString;
+use storage::*;
+use vector::*;
+use vectorx::*;
+use rptr::*;
+use s4::*;
+use symbol::*;
+use rweak::RWeakM;
+use rfunction::*;
+use environment::*;
+use promise::*;
+use rlang::*;
+use robject::*;
+use reference::*;
+
 
 macro_rules! gen_vec_vec_intor{
 	($typ1:ident, $typ2:ident, $($real:ty),*) => {
@@ -72,6 +86,79 @@ gen_vec_vec_intor_str!(LinkedList,LinkedList);
 gen_vec_vec_intor_str!(VecDeque,LinkedList);
 gen_vec_vec_intor_str!(BTreeSet,Vec);
 gen_vec_vec_intor_str!(BTreeSet,VecDeque);
+
+
+macro_rules! gen_vec_vec_intor_sexp{
+	($typ1:ident, $($real:ident),*) => {
+		$(
+impl<T:SEXPbucket> IntoR for $typ1<$real<T>>{
+	fn intor(&self)->RResult<SEXP>{
+		unsafe{
+		let res = Shield::new(Rf_allocVector(VECSXP, self.len() as R_xlen_t));
+		for (ind,xx) in self.iter().enumerate(){
+			SET_VECTOR_ELT(res.s(), ind as R_xlen_t, try!(xx.intor()));
+		}
+		Ok(res.s())
+	}
+	}
+}
+
+impl<T:SEXPbucket> UIntoR for $typ1<$real<T>>{
+	unsafe fn uintor(&self)->SEXP{
+
+		let res = Shield::new(Rf_allocVector(VECSXP, self.len() as R_xlen_t));
+		for (ind,xx) in self.iter().enumerate(){
+			SET_VECTOR_ELT(res.s(), ind as R_xlen_t, xx.uintor());
+		}
+		res.s()
+	}
+}
+
+
+ )*
+	}
+}
+//RPtrM,RWeakM,
+gen_vec_vec_intor_sexp!(Vec,PromiseM,S4M,RLangM,EnvirM,RObjM,RFunM,SymbolM,ReferenceM, NumVecM,IntVecM,BoolVecM,CharVecM,CplVecM,RawVecM,ExprVecM,RListM);
+gen_vec_vec_intor_sexp!(VecDeque,PromiseM,S4M,RLangM,EnvirM,RObjM,RFunM,SymbolM,ReferenceM, NumVecM,IntVecM,BoolVecM,CharVecM,CplVecM,RawVecM,ExprVecM,RListM);
+gen_vec_vec_intor_sexp!(LinkedList,PromiseM,S4M,RLangM,EnvirM,RObjM,RFunM,SymbolM,ReferenceM, NumVecM,IntVecM,BoolVecM,CharVecM,CplVecM,RawVecM,ExprVecM,RListM);
+
+use std::any::*;
+
+macro_rules! gen_vec_vec_intor_ptr{
+	($typ1:ident, $($real:ident),*) => {
+		$(
+impl<T:SEXPbucket,Obj: Any> IntoR for $typ1<$real<Obj,T>>{
+	fn intor(&self)->RResult<SEXP>{
+		unsafe{
+		let res = Shield::new(Rf_allocVector(VECSXP, self.len() as R_xlen_t));
+		for (ind,xx) in self.iter().enumerate(){
+			SET_VECTOR_ELT(res.s(), ind as R_xlen_t, try!(xx.intor()));
+		}
+		Ok(res.s())
+	}
+	}
+}
+
+impl<T:SEXPbucket,Obj: Any> UIntoR for $typ1<$real<Obj,T>>{
+	unsafe fn uintor(&self)->SEXP{
+
+		let res = Shield::new(Rf_allocVector(VECSXP, self.len() as R_xlen_t));
+		for (ind,xx) in self.iter().enumerate(){
+			SET_VECTOR_ELT(res.s(), ind as R_xlen_t, xx.uintor());
+		}
+		res.s()
+	}
+}
+
+
+ )*
+	}
+}
+
+gen_vec_vec_intor_ptr!(Vec,RPtrM,RWeakM);
+gen_vec_vec_intor_ptr!(VecDeque,RPtrM,RWeakM);
+gen_vec_vec_intor_ptr!(LinkedList,RPtrM,RWeakM);
 
 
 macro_rules! gen_vec_vec_uintor{
