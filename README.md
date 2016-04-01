@@ -17,15 +17,14 @@ This project is now under construction. **Issues** and **contributions** are wel
 #### rustr
 
 - [x] random numbers from R
-- [x] check bindgen code
+- [ ] check bindgen code
 - [x] more methods for `R Vector Obejct` types
 - [x] stablize R in Rust with `feature::engine` module
 - [x] more `RNew` `IntoR` `From` `Into` for types
-- [ ] R Object - DataFrame type
+- [x] DataFrame type for RList
 - [x] [`nalgebra`][1] crate types
 - [x] [`num`][2] crate types
 - [x] [`log`][3] crate `log` trait
-
 
 #### rustinr
 
