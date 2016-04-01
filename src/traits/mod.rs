@@ -18,6 +18,7 @@ pub mod name;
 pub mod rfield;
 pub mod dim;
 pub mod dimname;
+pub mod rlist;
 
 pub use self::intor::*;
 pub use self::attr::*;
@@ -26,6 +27,8 @@ pub use self::name::*;
 pub use self::rfield::*;
 pub use self::dim::*;
 pub use self::dimname::*;
+pub use self::rlist::*;
+
 use util::c_str;
 pub trait Args: Named {}
 

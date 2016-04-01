@@ -869,6 +869,22 @@ impl IntoR for $x<String> {
     }
 }
 
+impl<'a> IntoR for $x<&'a str> {
+    fn intor(&self) -> RResult<SEXP> {
+    	let lens = self.len();
+        unsafe {
+            let rvec = Shield::new(Rf_allocVector(STRSXP, lens as R_xlen_t));
+            let mut index = 0;
+            for xs in self{
+            	let strs :&str = xs.as_ref();
+            	SET_STRING_ELT( rvec.s(), index, Rf_mkChar(try!(CString::new(strs)).as_ptr()));
+            	index = index + 1;
+            } 
+           Ok(rvec.s())
+        }
+    }
+}
+
 impl URNew for $x<CString> {
 	unsafe fn urnew(x: SEXP) -> $x<CString> {
 			let lens = Rf_xlength(x);
@@ -1001,6 +1017,22 @@ impl IntoR for $x<CString> {
 }
 
 impl IntoR for $x<String> {
+    fn intor(&self) -> RResult<SEXP> {
+    	let lens = self.len();
+        unsafe {
+            let rvec = Shield::new(Rf_allocVector(STRSXP, lens as R_xlen_t));
+            let mut index = 0;
+            for xs in self{
+            	let strs :&str = xs.as_ref();
+            	SET_STRING_ELT( rvec.s(), index, Rf_mkChar(try!(CString::new(strs)).as_ptr()));
+            	index = index + 1;
+            } 
+            Ok(rvec.s())
+        }
+    }
+}
+
+impl<'a> IntoR for $x<&'a str> {
     fn intor(&self) -> RResult<SEXP> {
     	let lens = self.len();
         unsafe {
