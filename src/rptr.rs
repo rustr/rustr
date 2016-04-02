@@ -118,13 +118,13 @@ impl<Obj: Any, T: SEXPbucket> RPtrM<Obj, T> {
     pub fn new(ptr: Box<Obj>) -> RPtrM<Obj, T> {
         Self::init().done(ptr)
     }
-    pub fn get(&mut self) -> RResult<*mut Obj> {
+    pub fn get(& mut self) -> RResult<& Obj> {
         unsafe {
             let res: *mut Obj = ::std::mem::transmute(R_ExternalPtrAddr(self.data.s()));
             if res.is_null() {
                 return rerror(Other("external pointer is not valid".into()));
             }
-            Ok(res)
+            Ok(&*res)
         }
     }
     pub unsafe fn uget(&mut self) -> *mut Obj {
