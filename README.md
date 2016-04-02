@@ -17,6 +17,7 @@ This project is now under construction. **Issues** and **contributions** are wel
 #### rustr
 
 - [x] random numbers from R
+- [ ] RChar for CHARSXP string
 - [ ] check bindgen code
 - [x] more methods for `R Vector Obejct` types
 - [x] stablize R in Rust with `feature::engine` module

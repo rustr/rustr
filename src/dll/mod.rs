@@ -40,3 +40,15 @@ pub fn r_option_width() -> ::std::os::raw::c_int {
 pub fn r_flushconsole() {
     unsafe { R_FlushConsole() }
 }
+
+pub fn r_na_string() ->SEXP {
+    unsafe { R_NaString }
+}
+
+pub fn r_na_real() ->::std::os::raw::c_double {
+    unsafe { R_NaReal }
+}
+
+pub fn r_na_int() ->::std::os::raw::c_int {
+    unsafe { R_NaInt }
+}

@@ -65,6 +65,7 @@ pub mod reference;
 pub mod rmath;
 pub mod environment;
 pub mod rfunction;
+pub mod rchar;
 
 pub mod dll;
 pub use dll::*;
@@ -138,3 +139,4 @@ pub use environment::*;
 pub use robject::*;
 pub use vectorx::*;
 pub use util::rprint;
+//pub use rchat::*;
