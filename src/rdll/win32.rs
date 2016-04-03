@@ -262,8 +262,8 @@ impl ::std::default::Default for Struct_exception {
 #[derive(Clone, Copy, PartialEq)]
 #[repr(u32)]
 #[derive(Debug)]
-pub enum Rboolean{ FALSE = 0, TRUE = 1, }
-
+pub enum Rboolean { FALSE = 0, TRUE = 1, }
+//pub type Rboolean = Enum_Unnamed8;
 #[repr(C)]
 #[derive(Copy)]
 pub struct Struct_Unnamed9 {
@@ -2262,6 +2262,8 @@ extern "C" {
     pub static mut libintl_version: ::std::os::raw::c_int;
     pub static mut R_DirtyImage: ::std::os::raw::c_int;
     pub static mut R_TempDir: *mut ::std::os::raw::c_char;
+    pub static mut UserBreak: ::std::os::raw::c_int;
+    pub static mut AllDevicesKilled: Rboolean;
     pub static mut R_InputHandlers: *mut InputHandler;
     pub static mut R_PolledEvents: ::std::option::Option<extern "C" fn()>;
     pub static mut R_wait_usec: ::std::os::raw::c_int;
@@ -4177,8 +4179,8 @@ extern "C" {
                                fptr: DL_FUNC);
     pub fn R_GetCCallable(package: *const ::std::os::raw::c_char,
                           name: *const ::std::os::raw::c_char) -> DL_FUNC;
-    pub fn GA_initapp(argc: ::std::os::raw::c_int,
-                      argv: *mut *mut ::std::os::raw::c_char)
+    pub fn GA_initapp(arg1: ::std::os::raw::c_int,
+                      arg2: *mut *mut ::std::os::raw::c_char)
      -> ::std::os::raw::c_int;
     pub fn GA_exitapp();
     pub fn GA_drawall();
@@ -4770,7 +4772,12 @@ extern "C" {
     pub fn Rf_KillAllDevices();
     pub fn R_CleanTempDir();
     pub fn R_SaveGlobalEnv();
-    pub fn fpu_setup(start: Rboolean);
+    pub fn getDLLVersion() -> *mut ::std::os::raw::c_char;
+    pub fn getRUser() -> *mut ::std::os::raw::c_char;
+    pub fn get_R_HOME() -> *mut ::std::os::raw::c_char;
+    pub fn setup_term_ui();
+    pub fn editorcleanall();
+    pub fn readconsolecfg();
     pub fn R_pow(x: ::std::os::raw::c_double, y: ::std::os::raw::c_double)
      -> ::std::os::raw::c_double;
     pub fn R_pow_di(arg1: ::std::os::raw::c_double,
