@@ -69,6 +69,17 @@ pub fn uncharvec()-> CharVec{
     unsafe{ucharvec!(sd ~ "sd", Sd ~ "Sd")}
 }
 
+// #[rustr_export]
+pub fn charvec_setc()-> RResult<CharVec>{
+    let mut res = CharVec::alloc(4);
+    try!(res.setc(0*2+0,RChar::na()));
+    try!(res.setc(0*2+1,RChar::na()));
+    try!(res.setc(1*2+0,RChar::na()));
+    try!(res.setc(1*2+1,RChar::na()));
+    try!(res.set_dim(&[2,2]));
+    Ok(res)
+}
+
 // boolvec
 
 // #[rustr_export]

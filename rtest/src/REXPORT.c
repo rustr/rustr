@@ -47,6 +47,8 @@ extern SEXP rustr_ucharvec();
 SEXP rtest_ucharvec(){ return(rustr_ucharvec());}
 extern SEXP rustr_uncharvec();
 SEXP rtest_uncharvec(){ return(rustr_uncharvec());}
+extern SEXP rustr_charvec_setc();
+SEXP rtest_charvec_setc(){ return(rustr_charvec_setc());}
 extern SEXP rustr_boolvec();
 SEXP rtest_boolvec(){ return(rustr_boolvec());}
 extern SEXP rustr_nboolvec();

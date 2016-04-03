@@ -9,6 +9,7 @@ use std::ops::Range;
 use std::ffi::*;
 use util::c_str;
 
+
 pub type CharVec = CharVecM<Preserve>;
 
 impl<T: SEXPbucket> CharVecM<T> {
@@ -69,19 +70,22 @@ impl<T: SEXPbucket> CharVecM<T> {
     pub unsafe fn uatc(&self, ind: usize) -> CString {
         CStr::from_ptr(R_CHAR(STRING_ELT(self.s(), ind as R_xlen_t))).to_owned()
     }
-    pub unsafe fn usetc(&mut self, ind: usize, value: CString) {
+    pub unsafe fn usetc<D:ToSEXP>(&mut self, ind: usize, value: D) {
         SET_STRING_ELT(self.s(),
                        ind as R_xlen_t,
-                       Shield::new(Rf_mkChar(value.as_ptr())).s())
+                      value.s())
     }
-    pub fn setc(&mut self, ind: usize, value: CString) -> RResult<()> {
+    pub fn setc<D:ToSEXP>(&mut self, ind: usize, value: D) -> RResult<()> {
         unsafe {
             if Rf_xlength(self.s()) <= ind as R_xlen_t {
                 return rraise("index out of bound");
             }
+            if RTYPEOF(self.s()) == CHARSXP  || self.s() == R_NaString{
+                return rraise("not a CHARSXP");
+            }
             SET_STRING_ELT(self.s(),
                            ind as R_xlen_t,
-                           Shield::new(Rf_mkChar(value.as_ptr())).s());
+                           value.s());
             Ok(())
         }
     }
@@ -224,7 +228,9 @@ macro_rules! charvec {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.usetc(x-1, try!(::std::ffi::CString::new($tts)));
+			let xi = try!(::std::ffi::CString::new($tts));
+			let tmp : SEXP = $crate::protect::stackp::Shield::new(RCharM::<NoProtect>::from(xi).s()).s(); 
+      		res.usetc(x-1,tmp);
       		
       )*      
 	}
@@ -244,7 +250,9 @@ macro_rules! charvec {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.usetc(x-1,try!(::std::ffi::CString::new($tts)));
+			let xi = try!(::std::ffi::CString::new($tts));
+			let tmp : SEXP = $crate::protect::stackp::Shield::new(RCharM::<NoProtect>::from(xi).s()).s(); 
+      		res.usetc(x-1,tmp);
       		name.uset(x-1, stringify!($id));
       )*
 	}
@@ -268,7 +276,7 @@ macro_rules! ucharvec {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.usetc(x-1, $crate::util::c_str($tts));
+      		res.uset(x-1, $tts);
       		
       )*      
       res
@@ -286,7 +294,7 @@ macro_rules! ucharvec {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.usetc(x-1, $crate::util::c_str($tts));
+      		res.uset(x-1, $tts);
       		name.uset(x-1, stringify!($id));
       )*
 	

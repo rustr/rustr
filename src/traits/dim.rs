@@ -5,8 +5,8 @@ use error::*;
 use std::ffi::CString;
 use rtype::*;
 
-pub trait RDim : RAttribute{
-	type Output;
+pub trait RDim: RAttribute+RSize {
+    type Output;
     fn dim(&self) -> Vec<usize> {
         if !self.is_matrix() && !self.is_array() {
             return Vec::new();
@@ -16,12 +16,18 @@ pub trait RDim : RAttribute{
             Vec::urnew(res.s())
         }
     }
-    fn set_dim(&mut self, x: &[usize]) {
-        if self.is_matrix() || self.is_array() {
-            unsafe {
-                Rf_setAttrib(self.s(), R_DimSymbol, x.uintor());
-            }
+    fn set_dim(&mut self, x: &[usize]) -> RResult<()> {
+		if self.rsize() == 0{
+			return rraise("can not set 0 length vector");
         }
+    	let lens = x.iter().fold(1,|sum,i| sum * i );
+        if self.rsize() as usize != lens {
+			return rraise(format!("length is {} , can not set dimension {:?}",self.rsize(),lens));
+        }
+        unsafe {
+            Rf_setAttrib(self.s(), R_DimSymbol, x.uintor());
+        }
+        Ok(())
     }
     fn nrow(&self) -> usize {
         if !self.is_matrix() {

@@ -237,6 +237,16 @@ pub extern "C" fn rustr_uncharvec()->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_charvec_setc()->SEXP{
+
+  let res  = unwrapr!( charvec_setc());
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_boolvec()->SEXP{
 
   let res  = boolvec();

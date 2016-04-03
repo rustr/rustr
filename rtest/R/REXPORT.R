@@ -45,6 +45,8 @@ ucharvec = function(){ .Call('rtest_ucharvec',PACKAGE = 'rtest')}
 
 uncharvec = function(){ .Call('rtest_uncharvec',PACKAGE = 'rtest')}
 
+charvec_setc = function(){ .Call('rtest_charvec_setc',PACKAGE = 'rtest')}
+
 boolvec = function(){ .Call('rtest_boolvec',PACKAGE = 'rtest')}
 
 nboolvec = function(){ .Call('rtest_nboolvec',PACKAGE = 'rtest')}

@@ -139,4 +139,5 @@ pub use environment::*;
 pub use robject::*;
 pub use vectorx::*;
 pub use util::rprint;
-//pub use rchat::*;
+pub use rchar::*;
+
