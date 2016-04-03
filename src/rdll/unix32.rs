@@ -27,7 +27,7 @@ pub type __off64_t = ::std::os::raw::c_long;
 pub type __pid_t = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed1 {
     pub __val: [::std::os::raw::c_int; 2usize],
 }
@@ -69,7 +69,7 @@ pub type FILE = Struct__IO_FILE;
 pub type __FILE = Struct__IO_FILE;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed2 {
     pub __count: ::std::os::raw::c_int,
     pub __value: Union_Unnamed3,
@@ -82,7 +82,7 @@ impl ::std::default::Default for Struct_Unnamed2 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed3 {
     pub _bindgen_data_: [u32; 1usize],
 }
@@ -105,7 +105,7 @@ impl ::std::default::Default for Union_Unnamed3 {
 pub type __mbstate_t = Struct_Unnamed2;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed4 {
     pub __pos: __off_t,
     pub __state: __mbstate_t,
@@ -119,7 +119,7 @@ impl ::std::default::Default for Struct_Unnamed4 {
 pub type _G_fpos_t = Struct_Unnamed4;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed5 {
     pub __pos: __off64_t,
     pub __state: __mbstate_t,
@@ -137,7 +137,7 @@ pub enum Struct__IO_jump_t { }
 pub type _IO_lock_t = ::std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__IO_marker {
     pub _next: *mut Struct__IO_marker,
     pub _sbuf: *mut Struct__IO_FILE,
@@ -151,7 +151,7 @@ impl ::std::default::Default for Struct__IO_marker {
 }
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum___codecvt_result {
     __codecvt_ok = 0,
     __codecvt_partial = 1,
@@ -160,7 +160,7 @@ pub enum Enum___codecvt_result {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__IO_FILE {
     pub _flags: ::std::os::raw::c_int,
     pub _IO_read_ptr: *mut ::std::os::raw::c_char,
@@ -222,7 +222,7 @@ pub type float_t = ::std::os::raw::c_float;
 pub type double_t = ::std::os::raw::c_double;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed6 {
     FP_NAN = 0,
     FP_INFINITE = 1,
@@ -232,7 +232,7 @@ pub enum Enum_Unnamed6 {
 }
 #[derive(Clone, Copy)]
 #[repr(i32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed7 {
     _IEEE_ = -1,
     _SVID_ = 0,
@@ -243,7 +243,7 @@ pub enum Enum_Unnamed7 {
 pub type _LIB_VERSION_TYPE = Enum_Unnamed7;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_exception {
     pub _type: ::std::os::raw::c_int,
     pub name: *mut ::std::os::raw::c_char,
@@ -259,7 +259,7 @@ impl ::std::default::Default for Struct_exception {
 }
 #[derive(Clone, Copy, PartialEq)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Rboolean { FALSE = 0, TRUE = 1, }
 
 #[repr(C)]
@@ -283,7 +283,7 @@ pub type R_xlen_t = ::std::os::raw::c_int;
 pub type SEXPTYPE = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_sxpinfo_struct {
     pub _bindgen_bitfield_1_: SEXPTYPE,
     pub _bindgen_bitfield_2_: ::std::os::raw::c_uint,
@@ -296,7 +296,7 @@ impl ::std::default::Default for Struct_sxpinfo_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_vecsxp_struct {
     pub length: R_len_t,
     pub truelength: R_len_t,
@@ -309,7 +309,7 @@ impl ::std::default::Default for Struct_vecsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_primsxp_struct {
     pub offset: ::std::os::raw::c_int,
 }
@@ -321,7 +321,7 @@ impl ::std::default::Default for Struct_primsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_symsxp_struct {
     pub pname: *mut Struct_SEXPREC,
     pub value: *mut Struct_SEXPREC,
@@ -335,7 +335,7 @@ impl ::std::default::Default for Struct_symsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_listsxp_struct {
     pub carval: *mut Struct_SEXPREC,
     pub cdrval: *mut Struct_SEXPREC,
@@ -349,7 +349,7 @@ impl ::std::default::Default for Struct_listsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_envsxp_struct {
     pub frame: *mut Struct_SEXPREC,
     pub enclos: *mut Struct_SEXPREC,
@@ -363,7 +363,7 @@ impl ::std::default::Default for Struct_envsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_closxp_struct {
     pub formals: *mut Struct_SEXPREC,
     pub body: *mut Struct_SEXPREC,
@@ -377,7 +377,7 @@ impl ::std::default::Default for Struct_closxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_promsxp_struct {
     pub value: *mut Struct_SEXPREC,
     pub expr: *mut Struct_SEXPREC,
@@ -391,7 +391,7 @@ impl ::std::default::Default for Struct_promsxp_struct {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_SEXPREC {
     pub sxpinfo: Struct_sxpinfo_struct,
     pub attrib: *mut Struct_SEXPREC,
@@ -407,7 +407,7 @@ impl ::std::default::Default for Struct_SEXPREC {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed10 {
     pub _bindgen_data_: [u64; 3usize],
 }
@@ -447,7 +447,7 @@ pub type SEXPREC = Struct_SEXPREC;
 pub type SEXP = *mut Struct_SEXPREC;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_VECTOR_SEXPREC {
     pub sxpinfo: Struct_sxpinfo_struct,
     pub attrib: *mut Struct_SEXPREC,
@@ -465,7 +465,7 @@ pub type VECTOR_SEXPREC = Struct_VECTOR_SEXPREC;
 pub type VECSEXP = *mut Struct_VECTOR_SEXPREC;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed11 {
     pub _bindgen_data_: [u64; 5usize],
 }
@@ -490,12 +490,12 @@ pub type PROTECT_INDEX = ::std::os::raw::c_int;
 pub type R_allocator_t = Struct_R_allocator;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed12 { Bytes = 0, Chars = 1, Width = 2, }
 pub type nchar_type = Enum_Unnamed12;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed13 {
     CE_NATIVE = 0,
     CE_UTF8 = 1,
@@ -509,7 +509,7 @@ pub type R_CFinalizer_t = ::std::option::Option<extern "C" fn(arg1: SEXP)>;
 pub type R_pstream_data_t = *mut ::std::os::raw::c_void;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed14 {
     R_pstream_any_format = 0,
     R_pstream_ascii_format = 1,
@@ -521,7 +521,7 @@ pub type R_pstream_format_t = Enum_Unnamed14;
 pub type R_outpstream_t = *mut Struct_R_outpstream_st;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_R_outpstream_st {
     pub data: R_pstream_data_t,
     pub _type: R_pstream_format_t,
@@ -549,7 +549,7 @@ impl ::std::default::Default for Struct_R_outpstream_st {
 pub type R_inpstream_t = *mut Struct_R_inpstream_st;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_R_inpstream_st {
     pub data: R_pstream_data_t,
     pub _type: R_pstream_format_t,
@@ -574,12 +574,12 @@ impl ::std::default::Default for Struct_R_inpstream_st {
 }
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed15 { P_ALL = 0, P_PID = 1, P_PGID = 2, }
 pub type idtype_t = Enum_Unnamed15;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_wait {
     pub _bindgen_data_: [u32; 1usize],
 }
@@ -605,7 +605,7 @@ impl ::std::default::Default for Union_wait {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed16 {
     pub _bindgen_bitfield_1_: ::std::os::raw::c_uint,
 }
@@ -617,7 +617,7 @@ impl ::std::default::Default for Struct_Unnamed16 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed17 {
     pub _bindgen_bitfield_1_: ::std::os::raw::c_uint,
 }
@@ -629,7 +629,7 @@ impl ::std::default::Default for Struct_Unnamed17 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed18 {
     pub _bindgen_data_: [u64; 1usize],
 }
@@ -652,7 +652,7 @@ impl ::std::default::Default for Union_Unnamed18 {
 pub type __WAIT_STATUS = Union_Unnamed18;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed19 {
     pub quot: ::std::os::raw::c_int,
     pub rem: ::std::os::raw::c_int,
@@ -666,7 +666,7 @@ impl ::std::default::Default for Struct_Unnamed19 {
 pub type div_t = Struct_Unnamed19;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed20 {
     pub quot: ::std::os::raw::c_long,
     pub rem: ::std::os::raw::c_long,
@@ -680,7 +680,7 @@ impl ::std::default::Default for Struct_Unnamed20 {
 pub type ldiv_t = Struct_Unnamed20;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed21 {
     pub quot: ::std::os::raw::c_longlong,
     pub rem: ::std::os::raw::c_longlong,
@@ -730,7 +730,7 @@ pub type register_t = ::std::os::raw::c_long;
 pub type __sig_atomic_t = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed22 {
     pub __val: [::std::os::raw::c_ulong; 16usize],
 }
@@ -744,7 +744,7 @@ pub type __sigset_t = Struct_Unnamed22;
 pub type sigset_t = __sigset_t;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_timespec {
     pub tv_sec: __time_t,
     pub tv_nsec: __syscall_slong_t,
@@ -757,7 +757,7 @@ impl ::std::default::Default for Struct_timespec {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_timeval {
     pub tv_sec: __time_t,
     pub tv_usec: __suseconds_t,
@@ -772,7 +772,7 @@ pub type suseconds_t = __suseconds_t;
 pub type __fd_mask = ::std::os::raw::c_long;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed23 {
     pub __fds_bits: [__fd_mask; 16usize],
 }
@@ -814,7 +814,7 @@ impl ::std::default::Default for Union_pthread_attr_t {
 pub type pthread_attr_t = Union_pthread_attr_t;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct___pthread_internal_list {
     pub __prev: *mut Struct___pthread_internal_list,
     pub __next: *mut Struct___pthread_internal_list,
@@ -854,7 +854,7 @@ impl ::std::default::Default for Union_Unnamed24 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct___pthread_mutex_s {
     pub __lock: ::std::os::raw::c_int,
     pub __count: ::std::os::raw::c_uint,
@@ -874,7 +874,7 @@ impl ::std::default::Default for Struct___pthread_mutex_s {
 pub type pthread_mutex_t = Union_Unnamed24;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed25 {
     pub _bindgen_data_: [u32; 1usize],
 }
@@ -923,7 +923,7 @@ impl ::std::default::Default for Union_Unnamed26 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed27 {
     pub __lock: ::std::os::raw::c_int,
     pub __futex: ::std::os::raw::c_uint,
@@ -943,7 +943,7 @@ impl ::std::default::Default for Struct_Unnamed27 {
 pub type pthread_cond_t = Union_Unnamed26;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed28 {
     pub _bindgen_data_: [u32; 1usize],
 }
@@ -994,7 +994,7 @@ impl ::std::default::Default for Union_Unnamed29 {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed30 {
     pub __lock: ::std::os::raw::c_int,
     pub __nr_readers: ::std::os::raw::c_uint,
@@ -1017,7 +1017,7 @@ impl ::std::default::Default for Struct_Unnamed30 {
 pub type pthread_rwlock_t = Union_Unnamed29;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed31 {
     pub _bindgen_data_: [u64; 1usize],
 }
@@ -1041,7 +1041,7 @@ pub type pthread_rwlockattr_t = Union_Unnamed31;
 pub type pthread_spinlock_t = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed32 {
     pub _bindgen_data_: [u64; 4usize],
 }
@@ -1065,7 +1065,7 @@ impl ::std::default::Default for Union_Unnamed32 {
 pub type pthread_barrier_t = Union_Unnamed32;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Union_Unnamed33 {
     pub _bindgen_data_: [u32; 1usize],
 }
@@ -1088,7 +1088,7 @@ impl ::std::default::Default for Union_Unnamed33 {
 pub type pthread_barrierattr_t = Union_Unnamed33;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_random_data {
     pub fptr: *mut int32_t,
     pub rptr: *mut int32_t,
@@ -1106,7 +1106,7 @@ impl ::std::default::Default for Struct_random_data {
 }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_drand48_data {
     pub __x: [::std::os::raw::c_ushort; 3usize],
     pub __old_x: [::std::os::raw::c_ushort; 3usize],
@@ -1128,7 +1128,7 @@ pub type __compar_fn_t =
                               -> ::std::os::raw::c_int>;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed34 {
     WICHMANN_HILL = 0,
     MARSAGLIA_MULTICARRY = 1,
@@ -1142,7 +1142,7 @@ pub enum Enum_Unnamed34 {
 pub type RNGtype = Enum_Unnamed34;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed35 {
     BUGGY_KINDERMAN_RAMAGE = 0,
     AHRENS_DIETER = 1,
@@ -1156,7 +1156,7 @@ pub type Int32 = ::std::os::raw::c_uint;
 pub enum Struct___locale_data { }
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct___locale_struct {
     pub __locales: [*mut Struct___locale_data; 13usize],
     pub __ctype_b: *const ::std::os::raw::c_ushort,
@@ -1191,7 +1191,7 @@ pub type R_NativePrimitiveArgType = ::std::os::raw::c_uint;
 pub type R_NativeObjectArgType = ::std::os::raw::c_uint;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed37 {
     R_ARG_IN = 0,
     R_ARG_OUT = 1,
@@ -1201,7 +1201,7 @@ pub enum Enum_Unnamed37 {
 pub type R_NativeArgStyle = Enum_Unnamed37;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed38 {
     pub name: *const ::std::os::raw::c_char,
     pub fun: DL_FUNC,
@@ -1219,7 +1219,7 @@ pub type R_CMethodDef = Struct_Unnamed38;
 pub type R_FortranMethodDef = R_CMethodDef;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed39 {
     pub name: *const ::std::os::raw::c_char,
     pub fun: DL_FUNC,
@@ -1239,7 +1239,7 @@ pub enum Struct_Rf_RegisteredNativeSymbol { }
 pub type R_RegisteredNativeSymbol = Struct_Rf_RegisteredNativeSymbol;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed40 {
     R_ANY_SYM = 0,
     R_C_SYM = 1,
@@ -1289,7 +1289,7 @@ pub type R_ToplevelCallback =
 pub type R_ToplevelCallbackEl = Struct__ToplevelCallback;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__ToplevelCallback {
     pub cb: R_ToplevelCallback,
     pub data: *mut ::std::os::raw::c_void,
@@ -1342,7 +1342,7 @@ pub type Rdb_onAttach =
     ::std::option::Option<unsafe extern "C" fn(arg1: *mut R_ObjectTable)>;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__R_ObjectTable {
     pub _type: ::std::os::raw::c_int,
     pub cachedNames: *mut *mut ::std::os::raw::c_char,
@@ -1458,7 +1458,7 @@ pub type InputHandlerProc =
                                                    *mut ::std::os::raw::c_void)>;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__InputHandler {
     pub activity: ::std::os::raw::c_int,
     pub fileDescriptor: ::std::os::raw::c_int,
@@ -1476,7 +1476,7 @@ impl ::std::default::Default for Struct__InputHandler {
 pub type InputHandler = Struct__InputHandler;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed41 {
     GE_DEVICE = 0,
     GE_NDC = 1,
@@ -1486,7 +1486,7 @@ pub enum Enum_Unnamed41 {
 pub type GEUnit = Enum_Unnamed41;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed42 {
     GE_InitState = 0,
     GE_FinaliseState = 1,
@@ -1501,7 +1501,7 @@ pub enum Enum_Unnamed42 {
 pub type GEevent = Enum_Unnamed42;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed43 {
     GE_ROUND_CAP = 1,
     GE_BUTT_CAP = 2,
@@ -1510,7 +1510,7 @@ pub enum Enum_Unnamed43 {
 pub type R_GE_lineend = Enum_Unnamed43;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed44 {
     GE_ROUND_JOIN = 1,
     GE_MITRE_JOIN = 2,
@@ -1762,7 +1762,7 @@ impl ::std::default::Default for Struct__DevDesc {
 }
 #[derive(Clone, Copy)]
 #[repr(i32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed46 {
     knUNKNOWN = -1,
     knLEFT = 0,
@@ -1791,7 +1791,7 @@ pub enum Enum_Unnamed46 {
 pub type R_KeyName = Enum_Unnamed46;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed47 { meMouseDown = 0, meMouseUp = 1, meMouseMove = 2, }
 pub type R_MouseEvent = Enum_Unnamed47;
 pub type GEDevDesc = Struct__GEDevDesc;
@@ -1801,7 +1801,7 @@ pub type GEcallback =
                                                arg3: SEXP) -> SEXP>;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed48 {
     pub systemSpecific: *mut ::std::os::raw::c_void,
     pub callback: GEcallback,
@@ -1815,7 +1815,7 @@ impl ::std::default::Default for Struct_Unnamed48 {
 pub type GESystemDesc = Struct_Unnamed48;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct__GEDevDesc {
     pub dev: pDevDesc,
     pub displayListOn: Rboolean,
@@ -1872,7 +1872,7 @@ pub type custom_free_t =
                                                    *mut ::std::os::raw::c_void)>;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_R_allocator {
     pub mem_alloc: custom_alloc_t,
     pub mem_free: custom_free_t,
@@ -1887,7 +1887,7 @@ impl ::std::default::Default for Struct_R_allocator {
 }
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_Unnamed49 {
     SA_NORESTORE = 0,
     SA_RESTORE = 1,
@@ -1900,7 +1900,7 @@ pub enum Enum_Unnamed49 {
 pub type SA_TYPE = Enum_Unnamed49;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct_Unnamed50 {
     pub R_Quiet: Rboolean,
     pub R_Slave: Rboolean,
@@ -1928,16 +1928,16 @@ pub type structRstart = Struct_Unnamed50;
 pub type Rstart = *mut structRstart;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_AlgType { NREG = 1, OPT = 2, }
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_VPos { F = 9, F0 = 12, FDIF = 10, G = 27, HC = 70, }
 pub const INITS: Enum_IVPos = Enum_IVPos::INITH;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub enum Enum_IVPos {
     AI = 90,
     AM = 94,
@@ -1983,7 +1983,7 @@ pub type __builtin_va_list = [__va_list_tag; 1usize];
 pub type __va_list_tag = Struct___va_list_tag;
 #[repr(C)]
 #[derive(Copy)]
-#[derive(Debug)]
+#[cfg_attr(feature = "rdebug",derive(Debug))]
 pub struct Struct___va_list_tag {
     pub gp_offset: ::std::os::raw::c_uint,
     pub fp_offset: ::std::os::raw::c_uint,

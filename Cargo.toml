@@ -23,6 +23,7 @@ random = ["rand"]
 logging = ["log"]
 ty_nalgebra =["nalgebra","num"]
 ty_num = ["num"]
+rdebug = []
 
 [dependencies]
 clippy = {version = "0.0.56", optional = true}

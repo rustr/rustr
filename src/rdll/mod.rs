@@ -48,5 +48,7 @@ pub mod engine {
         pub static mut R_Outputfile: *mut super::FILE;
         pub static mut R_timeout_val: ::std::os::raw::c_long;
         pub static mut R_running_as_main_program: ::std::os::raw::c_int;
+        #[cfg(not(target_os = "windows"))]
+		pub fn get_R_HOME() -> *const ::std::os::raw::c_char;
     }
 }
