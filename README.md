@@ -29,6 +29,8 @@ This project is now under construction. **Issues** and **contributions** are wel
 
 #### rustinr
 
+Will try CRANing when R 3.3.0 release
+
 - [ ] find and fix bugs
 - [ ] CRAN
 - [ ] knitr code engine
