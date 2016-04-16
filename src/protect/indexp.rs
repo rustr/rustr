@@ -3,7 +3,7 @@ use ::traits::*;
 
 /// Armor
 ///
-/// PROTECT_INDEX, save index in Armor
+/// save index in Armor
 
 pub struct Armor {
     data: SEXP,

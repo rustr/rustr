@@ -8,7 +8,7 @@ crate-type = ["staticlib","rlib"]
 
 [dependencies.rustr]
 path = "../../../../../../"
-features = ["date", "engine", "random", "logging","ty_nalgebra", "ty_num"]
+features = ["date", "engine", "random", "logging","ty_nalgebra", "ty_num", "extra"]
 
 [dependencies]
 nalgebra = "0.5.1"

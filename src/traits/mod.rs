@@ -18,6 +18,7 @@ pub mod name;
 pub mod rfield;
 pub mod dim;
 pub mod dimname;
+#[cfg(feature = "extra")]
 pub mod rlist;
 
 pub use self::intor::*;
@@ -27,6 +28,7 @@ pub use self::name::*;
 pub use self::rfield::*;
 pub use self::dim::*;
 pub use self::dimname::*;
+#[cfg(feature = "extra")]
 pub use self::rlist::*;
 
 use util::c_str;
