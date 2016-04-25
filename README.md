@@ -43,7 +43,6 @@ Will try CRANing when R 3.3.0 release
 - [ ] about memory safety and garbage collection
 - [ ] R in Rust with `feature::engine` module
 
-
 #### gallery
 
 - [ ] more examples with vectors [rustr/gallery #1](https://github.com/rustr/gallery/issues/1)
@@ -60,6 +59,7 @@ Will try CRANing when R 3.3.0 release
 - [ ] date type with [chrono][4]
 - [ ] sugar function
 - [ ] R6 & Rust type
+- [ ] wait for a great matrix library for Rust! There are some promising [crates](https://crates.io/search?q=matrix).
 
 Miss a feature? Talk on [forum](https://groups.google.com/forum/#!forum/rustr) or create an issue. 
 
