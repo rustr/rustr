@@ -132,13 +132,8 @@ impl RError {
     /// # Examples
     ///
     /// ```txt
-    /// use rustr::error::{RError, MessageKind};
+    /// use rustr::error::{RError, REKind};
     ///
-    /// // errors can be created from strings
-    /// let custom_error = RError::message(MessageKind::Other, "oh no!");
-    ///
-    /// // errors can also be created from other errors
-    /// let custom_error2 = RError::message(MessageKind::IndexOutOfBounds, custom_error);
     /// ```
     #[inline]
     pub fn new(kind_: REKind) -> RError {
