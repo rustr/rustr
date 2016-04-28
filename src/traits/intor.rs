@@ -170,9 +170,10 @@ impl URNew for $collection<$x> {
     unsafe fn urnew(x:SEXP) -> $collection<$x> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<$x> = $collection::with_capacity(lens as usize);
-            let rptr = $sexpget(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) as $x);
+            let mut rptr = $sexpget(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) as $x);
+                rptr = rptr.offset(1);
             }
             vecs
         }
@@ -184,11 +185,10 @@ impl UIntoR for $collection<$x> {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
-            let rptr = $sexpget(rvec.s());
-            let mut index = 0;
+            let mut rptr = $sexpget(rvec.s());
             for ii in self {
-                *rptr.offset(index) = ii.clone() as $into ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as $into ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
 
@@ -234,28 +234,26 @@ impl URNew for $collection<$x> {
     unsafe fn urnew(x:SEXP) -> $collection<$x> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<$x> = $collection::with_capacity(lens as usize);
-            let rptr = $sexpget(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) ==1 );
+            let mut rptr = $sexpget(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) ==1 );
+                rptr = rptr.offset(1);
             }
             vecs
         }
     }
-
 
 impl UIntoR for $collection<$x> {
     unsafe fn uintor(&self) -> SEXP {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
-            let rptr = $sexpget(rvec.s());
-            let mut index = 0;
+            let mut rptr = $sexpget(rvec.s());
             for ii in self {
-                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int  ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as ::std::os::raw::c_int  ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
-
     }
 }
 
@@ -296,15 +294,17 @@ impl URNew for $collection<u8> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<u8> = $collection::with_capacity(lens as usize);
             if RTYPEOF(x) ==INTSXP{
-	            let rptr = INTEGER(x);
-	            for ii in 0..lens {
-	                vecs.$push(*rptr.offset(ii as isize) as u8);
+	            let mut rptr = INTEGER(x);
+	            for _ in 0..lens {
+	                vecs.$push(*rptr.offset(0) as u8);
+	                rptr = rptr.offset(1);
 	            }
 	             return vecs;
             }
-            let rptr = RAW(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) as u8);
+            let mut rptr = RAW(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) as u8);
+                rptr = rptr.offset(1);
             }
             vecs
         }
@@ -315,14 +315,13 @@ impl UIntoR for $collection<u8> {
     unsafe fn uintor(&self) -> SEXP {
         let size_x = self.len();
             let rvec = Shield::new(Rf_allocVector(INTSXP, size_x as R_xlen_t));
-            let rptr = INTEGER(rvec.s());
-            let mut index = 0;
+            let mut rptr = INTEGER(rvec.s());
+
             for ii in self {
-                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as ::std::os::raw::c_int ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
-
     }
 }
 
@@ -345,11 +344,11 @@ $(impl<'a> UIntoR for &'a [$usize]{
 	unsafe fn uintor(&self)->SEXP{
 		let size_x = self.len();
             let rvec = Shield::new(Rf_allocVector($INTSXP, size_x as R_xlen_t));
-            let rptr = $INTEGER(rvec.s());
-            let mut index = 0;
+            let mut rptr = $INTEGER(rvec.s());
+
             for ii in *self {
-                *rptr.offset(index) = ii.clone() as $tyy ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as $tyy ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
 	}
@@ -388,9 +387,10 @@ impl URNew for $collection<$x> {
     unsafe fn urnew(x:SEXP) -> $collection<$x> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<$x> = $collection::new();
-            let rptr = $sexpget(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) as $x);
+            let mut rptr = $sexpget(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) as $x);
+                rptr = rptr.offset(1);
             }
             vecs
     }
@@ -407,12 +407,13 @@ impl UIntoR for $collection<$x> {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
-            let rptr = $sexpget(rvec.s());
-            let mut index = 0;
+            let mut rptr = $sexpget(rvec.s());
+
             for ii in self {
-                *rptr.offset(index) = ii.clone() as $into ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as $into ;
+				rptr = rptr.offset(1);
             }
+            
             rvec.s()
 
     }
@@ -449,9 +450,10 @@ impl URNew for $collection<$x> {
     unsafe fn urnew(x:SEXP) -> $collection<$x> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<$x> = $collection::new();
-            let rptr = $sexpget(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) ==1);
+            let mut rptr = $sexpget(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) ==1);
+                rptr = rptr.offset(1);
             }
             vecs
     }
@@ -468,14 +470,13 @@ impl UIntoR for $collection<$x> {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector($sexp, size_x as R_xlen_t));
-            let rptr = $sexpget(rvec.s());
-            let mut index = 0;
+            let mut rptr = $sexpget(rvec.s());
+
             for ii in self {
-                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as ::std::os::raw::c_int ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
-
     }
 }
 
@@ -508,15 +509,17 @@ impl URNew for $collection<u8> {
             let lens = Rf_xlength(x);
             let mut vecs: $collection<u8> = $collection::new();
             if RTYPEOF(x) ==INTSXP{
-				let rptr = INTEGER(x);
-	            for ii in 0..lens {
-	                vecs.$push(*rptr.offset(ii as isize) as u8);
+				let mut rptr = INTEGER(x);
+	            for _ in 0..lens {
+	                vecs.$push(*rptr.offset(0) as u8);
+	                rptr = rptr.offset(1);
 	            }
 	            return vecs;
             }
-            let rptr = RAW(x);
-            for ii in 0..lens {
-                vecs.$push(*rptr.offset(ii as isize) as u8);
+            let mut rptr = RAW(x);
+            for _ in 0..lens {
+                vecs.$push(*rptr.offset(0) as u8);
+                rptr = rptr.offset(1);
             }
             vecs
     }
@@ -533,14 +536,13 @@ impl UIntoR for $collection<u8> {
         let size_x = self.len();
 
             let rvec = Shield::new(Rf_allocVector(INTSXP, size_x as R_xlen_t));
-            let rptr = INTEGER(rvec.s());
-            let mut index = 0;
+            let mut rptr = INTEGER(rvec.s());
+
             for ii in self {
-                *rptr.offset(index) = ii.clone() as ::std::os::raw::c_int ;
-				index = index + 1;
+                *rptr.offset(0) = ii.clone() as ::std::os::raw::c_int ;
+				rptr = rptr.offset(1);
             }
             rvec.s()
-
     }
 }
 )}
