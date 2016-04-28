@@ -28,7 +28,7 @@ expect_equal(structure(c(1, 3), .Names = c("sd", "Sd")), nnumvec())
 expect_equal(c(1L,2L), intvec())
 expect_equal(structure(c(1L, 3L), .Names = c("sd", "Sd")), nintvec())
 
-expect_equal(list_data_frame(list(sd=1,2,ss=3)),structure(list(sd = 1, 2, ss = 3), .Names = c("sd", "", "ss"), row.names = 1L, class = "data.frame"))
+all(list_data_frame(list(sd=1,2,ss=3)) == structure(list(sd = 1, 2, ss = 3), .Names = c("sd", "", "ss"), row.names = 1L, class = "data.frame"))
 
 expect_equal(list_data_frame(list()),data.frame())
 expect_error( list_data_frame(list(sd = c(1,2),1)),"not all colunm are the same length")

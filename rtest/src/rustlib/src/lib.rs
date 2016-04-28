@@ -13,7 +13,7 @@ pub use self::robj::*;
 //
 
 pub use nalgebra::{DVec,Vec3,Vec4,DVec1,DVec2,DVec3};
-pub use nalgebra::{DMat,Mat3,Mat4};
+pub use nalgebra::{DMat,Mat3,Mat4,Mat1,Mat2,Mat5,Mat6};
 pub use rustr::types::nalgebra::*;
 
 // #[rustr_export]

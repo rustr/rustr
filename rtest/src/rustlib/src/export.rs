@@ -87,10 +87,10 @@ pub extern "C" fn rustr_dvec(x : SEXP)->SEXP{
 }
 
 #[no_mangle]
-pub extern "C" fn rustr_dmat(d : SEXP)->SEXP{
+pub extern "C" fn rustr_dint_mat(d : SEXP)->SEXP{
 
  let d_ : DMat<f64> = unwrapr!( DMat::rnew(d) );
- let res  = dmat(d_);
+ let res  = dint_mat(d_);
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 
@@ -109,10 +109,120 @@ pub extern "C" fn rustr_mat3(d : SEXP)->SEXP{
 }
 
 #[no_mangle]
+pub extern "C" fn rustr_mat2(d : SEXP)->SEXP{
+
+ let d_ : Mat2<f64> = unwrapr!( Mat2::rnew(d) );
+ let res  = mat2(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_mat1(d : SEXP)->SEXP{
+
+ let d_ : Mat1<f64> = unwrapr!( Mat1::rnew(d) );
+ let res  = mat1(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
 pub extern "C" fn rustr_mat4(d : SEXP)->SEXP{
 
  let d_ : Mat4<f64> = unwrapr!( Mat4::rnew(d) );
  let res  = mat4(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_mat5(d : SEXP)->SEXP{
+
+ let d_ : Mat2<f64> = unwrapr!( Mat2::rnew(d) );
+ let res  = mat5(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_mat6(d : SEXP)->SEXP{
+
+ let d_ : Mat1<f64> = unwrapr!( Mat1::rnew(d) );
+ let res  = mat6(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat3(d : SEXP)->SEXP{
+
+ let d_ : Mat3<u32> = unwrapr!( Mat3::rnew(d) );
+ let res  = int_mat3(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat2(d : SEXP)->SEXP{
+
+ let d_ : Mat2<u32> = unwrapr!( Mat2::rnew(d) );
+ let res  = int_mat2(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat1(d : SEXP)->SEXP{
+
+ let d_ : Mat1<u32> = unwrapr!( Mat1::rnew(d) );
+ let res  = int_mat1(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat4(d : SEXP)->SEXP{
+
+ let d_ : Mat4<u32> = unwrapr!( Mat4::rnew(d) );
+ let res  = int_mat4(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat5(d : SEXP)->SEXP{
+
+ let d_ : Mat2<u32> = unwrapr!( Mat2::rnew(d) );
+ let res  = int_mat5(d_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_int_mat6(d : SEXP)->SEXP{
+
+ let d_ : Mat1<u32> = unwrapr!( Mat1::rnew(d) );
+ let res  = int_mat6(d_);
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 

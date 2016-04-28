@@ -17,11 +17,31 @@ dll_option = function(x){ .Call('rtest_dll_option',PACKAGE = 'rtest', x)}
 
 dvec = function(x){ .Call('rtest_dvec',PACKAGE = 'rtest', x)}
 
-dmat = function(d){ .Call('rtest_dmat',PACKAGE = 'rtest', d)}
+dint_mat = function(d){ .Call('rtest_dint_mat',PACKAGE = 'rtest', d)}
 
 mat3 = function(d){ .Call('rtest_mat3',PACKAGE = 'rtest', d)}
 
+mat2 = function(d){ .Call('rtest_mat2',PACKAGE = 'rtest', d)}
+
+mat1 = function(d){ .Call('rtest_mat1',PACKAGE = 'rtest', d)}
+
 mat4 = function(d){ .Call('rtest_mat4',PACKAGE = 'rtest', d)}
+
+mat5 = function(d){ .Call('rtest_mat5',PACKAGE = 'rtest', d)}
+
+mat6 = function(d){ .Call('rtest_mat6',PACKAGE = 'rtest', d)}
+
+int_mat3 = function(d){ .Call('rtest_int_mat3',PACKAGE = 'rtest', d)}
+
+int_mat2 = function(d){ .Call('rtest_int_mat2',PACKAGE = 'rtest', d)}
+
+int_mat1 = function(d){ .Call('rtest_int_mat1',PACKAGE = 'rtest', d)}
+
+int_mat4 = function(d){ .Call('rtest_int_mat4',PACKAGE = 'rtest', d)}
+
+int_mat5 = function(d){ .Call('rtest_int_mat5',PACKAGE = 'rtest', d)}
+
+int_mat6 = function(d){ .Call('rtest_int_mat6',PACKAGE = 'rtest', d)}
 
 charvec_at = function(x,y){ .Call('rtest_charvec_at',PACKAGE = 'rtest', x,y)}
 
