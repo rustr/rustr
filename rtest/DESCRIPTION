@@ -9,4 +9,4 @@ Description: More about what it doee.
 License: Apache License 2.0
 SystemRequirements: cargo, rustc
 RoxygenNote: 5.0.1
-Suggests: testthat
+Suggests: testthat, devtools
