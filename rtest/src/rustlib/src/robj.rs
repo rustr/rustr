@@ -10,6 +10,16 @@ pub fn numvec_at(x:NumVec,y:usize)->f64{
     x.at(y).unwrap_or(0.0)
 }
 
+// #[rustr_export]
+pub fn ref_numvec_at(x:&NumVec,y:usize)->f64{
+    x.at(y).unwrap_or(0.0)
+}
+
+// #[rustr_export]
+pub fn ref_mut_numvec_at(x:&NumVec,y:& mut usize)->f64{
+    x.at(*y).unwrap_or(0.0)
+}
+
 // vector ----------------------------
 
 // #[rustr_export]

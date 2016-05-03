@@ -49,6 +49,10 @@ extern SEXP rustr_charvec_at(SEXP x, SEXP y);
 SEXP rtest_charvec_at(SEXP x, SEXP y){ return(rustr_charvec_at(x,y));}
 extern SEXP rustr_numvec_at(SEXP x, SEXP y);
 SEXP rtest_numvec_at(SEXP x, SEXP y){ return(rustr_numvec_at(x,y));}
+extern SEXP rustr_ref_numvec_at(SEXP x, SEXP y);
+SEXP rtest_ref_numvec_at(SEXP x, SEXP y){ return(rustr_ref_numvec_at(x,y));}
+extern SEXP rustr_ref_mut_numvec_at(SEXP x, SEXP y);
+SEXP rtest_ref_mut_numvec_at(SEXP x, SEXP y){ return(rustr_ref_mut_numvec_at(x,y));}
 extern SEXP rustr_clist();
 SEXP rtest_clist(){ return(rustr_clist());}
 extern SEXP rustr_nlist();

@@ -235,7 +235,7 @@ pub extern "C" fn rustr_charvec_at(x : SEXP, y : SEXP)->SEXP{
  let x_ : CharVec = unwrapr!( CharVec::rnew(x) );
 
 let y_ : usize = unwrapr!( usize::rnew(y) );
- let res  = unwrapr!( charvec_at(x_, y_));
+ let res  = unwrapr!( charvec_at(x_,y_));
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 
@@ -248,7 +248,33 @@ pub extern "C" fn rustr_numvec_at(x : SEXP, y : SEXP)->SEXP{
  let x_ : NumVec = unwrapr!( NumVec::rnew(x) );
 
 let y_ : usize = unwrapr!( usize::rnew(y) );
- let res  = numvec_at(x_, y_);
+ let res  = numvec_at(x_,y_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_ref_numvec_at(x : SEXP, y : SEXP)->SEXP{
+
+ let x_ : NumVec = unwrapr!( NumVec::rnew(x) );
+
+let y_ : usize = unwrapr!( usize::rnew(y) );
+ let res  = ref_numvec_at(& x_,y_);
+
+ let res_sexp : SEXP = unwrapr!(res.intor());
+
+ return res_sexp;
+}
+
+#[no_mangle]
+pub extern "C" fn rustr_ref_mut_numvec_at(x : SEXP, y : SEXP)->SEXP{
+
+ let x_ : NumVec = unwrapr!( NumVec::rnew(x) );
+
+let mut y_ :  usize = unwrapr!(  usize::rnew(y) );
+ let res  = ref_mut_numvec_at(& x_,&mut y_);
 
  let res_sexp : SEXP = unwrapr!(res.intor());
 

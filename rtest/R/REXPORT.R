@@ -47,6 +47,10 @@ charvec_at = function(x,y){ .Call('rtest_charvec_at',PACKAGE = 'rtest', x,y)}
 
 numvec_at = function(x,y){ .Call('rtest_numvec_at',PACKAGE = 'rtest', x,y)}
 
+ref_numvec_at = function(x,y){ .Call('rtest_ref_numvec_at',PACKAGE = 'rtest', x,y)}
+
+ref_mut_numvec_at = function(x,y){ .Call('rtest_ref_mut_numvec_at',PACKAGE = 'rtest', x,y)}
+
 clist = function(){ .Call('rtest_clist',PACKAGE = 'rtest')}
 
 nlist = function(){ .Call('rtest_nlist',PACKAGE = 'rtest')}
