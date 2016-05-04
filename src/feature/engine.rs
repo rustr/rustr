@@ -69,42 +69,45 @@ impl REngine {
         }
 
         let d = unsafe { Rf_initEmbeddedR(dd as c_int, args.as_ptr() as *mut *mut c_char) };
-        //        if cfg!(unix) {
-        //            unsafe {
-        //                R_CStackLimit = ::std::os::raw::c_ulong::max_value();
-        //            }
-        //        }
+
+        if cfg!(unix) {
+            unsafe {
+                R_CStackLimit = uintptr_t::max_value();
+            }
+        }
 
         if d == 0 {
             return rraise("can not create REngine.");
         }
 
 
+
         unsafe {
             R_ReplDLLinit();
         } // populate the repl console buffers
 
+        if cfg!(unix) {
+            let mut rst = structRstart::default();
+            let startr: *mut structRstart = &mut rst;
+            unsafe {
+                R_DefParams(startr);
+            }
 
-        // let mut rst = structRstart::default();
-        // let startr: *mut structRstart = &mut rst;
-        // unsafe {
-        //     R_DefParams(startr);
-        // }
+            rst.R_Interactive = if interactive {
+                Rboolean::TRUE
+            } else {
+                Rboolean::FALSE
+            };       // sets interactive() to eval to false
+            rst.R_Verbose = if verbose {
+                Rboolean::TRUE
+            } else {
+                Rboolean::FALSE
+            };
 
-        // rst.R_Interactive = if interactive {
-        //     Rboolean::TRUE
-        // } else {
-        //     Rboolean::FALSE
-        // };       // sets interactive() to eval to false
-        // rst.R_Verbose = if verbose {
-        //     Rboolean::TRUE
-        // } else {
-        //     Rboolean::FALSE
-        // };
-
-        // unsafe {
-        //     R_SetParams(startr);
-        // }
+            unsafe {
+                R_SetParams(startr);
+            }
+        }
 
         let envir = EnvirN::global();
 
