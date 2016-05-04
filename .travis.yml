@@ -45,6 +45,8 @@ script:
   - ../travis-tool.sh install_deps
   - ../travis-tool.sh run_tests
   - cd ..
+` - export R_HOME=$(Rscript -e "cat(R.home())")
+  - cargo test --features "engine"
   
 env:
   global:

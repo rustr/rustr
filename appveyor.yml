@@ -16,10 +16,11 @@ install:
   - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32"
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe"
   - rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
-  - SET PATH=%PATH%;C:\Rust\bin
+  - SET PATH=%PATH%;C:\Rust\bin;C:\R\bin\%R_ARCH%
   - del rust-nightly-i686-pc-windows-gnu.exe
   - del rust-nightly-x86_64-pc-windows-gnu.exe
   - SET RLIBPATH=C:\R\bin\%R_ARCH%
+  - SET R_HOME=C:\R\
 # Adapt as necessary starting from here
 
 environment:
@@ -46,6 +47,7 @@ test_script:
   - ../travis-tool.sh.cmd install_deps
   - ../travis-tool.sh.cmd run_tests
   - cd ..
+  - cargo test --features "engine"
 
 on_failure:
   - cd rtest 
