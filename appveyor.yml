@@ -14,7 +14,7 @@ install:
   - ps: Bootstrap
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe"
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe"
-  - if %R_ARCH%==i386 ( rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32" ) else ( rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32 )
+  - if %R_ARCH%==i386 ( rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32" ) else ( rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32" )
   - if %R_ARCH%==i386 ( md C:\Rust\lib\rustlib\x86_64-pc-windows-gnu ) else ( md C:\Rust\lib\rustlib\i686-pc-windows-gnu )
   - if %R_ARCH%==i386 ( xcopy C:\Rust32\lib\rustlib\x86_64-pc-windows-gnu C:\Rust\lib\rustlib\x86_64-pc-windows-gnu /s /e /h ) else ( xcopy C:\Rust32\lib\rustlib\i686-pc-windows-gnu C:\Rust\lib\rustlib\i686-pc-windows-gnu /s /e /h  )
   - if %R_ARCH%==i386 ( rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32" ) else ( rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Rust32" )
