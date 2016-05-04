@@ -7,24 +7,34 @@ addons:
       - libelf-dev
       - libdw-dev
 
-os:
-  - linux
-  - osx
-
-sudo: required
-dist: trusty
-
-# run builds for all the trains (and more)
-rust:
-  - nightly
-  - beta
-  - stable
-
 matrix:
+    include:
+        - os: osx
+          rust: stable
+        - os: osx
+          rust: beta
+        - os: osx
+          rust: nightly
+        - rust: nightly
+          os: linux
+          sudo: required
+          dist: trusty
+        - rust: beta
+          os: linux
+          sudo: required
+          dist: trusty
+        - rust: stable
+          os: linux
+          sudo: required
+          dist: trusty
+
     allow_failures:
-      rust:
-        - beta
-        - stable
+        - rust: stable
+          os: linux
+          sudo: required
+          dist: trusty
+        - os: osx
+          rust: stable
 
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
@@ -59,6 +69,14 @@ env:
 after_failure:
   - cd rtest
   - ../travis-tool.sh dump_logs
+
+after_success: |
+    [ $TRAVIS_RUST_VERSION = beta ] && [[ "Linux" == "$(uname -s)" ]] &&
+    wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+    tar xzf master.tar.gz && mkdir kcov-master/build && cd kcov-master/build && cmake .. && make && make install DESTDIR=../tmp && cd ../.. &&
+    ls target/debug &&
+    ./kcov-master/tmp/usr/local/bin/kcov --coveralls-id=$TRAVIS_JOB_ID --exclude-pattern=/.cargo target/kcov target/debug/rustr-* &&
+    ./kcov-master/tmp/usr/local/bin/kcov --coveralls-id=$TRAVIS_JOB_ID --exclude-pattern=/.cargo target/kcov target/debug/libtests* 
 
 notifications:
   email:
