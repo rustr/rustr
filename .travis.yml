@@ -49,7 +49,7 @@ script:
   - cd ..
   - export R_HOME=$(Rscript -e "cat(R.home())")
   - export RUST_TEST_THREADS=1
-  - sudo cargo test --features "engine"
+  - cargo test --features "engine"
   
 env:
   global:
