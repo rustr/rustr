@@ -46,6 +46,7 @@ script:
   - ../travis-tool.sh run_tests
   - cd ..
   - export R_HOME=$(Rscript -e "cat(R.home())")
+  - export RUST_TEST_THREADS=1
   - sudo cargo test --features "engine"
   
 env:

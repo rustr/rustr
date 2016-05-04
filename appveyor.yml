@@ -23,6 +23,7 @@ install:
   - del rust-nightly-i686-pc-windows-gnu.exe
   - del rust-nightly-x86_64-pc-windows-gnu.exe
   - SET RLIBPATH=C:\R\bin\%R_ARCH%
+  - SET RUST_TEST_THREADS=1
   - SET R_HOME=C:\R\
 # Adapt as necessary starting from here
 

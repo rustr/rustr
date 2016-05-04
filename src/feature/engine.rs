@@ -11,16 +11,16 @@ use dll::*;
 use traits::*;
 use error::REKind::*;
 
-pub static mut REng: bool = false;
+pub static mut REng: bool = true;
+pub static mut REngInit: bool = false;
 
 pub struct REngine {
-    verbose_m: bool, // constructor, or setter
-    global_env: EnvirN,
-    code: String,
+    verbose_m: bool
 }
 
+#[allow(unused_unsafe)]
 impl REngine {
-    pub fn init() -> RResult<Self> {
+    pub unsafe fn init() -> RResult<Self> {
         let argv: Vec<CString> = vec![CString::new("REmbeddedPostgres").unwrap(),
                                       CString::new("--gui=none").unwrap(),
                                       CString::new("--no-save").unwrap(),
@@ -30,15 +30,20 @@ impl REngine {
                                       CString::new("--slave").unwrap(),
                                       ];
         REngine::initialize(argv, false, false)
-
     }
-    pub fn initialize(args: Vec<CString>, verbose: bool, interactive: bool) -> RResult<Self> {
-        let dd = args.len();
-        unsafe {
-            if REng {
-                return rerror(REKind::BindingIsLocked("there is a runing R engine".into()));
-            }
+    pub unsafe fn initialize(args: Vec<CString>, verbose: bool, interactive: bool) -> RResult<Self> {
+        if unsafe{!REng} {
+            return rraise("REngine was shutdown!");
         }
+
+        if unsafe{REngInit} {
+            return Ok(REngine {
+                verbose_m: verbose
+            })
+        }
+
+        let dd = args.len();
+
         let args: Vec<*mut c_char> = args.iter()
                                          .map(|arg| arg.as_ptr() as *mut c_char)
                                          .collect();
@@ -68,19 +73,19 @@ impl REngine {
             }
         }
 
-        let d = unsafe { Rf_initEmbeddedR(dd as c_int, args.as_ptr() as *mut *mut c_char) };
-
         if cfg!(unix) {
+
+            unsafe { Rf_initialize_R(dd as c_int, args.as_ptr() as *mut *mut c_char) };
+
             unsafe {
                 R_CStackLimit = uintptr_t::max_value();
             }
+            unsafe{
+                setup_Rmainloop(); 
+            }
+        }else{
+            unsafe { Rf_initEmbeddedR(dd as c_int, args.as_ptr() as *mut *mut c_char) };
         }
-
-        if d == 0 {
-            return rraise("can not create REngine.");
-        }
-
-
 
         unsafe {
             R_ReplDLLinit();
@@ -109,16 +114,11 @@ impl REngine {
             }
         }
 
-        let envir = EnvirN::global();
-
-
         unsafe {
-            REng = true;
+            REngInit = true;
         }
         Ok(REngine {
-            verbose_m: verbose,
-            global_env: envir,
-            code: "".into(),
+            verbose_m: verbose
         })
     }
     pub fn eval<D: RNew>(&mut self, code: &str) -> RResult<D> {
@@ -126,7 +126,6 @@ impl REngine {
         let mut status: ParseStatus = ParseStatus::PARSE_OK;
         let mut error_occurred: c_int = 0;
         unsafe {
-            self.code = code.into();
             let cmd_sexp = Rf_allocVector(STRSXP, 1);
             Rf_protect(cmd_sexp);
 
@@ -140,21 +139,19 @@ impl REngine {
                     // Loop is needed here as EXPSEXP might be of length > 1
                     for i in 0..Rf_xlength(cmdexpr) {
                         ans = R_tryEval(VECTOR_ELT(cmdexpr, i),
-                                        self.global_env.s(),
+                                        EnvirN::global().s(),
                                         &mut error_occurred);
                         if error_occurred == 1 {
                             if self.verbose_m {
                                 r_warn(&format!("Error in evaluating R code {:?}\n", status));
                             }
                             Rf_unprotect(2);
-                            self.code = "".into();
                             return rerror(EvalError("EVAL_ERROR".into()));
                         }
                         if self.verbose_m {
                             Rf_PrintValue(ans);
                         }
                     }
-                    self.code = "".into();
                 }
                 ParseStatus::PARSE_INCOMPLETE => {}
                 ParseStatus::PARSE_NULL => {
@@ -162,7 +159,6 @@ impl REngine {
                         r_warn(&format!("%s: ParseStatus is null ({:?})\n", status));
                     }
                     Rf_unprotect(2);
-                    self.code = "".into();
                     return rerror(EvalError("PARSE_NULL".into()));
 
                 }
@@ -171,7 +167,6 @@ impl REngine {
                         r_warn(&format!("Parse Error: \"{:?}\"\n", code));
                     }
                     Rf_unprotect(2);
-                    self.code = "".into();
                     return rerror(EvalError("PARSE_ERROR".into()));
 
                 }
@@ -185,21 +180,16 @@ impl REngine {
             D::rnew(ans)
         }
     }
-}
 
-
-impl Drop for REngine {
-    fn drop(&mut self) {
-        unsafe {
-            R_dot_Last();
-            R_RunExitFinalizers();
-            R_CleanTempDir();
-            // Rf_KillAllDevices();
-            // #ifndef WIN32
-            // fpu_setup(FALSE);
-            // #endif
-            Rf_endEmbeddedR(0);
-            REng = false;
-        }
+    pub unsafe fn leave(self) {
+        R_dot_Last();
+        R_RunExitFinalizers();
+        R_CleanTempDir();
+        // Rf_KillAllDevices();
+        // #ifndef WIN32
+        // fpu_setup(FALSE);
+        // #endif
+        Rf_endEmbeddedR(0); 
+        REng = false;
     }
 }
