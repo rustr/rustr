@@ -1,5 +1,6 @@
 library(testthat)
 library(rtest)
-devtools::load_all("rtest")
+library(devtools)
+load_all(find.package("rtest"))
 
 test_check("rtest")

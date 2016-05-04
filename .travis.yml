@@ -43,7 +43,6 @@ script:
   # - cargo test  --verbose --features "$FEATURE"
   - cd rtest
   - ../travis-tool.sh install_deps
-  - Rscript -e 'library(devtools); install();'
   - ../travis-tool.sh run_tests
   - cd ..
   

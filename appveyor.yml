@@ -44,7 +44,6 @@ test_script:
   # - cargo test --verbose --features "date engine random logging"
   - cd rtest
   - ../travis-tool.sh.cmd install_deps
-  - Rscript -e 'library(devtools); install();'
   - ../travis-tool.sh.cmd run_tests
   - cd ..
 
