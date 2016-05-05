@@ -11,6 +11,7 @@ fn main() {
     let res: f64 = re.eval("1+1").unwrap();
     println!("{}", res);
     assert_eq!(2.0, res);
+    unsafe{re.leave()};
 }
 
 #[cfg(not(feature = "engine"))]
