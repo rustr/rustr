@@ -73,18 +73,13 @@ impl REngine {
             }
         }
 
-        if cfg!(unix) {
+        unsafe { Rf_initialize_R(dd as c_int, args.as_ptr() as *mut *mut c_char) };
 
-            unsafe { Rf_initialize_R(dd as c_int, args.as_ptr() as *mut *mut c_char) };
-
-            unsafe {
-                R_CStackLimit = uintptr_t::max_value();
-            }
-            unsafe{
-                setup_Rmainloop(); 
-            }
-        }else{
-            unsafe { Rf_initEmbeddedR(dd as c_int, args.as_ptr() as *mut *mut c_char) };
+        unsafe {
+            R_CStackLimit = uintptr_t::max_value();
+        }
+        unsafe{
+            setup_Rmainloop(); 
         }
 
         unsafe {
