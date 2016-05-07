@@ -19,6 +19,8 @@ This project is now under construction. **Issues** and **contributions** are wel
 - [x] random numbers from R
 - [ ] RChar for CHARSXP string
 - [ ] check bindgen code
+- [ ] check NA for `RNew` `IntoR`
+- [ ] [`nalgebra`][1] traits with RBLAS [#3](https://github.com/rustr/rustr/issues/3)
 - [x] more methods for `R Vector Obejct` types
 - [x] stablize R in Rust with `feature::engine` module
 - [x] more `RNew` `IntoR` `From` `Into` for types
