@@ -4,14 +4,14 @@
 //!
 
 
-#[cfg(all(any(target_os="linux",target_os="macos"), target_pointer_width = "64"))]
+#[cfg(all(any(target_os="freebsd",target_os="linux",target_os="macos"), target_pointer_width = "64"))]
 pub mod unix64;
-#[cfg(all(any(target_os="linux",target_os="macos"), target_pointer_width = "64"))]
+#[cfg(all(any(target_os="freebsd",target_os="linux",target_os="macos"), target_pointer_width = "64"))]
 pub use self::unix64::*;
 
-#[cfg(all(target_os="linux", target_pointer_width = "32"))]
+#[cfg(all(any(target_os="freebsd",target_os="linux"), target_pointer_width = "32"))]
 pub mod unix32;
-#[cfg(all(target_os="linux", target_pointer_width = "32"))]
+#[cfg(all(any(target_os="freebsd",target_os="linux"), target_pointer_width = "32"))]
 pub use self::unix32::*;
 
 #[cfg(all(target_os="windows", target_pointer_width = "64"))]
@@ -49,6 +49,6 @@ pub mod engine {
         pub static mut R_timeout_val: ::std::os::raw::c_long;
         pub static mut R_running_as_main_program: ::std::os::raw::c_int;
         #[cfg(not(target_os = "windows"))]
-		pub fn get_R_HOME() -> *const ::std::os::raw::c_char;
+        pub fn get_R_HOME() -> *const ::std::os::raw::c_char;
     }
 }
