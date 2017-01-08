@@ -12,6 +12,11 @@ More info: https://rustr.org
 
 This project is now under construction. **Issues** and **contributions** are welcome!
 
+### Changes on master since the latest crates.io v0.1.9
+
+- Initial FreeBSD support
+- Require Rust 1.13 for `?` error handling support. See: https://blog.rust-lang.org/2016/11/10/Rust-1.13.html#whats-in-113-stable
+
 ### Todo for v0.2
 
 #### rustr
