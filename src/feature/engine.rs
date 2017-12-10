@@ -11,7 +11,9 @@ use dll::*;
 use traits::*;
 use error::REKind::*;
 
+#[allow(non_upper_case_globals)]
 pub static mut REng: bool = true;
+#[allow(non_upper_case_globals)]
 pub static mut REngInit: bool = false;
 
 pub struct REngine {

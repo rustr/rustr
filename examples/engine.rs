@@ -1,8 +1,6 @@
 extern crate rustr;
 
 #[cfg(feature = "engine")]
-use rustr::*;
-#[cfg(feature = "engine")]
 use rustr::feature::engine::*;
 
 #[cfg(feature = "engine")]

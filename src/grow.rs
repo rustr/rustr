@@ -8,7 +8,6 @@ use error::*;
 use protect::stackp::*;
 use rtype::*;
 use util::rprint as rp;
-use storage::*;
 
 pub fn pairlist(xs: &[&Args]) -> RResult<SEXP> {
     let mut res: Shield = Shield::new(unsafe { R_NilValue });

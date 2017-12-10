@@ -3,7 +3,6 @@ use traits::{ToSEXP, SetSEXP, RNew};
 use protect::stackp::Shield;
 
 use util::c_str;
-use storage::*;
 use error::*;
 
 pub trait RField: ToSEXP+ SetSEXP{
