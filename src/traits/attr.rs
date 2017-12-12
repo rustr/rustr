@@ -5,7 +5,6 @@ use storage::*;
 use util::c_str;
 
 use symbol::*;
-use error::*;
 
 pub trait RAttribute : ToSEXP{
     fn get_attr<D: RNew, S: SEXPbucket, EE: Into<SymbolM<S>>>(&self, name: EE) -> RResult<D> {

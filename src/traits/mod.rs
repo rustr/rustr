@@ -43,6 +43,7 @@ pub trait RSize {
     fn rsize(&self) -> R_xlen_t;
 }
 
+#[allow(non_snake_case)]
 pub trait SetSEXP {
     fn set_s(&mut self, X: SEXP);
 }
