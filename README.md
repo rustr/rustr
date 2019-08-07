@@ -1,3 +1,11 @@
+## WARNING
+
+R and Rust are rapidly developing in these two years. R introduced ALTREP and Rust introduced 2018 Edition.
+
+But this repo is not updating regularly, so it may not work with the latest version of R and Rust.
+
+Testing R version is 3.3.0, Rust version is 1.13.
+
 ## Rust and R Integration
 
 [![Build Status](https://travis-ci.org/rustr/rustr.svg?branch=master)](https://travis-ci.org/rustr/rustr)
