@@ -16,7 +16,7 @@ Testing R version is 3.3.0, Rust version is 1.13.
 
 Write pure Rust code with `rustr`, and then use `rustinr` R package to generate Rust interfaces to R.
 
-More info: https://rustr.org
+More info: https://rustr.github.io
 
 This project is now under construction. **Issues** and **contributions** are welcome!
 
