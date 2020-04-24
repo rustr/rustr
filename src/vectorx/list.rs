@@ -100,8 +100,9 @@ impl<T: SEXPbucket> RListM<T> {
     				return rraise("not all colunm are the same length.");
     			}
 			}
- 			let mut rowname = IntVec::alloc(colsize as usize);
-			for ii in 0..(self.rsize() as usize){
+		        let n_rows = Rf_xlength(self.uat(0)) as usize;
+ 			let mut rowname = IntVec::alloc(n_rows);
+			for ii in 0..n_rows {
     				rowname.uset(ii, (ii as ::std::os::raw::c_int)+1);
 			}
             Rf_setAttrib(self.s(), R_RowNamesSymbol, rowname.s());
@@ -234,7 +235,7 @@ macro_rules! rlist {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.uset(x-1, try!($tts.intor()));
+      		res.uset(x-1, $tts.intor()?);
       		
       )*      
 	}
@@ -254,7 +255,7 @@ macro_rules! rlist {
       $(
 			// skip a warning message 
 			x += 1;
-      		res.uset(x-1, try!($tts.intor()));
+      		res.uset(x-1, $tts.intor()?);
       		name.uset(x-1, stringify!($id));
       )*
 	}
